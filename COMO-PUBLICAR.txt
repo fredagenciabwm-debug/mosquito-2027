@@ -28,6 +28,16 @@ TROCAR A SENHA (opcional)
   Vercel → Settings → Environment Variables → crie ADMIN_SENHA com a nova
   senha → Redeploy. A senha antiga deixa de funcionar.
 
+NO PAINEL
+  • Setores: Ala Pais e Filhos, Ala das Bandeiras, Destaques, Bateria e
+    Abadás avulsos (fora do kit).
+  • "+ Novo cadastro" / "+ Cadastrar neste setor": cadastra pessoas que não
+    vieram pelo site. "Editar" corrige qualquer cadastro.
+  • "Planilha do setor" baixa só a aba aberta; "Planilha geral" baixa um
+    Excel com uma aba de Resumo + uma aba para cada setor.
+  • Para mudar a lista de posições de destaque ou de instrumentos, edite
+    POSICOES e INSTRUMENTOS no início do script do admin.html.
+
 OBSERVAÇÕES
   • A inscrição entra no painel quando a pessoa clica no botão do formulário
     (antes de abrir o WhatsApp), sempre como "Pendente". Se alguém desistir

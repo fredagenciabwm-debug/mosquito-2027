@@ -11,6 +11,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Calistoga&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Planilhas Excel (.xlsx) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" defer></script>
   <script>
     tailwind.config = {
       theme: {
@@ -55,6 +57,11 @@
     .pill.pago { background: #E5F7EA; color: #166534; border-color: #22A04B; }
     .pill.pendente { background: #FFF4D6; color: #8A5300; border-color: #E8A317; }
     .pill:disabled { opacity: .5; cursor: wait; }
+    .tag { display: inline-block; font-size: .65rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; padding: .1rem .45rem; border-radius: .4rem; vertical-align: middle; }
+    .tag-painel { background: #EFE7FF; color: #5B2DB3; }
+    .tag-site { background: #E6F2FF; color: #1D5FA8; }
+    .modal-fundo { background: rgba(43,22,16,.55); backdrop-filter: blur(2px); }
+    .rotulo-campo { display: block; font-size: .8rem; font-weight: 600; margin-bottom: .3rem; }
   </style>
 </head>
 <body class="min-h-screen antialiased">
@@ -85,6 +92,7 @@
           <h1 class="titulo text-white text-xl sm:text-2xl leading-tight">Controle Interno</h1>
           <p class="text-white/90 text-xs sm:text-sm truncate">Mosquito • Caravana Cigana • Carnaval 2027</p>
         </div>
+        <button id="btnNovoTopo" class="btn btn-laranja px-3 sm:px-4 py-2 rounded-xl text-sm whitespace-nowrap">+ <span class="hidden sm:inline">Novo cadastro</span></button>
         <button id="btnAtualizar" class="btn btn-branco px-3 sm:px-4 py-2 rounded-xl text-sm" title="Atualizar">⟳<span class="hidden sm:inline"> Atualizar</span></button>
         <button id="btnSair" class="btn btn-branco px-3 sm:px-4 py-2 rounded-xl text-sm">Sair</button>
       </div>
@@ -101,7 +109,7 @@
           <p id="cTotalPagos" class="text-sm text-white/90 mt-1">0 pagos • 0 pendentes</p>
         </div>
         <div class="card p-5">
-          <p class="text-xs font-bold uppercase tracking-wider text-laranja">No Kit Desfile (alas)</p>
+          <p class="text-xs font-bold uppercase tracking-wider text-laranja">No Kit Desfile</p>
           <p id="cKit" class="titulo text-4xl mt-2">0</p>
           <p id="cKitDet" class="text-xs text-tinta/60 mt-1">—</p>
         </div>
@@ -121,7 +129,7 @@
       <section class="card p-5 mt-6">
         <div class="flex flex-wrap items-baseline justify-between gap-2">
           <h2 class="titulo text-lg">Abadás por tamanho</h2>
-          <p class="text-xs text-tinta/60">Soma de alas + avulsos (inclui responsáveis e crianças)</p>
+          <p class="text-xs text-tinta/60">Soma de todos os setores + avulsos (inclui responsáveis e crianças)</p>
         </div>
         <div id="porTamanho" class="mt-4 grid grid-cols-4 sm:grid-cols-7 gap-3"></div>
       </section>
@@ -131,20 +139,24 @@
         <div role="tablist" class="flex flex-wrap gap-3">
           <button role="tab" class="aba px-4 py-2.5 rounded-xl text-sm" data-aba="paisFilhos" aria-selected="true">Ala Pais e Filhos <span class="ml-1 opacity-80" data-cont="paisFilhos">0</span></button>
           <button role="tab" class="aba px-4 py-2.5 rounded-xl text-sm" data-aba="bandeiras" aria-selected="false">Ala das Bandeiras <span class="ml-1 opacity-80" data-cont="bandeiras">0</span></button>
+          <button role="tab" class="aba px-4 py-2.5 rounded-xl text-sm" data-aba="destaque" aria-selected="false">Destaques <span class="ml-1 opacity-80" data-cont="destaque">0</span></button>
+          <button role="tab" class="aba px-4 py-2.5 rounded-xl text-sm" data-aba="bateria" aria-selected="false">Bateria <span class="ml-1 opacity-80" data-cont="bateria">0</span></button>
           <button role="tab" class="aba px-4 py-2.5 rounded-xl text-sm" data-aba="abada" aria-selected="false">Abadás avulsos (fora do kit) <span class="ml-1 opacity-80" data-cont="abada">0</span></button>
         </div>
 
         <div class="card mt-4 overflow-hidden">
-          <div class="p-4 flex flex-col sm:flex-row gap-3 sm:items-center border-b-2 border-tinta bg-white">
-            <input id="busca" class="campo sm:max-w-xs" placeholder="Buscar nome ou WhatsApp…" />
-            <select id="filtroStatus" class="campo sm:max-w-[180px]">
+          <div class="p-4 flex flex-col lg:flex-row lg:flex-wrap gap-3 lg:items-center border-b-2 border-tinta bg-white">
+            <input id="busca" class="campo lg:max-w-xs" placeholder="Buscar nome ou WhatsApp…" />
+            <select id="filtroStatus" class="campo lg:max-w-[180px]">
               <option value="">Todos os status</option>
               <option value="pendente">Pendentes</option>
               <option value="pago">Pagos</option>
             </select>
-            <div class="sm:ml-auto flex items-center gap-3">
-              <p id="resumoAba" class="text-sm text-tinta/70"></p>
-              <button id="btnCsv" class="btn btn-branco px-4 py-2 rounded-xl text-sm whitespace-nowrap">⬇ Exportar planilha</button>
+            <p id="resumoAba" class="text-sm text-tinta/70 sm:ml-auto"></p>
+            <div class="flex flex-wrap items-center gap-2">
+              <button id="btnNovo" class="btn btn-laranja px-4 py-2 rounded-xl text-sm whitespace-nowrap">+ Cadastrar neste setor</button>
+              <button id="btnPlanilhaSetor" class="btn btn-branco px-4 py-2 rounded-xl text-sm whitespace-nowrap">⬇ Planilha do setor</button>
+              <button id="btnPlanilhaGeral" class="btn btn-branco px-4 py-2 rounded-xl text-sm whitespace-nowrap">⬇ Planilha geral</button>
             </div>
           </div>
           <div class="overflow-x-auto max-h-[70vh]">
@@ -155,14 +167,113 @@
           </div>
           <p id="vazio" class="hidden p-10 text-center text-tinta/60">Nenhum registro por aqui ainda.</p>
         </div>
-        <p class="mt-3 text-xs text-tinta/60">Clique no status para alternar entre <strong>Pendente</strong> e <strong>Pago</strong>. A lista se atualiza sozinha a cada minuto.</p>
+        <p class="mt-3 text-xs text-tinta/60">Clique no status para alternar entre <strong>Pendente</strong> e <strong>Pago</strong>. <span class="tag tag-site">site</span> = veio do formulário do site • <span class="tag tag-painel">painel</span> = cadastrado por aqui. A lista se atualiza sozinha a cada minuto.</p>
       </section>
     </main>
   </div>
 
+  <!-- ================= MODAL CADASTRO / EDIÇÃO ================= -->
+  <div id="modal" class="hidden fixed inset-0 z-50 modal-fundo overflow-y-auto">
+    <div class="min-h-full flex items-start sm:items-center justify-center p-3 sm:p-6">
+      <form id="formCadastro" class="card w-full max-w-2xl p-5 sm:p-7" novalidate>
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <h2 id="modalTitulo" class="titulo text-2xl">Novo cadastro</h2>
+            <p class="text-sm text-tinta/60">Campos com * são obrigatórios.</p>
+          </div>
+          <button type="button" data-fechar class="text-2xl leading-none px-2 text-tinta/50 hover:text-tinta" aria-label="Fechar">×</button>
+        </div>
+
+        <div class="mt-5 grid sm:grid-cols-2 gap-4">
+          <div class="sm:col-span-2">
+            <label class="rotulo-campo" for="fTipo">Setor *</label>
+            <select id="fTipo" class="campo"></select>
+          </div>
+
+          <div class="sm:col-span-2" data-so="destaque">
+            <label class="rotulo-campo" for="fPosicao">Posição de destaque *</label>
+            <select id="fPosicao" class="campo"></select>
+            <input id="fPosicaoOutra" class="campo mt-2 hidden" placeholder="Qual posição?" maxlength="80" />
+          </div>
+          <div class="sm:col-span-2" data-so="bateria">
+            <label class="rotulo-campo" for="fInstrumento">Instrumento *</label>
+            <select id="fInstrumento" class="campo"></select>
+            <input id="fInstrumentoOutro" class="campo mt-2 hidden" placeholder="Qual instrumento?" maxlength="60" />
+          </div>
+
+          <div class="sm:col-span-2">
+            <label class="rotulo-campo" for="fNome"><span id="rotuloNome">Nome completo</span> *</label>
+            <input id="fNome" class="campo" maxlength="100" />
+          </div>
+          <div>
+            <label class="rotulo-campo" for="fWhats">WhatsApp</label>
+            <input id="fWhats" class="campo" inputmode="tel" placeholder="(00) 00000-0000" maxlength="16" />
+          </div>
+          <div>
+            <label class="rotulo-campo" for="fTamanho"><span id="rotuloTamanho">Tamanho do abadá</span></label>
+            <select id="fTamanho" class="campo"></select>
+          </div>
+
+          <div data-so="abada">
+            <label class="rotulo-campo" for="fQtd">Quantidade *</label>
+            <input id="fQtd" type="number" min="1" max="200" value="1" class="campo" />
+          </div>
+          <div data-nao="abada">
+            <label class="rotulo-campo" for="fValor">Valor do kit</label>
+            <input id="fValor" class="campo" placeholder="R$ 0,00" maxlength="20" />
+          </div>
+          <div>
+            <label class="rotulo-campo" for="fStatus">Pagamento</label>
+            <select id="fStatus" class="campo">
+              <option value="pendente">⏳ Pendente</option>
+              <option value="pago">✔ Pago</option>
+            </select>
+          </div>
+
+          <div class="sm:col-span-2" data-so="paisFilhos">
+            <div class="flex items-center justify-between">
+              <p class="rotulo-campo !mb-0">Crianças *</p>
+              <button type="button" id="btnAddCrianca" class="text-sm font-bold text-laranja hover:underline">+ Adicionar criança</button>
+            </div>
+            <div id="fCriancas" class="mt-2 space-y-2"></div>
+          </div>
+
+          <div class="sm:col-span-2">
+            <label class="rotulo-campo" for="fObs">Observação</label>
+            <textarea id="fObs" class="campo" rows="2" maxlength="300" placeholder="Ex.: pagou metade, retirar com a Ana…"></textarea>
+          </div>
+        </div>
+
+        <p id="erroModal" class="hidden mt-4 text-sm font-semibold text-red-700"></p>
+        <div class="mt-6 flex flex-col-reverse sm:flex-row sm:justify-end gap-3">
+          <button type="button" data-fechar class="btn btn-branco px-5 py-2.5 rounded-xl">Cancelar</button>
+          <button id="btnSalvar" type="submit" class="btn btn-laranja px-6 py-2.5 rounded-xl">Salvar cadastro</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <script>
     const TAMANHOS = ['PP', 'P', 'M', 'G', 'GG', 'XGG', 'Infantil'];
-    const NOMES = { paisFilhos: 'Ala Pais e Filhos', bandeiras: 'Ala das Bandeiras', abada: 'Abadás avulsos' };
+    const NOMES = { paisFilhos: 'Ala Pais e Filhos', bandeiras: 'Ala das Bandeiras', destaque: 'Destaques', bateria: 'Bateria', abada: 'Abadás avulsos' };
+    const SETORES = Object.keys(NOMES);
+    const SETORES_KIT = ['paisFilhos', 'bandeiras', 'destaque', 'bateria'];
+
+    /* Posições de destaque (do projeto do desfile) — edite à vontade */
+    const POSICOES = [
+      'Comissão de Frente – “A Dança Cigana”',
+      'Tripé Abre-Alas – “A Caravana Chegou”',
+      'Porta-Estandarte – “O Destino e a Sorte”',
+      'Mestre-Sala – “Eu vi na bola de cristal”',
+      'Porta-Bandeira – “Eu vi na bola de cristal”',
+      'Rainha da Bateria – “A Guardiã da Fogueira”',
+      'Destaque – “A Lua Vem Guiar” (Caminho das Águas)',
+      'Músicos e Cantores – “Cantoria Cigana”',
+      'Puxador',
+      'Alegoria – “Carroças Ciganas”'
+    ];
+    /* Instrumentos da bateria — edite à vontade */
+    const INSTRUMENTOS = ['Surdo de 1ª', 'Surdo de 2ª', 'Surdo de 3ª', 'Caixa', 'Repique', 'Tamborim', 'Chocalho', 'Agogô', 'Cuíca', 'Pandeiro', 'Timbal', 'Mestre / Diretor de bateria'];
 
     const $ = (s) => document.querySelector(s);
     const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -255,11 +366,10 @@
       $('#cTotal').textContent = total;
       $('#cTotalPagos').textContent = `${totalPagos} pagos • ${total - totalPagos} pendentes`;
 
-      const pf = inscricoes.filter((r) => r.tipo === 'paisFilhos');
-      const bd = inscricoes.filter((r) => r.tipo === 'bandeiras');
-      const av = inscricoes.filter((r) => r.tipo === 'abada');
-      $('#cKit').textContent = soma(pf) + soma(bd);
-      $('#cKitDet').textContent = `Pais e Filhos: ${soma(pf)} • Bandeiras: ${soma(bd)}`;
+      const de = (t) => inscricoes.filter((r) => r.tipo === t);
+      const av = de('abada');
+      $('#cKit').textContent = SETORES_KIT.reduce((s, t) => s + soma(de(t)), 0);
+      $('#cKitDet').textContent = `Pais e Filhos: ${soma(de('paisFilhos'))} • Bandeiras: ${soma(de('bandeiras'))} • Destaques: ${soma(de('destaque'))} • Bateria: ${soma(de('bateria'))}`;
       $('#cAvulsos').textContent = soma(av);
       $('#cAvulsosDet').textContent = `${av.length} pedido(s) • ${soma(av.filter((r) => r.status === 'pago'))} pagos`;
       $('#cInscricoes').textContent = inscricoes.length;
@@ -273,7 +383,7 @@
           <p class="titulo text-2xl mt-0.5">${cont[t]}</p>
         </div>`).join('');
 
-      ['paisFilhos', 'bandeiras', 'abada'].forEach((t) => {
+      SETORES.forEach((t) => {
         document.querySelector(`[data-cont="${t}"]`).textContent = inscricoes.filter((r) => r.tipo === t).length;
       });
     }
@@ -281,6 +391,8 @@
     const COLUNAS = {
       paisFilhos: ['Data', 'Responsável', 'WhatsApp', 'Abadá resp.', 'Crianças (nome • idade • abadá)', 'Abadás', 'Kit', 'Pagamento', ''],
       bandeiras:  ['Data', 'Nome', 'WhatsApp', 'Abadá', 'Abadás', 'Kit', 'Pagamento', ''],
+      destaque:   ['Data', 'Nome', 'Posição de destaque', 'WhatsApp', 'Abadá', 'Kit', 'Pagamento', ''],
+      bateria:    ['Data', 'Nome', 'Instrumento', 'WhatsApp', 'Abadá', 'Kit', 'Pagamento', ''],
       abada:      ['Data', 'Nome', 'WhatsApp', 'Tamanho', 'Quantidade', 'Pagamento', '']
     };
 
@@ -292,7 +404,7 @@
         .filter((r) => !st || r.status === st)
         .filter((r) => {
           if (!termo) return true;
-          const nomes = [r.nome, ...(r.criancas || []).map((c) => c.nome)].join(' ').toLowerCase();
+          const nomes = [r.nome, r.posicao, r.instrumento, r.obs, ...(r.criancas || []).map((c) => c.nome)].join(' ').toLowerCase();
           return nomes.includes(termo) || (termoNum && String(r.whatsapp).replace(/\D/g, '').includes(termoNum));
         });
     }
@@ -302,9 +414,17 @@
       return `<button class="pill ${pago ? 'pago' : 'pendente'}" data-acao="status" data-id="${esc(r.id)}" title="Clique para alternar">
         ${pago ? '✔ Pago' : '⏳ Pendente'}</button>`;
     }
-    const celulaExcluir = (r) => `<button class="text-xs font-semibold text-tinta/50 hover:text-red-700 px-2 py-1 rounded" data-acao="excluir" data-id="${esc(r.id)}">Excluir</button>`;
-    const celulaWhats = (r) => `<a href="${linkWhats(r.whatsapp)}" target="_blank" rel="noopener" class="font-semibold text-laranja hover:underline whitespace-nowrap">${esc(r.whatsapp)}</a>`;
-    const tam = (t) => `<span class="inline-block min-w-[2.2rem] text-center font-bold bg-pele rounded-md px-1.5 py-0.5">${esc(t)}</span>`;
+    const celulaAcoes = (r) => `<div class="flex justify-end gap-1 whitespace-nowrap">
+      <button class="text-xs font-semibold text-laranja hover:bg-pele px-2 py-1 rounded" data-acao="editar" data-id="${esc(r.id)}">Editar</button>
+      <button class="text-xs font-semibold text-tinta/50 hover:text-red-700 px-2 py-1 rounded" data-acao="excluir" data-id="${esc(r.id)}">Excluir</button></div>`;
+    const celulaWhats = (r) => r.whatsapp
+      ? `<a href="${linkWhats(r.whatsapp)}" target="_blank" rel="noopener" class="font-semibold text-laranja hover:underline whitespace-nowrap">${esc(r.whatsapp)}</a>`
+      : '<span class="text-tinta/40">—</span>';
+    const tam = (t) => t ? `<span class="inline-block min-w-[2.2rem] text-center font-bold bg-pele rounded-md px-1.5 py-0.5">${esc(t)}</span>` : '<span class="text-tinta/40">—</span>';
+    const celulaNome = (r) => `<span class="font-semibold">${esc(r.nome)}</span>
+      <span class="tag ${r.origem === 'painel' ? 'tag-painel' : 'tag-site'} ml-1">${r.origem === 'painel' ? 'painel' : 'site'}</span>
+      ${r.obs ? `<p class="text-xs text-tinta/55 mt-1 max-w-[260px]">📝 ${esc(r.obs)}</p>` : ''}`;
+    const kit = (r) => `<span class="whitespace-nowrap">${esc(r.valorKit || '—')}</span>`;
 
     function renderizarTabela() {
       $('#thead').innerHTML = '<tr>' + COLUNAS[abaAtual].map((c) => `<th class="text-left font-bold text-xs uppercase tracking-wide px-4 py-3 whitespace-nowrap">${c}</th>`).join('') + '</tr>';
@@ -312,16 +432,22 @@
       const td = (h, extra = '') => `<td class="px-4 py-3 align-top ${extra}">${h}</td>`;
 
       $('#tbody').innerHTML = lista.map((r) => {
-        const base = [td(`<span class="whitespace-nowrap text-tinta/60">${data(r.criadoEm)}</span>`), td(`<span class="font-semibold">${esc(r.nome)}</span>`), td(celulaWhats(r)), td(tam(r.tamanho))];
+        const dataCel = td(`<span class="whitespace-nowrap text-tinta/60">${data(r.criadoEm)}</span>`);
+        const destaqueCel = (v) => td(`<span class="inline-block font-bold text-laranja bg-pele rounded-lg px-2 py-1 min-w-[140px]">${esc(v || '—')}</span>`);
+        let base;
         if (abaAtual === 'paisFilhos') {
           const kids = (r.criancas || []).map((c) => `<li class="flex items-center gap-2"><span>${esc(c.nome)}</span><span class="text-tinta/50">• ${esc(c.idade)} anos</span>${tam(c.tamanho)}</li>`).join('');
-          base.push(td(`<ul class="space-y-1 min-w-[220px]">${kids}</ul>`), td(`<span class="titulo text-lg">${qtd(r)}</span>`), td(`<span class="whitespace-nowrap">${esc(r.valorKit || '—')}</span>`));
+          base = [dataCel, td(celulaNome(r)), td(celulaWhats(r)), td(tam(r.tamanho)), td(`<ul class="space-y-1 min-w-[220px]">${kids}</ul>`), td(`<span class="titulo text-lg">${qtd(r)}</span>`), td(kit(r))];
         } else if (abaAtual === 'bandeiras') {
-          base.push(td(`<span class="titulo text-lg">${qtd(r)}</span>`), td(`<span class="whitespace-nowrap">${esc(r.valorKit || '—')}</span>`));
+          base = [dataCel, td(celulaNome(r)), td(celulaWhats(r)), td(tam(r.tamanho)), td(`<span class="titulo text-lg">${qtd(r)}</span>`), td(kit(r))];
+        } else if (abaAtual === 'destaque') {
+          base = [dataCel, td(celulaNome(r)), destaqueCel(r.posicao), td(celulaWhats(r)), td(tam(r.tamanho)), td(kit(r))];
+        } else if (abaAtual === 'bateria') {
+          base = [dataCel, td(celulaNome(r)), destaqueCel(r.instrumento), td(celulaWhats(r)), td(tam(r.tamanho)), td(kit(r))];
         } else {
-          base.push(td(`<span class="titulo text-lg">${qtd(r)}</span>`));
+          base = [dataCel, td(celulaNome(r)), td(celulaWhats(r)), td(tam(r.tamanho)), td(`<span class="titulo text-lg">${qtd(r)}</span>`)];
         }
-        base.push(td(celulaStatus(r)), td(celulaExcluir(r), 'text-right'));
+        base.push(td(celulaStatus(r)), td(celulaAcoes(r), 'text-right'));
         return `<tr>${base.join('')}</tr>`;
       }).join('');
 
@@ -346,6 +472,8 @@
       if (!btn) return;
       const reg = inscricoes.find((r) => r.id === btn.dataset.id);
       if (!reg) return;
+
+      if (btn.dataset.acao === 'editar') return abrirModal(reg);
 
       if (btn.dataset.acao === 'status') {
         const novo = reg.status === 'pago' ? 'pendente' : 'pago';
@@ -375,25 +503,218 @@
       }
     });
 
-    // ---------- Exportar planilha (CSV que abre no Excel) ----------
-    $('#btnCsv').addEventListener('click', () => {
-      const lista = filtrados();
-      const linhas = [];
-      if (abaAtual === 'paisFilhos') {
-        linhas.push(['Data', 'Responsável', 'WhatsApp', 'Abadá responsável', 'Criança', 'Idade', 'Abadá criança', 'Abadás na inscrição', 'Kit', 'Pagamento']);
-        lista.forEach((r) => (r.criancas || []).forEach((c, i) => linhas.push([
-          data(r.criadoEm), r.nome, r.whatsapp, r.tamanho, c.nome, c.idade, c.tamanho, i === 0 ? qtd(r) : '', i === 0 ? r.valorKit : '', r.status
-        ])));
-      } else {
-        linhas.push(['Data', 'Nome', 'WhatsApp', 'Tamanho', 'Quantidade', ...(abaAtual === 'bandeiras' ? ['Kit'] : []), 'Pagamento']);
-        lista.forEach((r) => linhas.push([data(r.criadoEm), r.nome, r.whatsapp, r.tamanho, qtd(r), ...(abaAtual === 'bandeiras' ? [r.valorKit] : []), r.status]));
+    // ---------- Planilhas (Excel .xlsx; se a biblioteca não carregar, gera .csv) ----------
+    const dataCompleta = (iso) => { try { return iso ? new Date(iso).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }) : ''; } catch { return ''; } };
+    const statusTxt = (r) => r.status === 'pago' ? 'Pago' : 'Pendente';
+    const origemTxt = (r) => r.origem === 'painel' ? 'Painel' : 'Site';
+
+    function linhasSetor(tipo) {
+      const lista = inscricoes.filter((r) => r.tipo === tipo).slice().reverse(); // mais antigos primeiro
+      if (tipo === 'paisFilhos') {
+        const cab = ['Data', 'Responsável', 'WhatsApp', 'Abadá responsável', 'Criança', 'Idade', 'Abadá criança', 'Abadás na inscrição', 'Valor do kit', 'Pagamento', 'Origem', 'Observação'];
+        const linhas = [];
+        lista.forEach((r) => {
+          const kids = r.criancas && r.criancas.length ? r.criancas : [{}];
+          kids.forEach((c, i) => linhas.push([
+            i === 0 ? dataCompleta(r.criadoEm) : '', r.nome, r.whatsapp, r.tamanho, c.nome || '', c.idade ?? '', c.tamanho || '',
+            i === 0 ? qtd(r) : '', i === 0 ? r.valorKit : '', statusTxt(r), origemTxt(r), i === 0 ? r.obs || '' : ''
+          ]));
+        });
+        return [cab, ...linhas];
       }
-      const csv = '﻿' + linhas.map((l) => l.map((v) => `"${String(v ?? '').replace(/"/g, '""')}"`).join(';')).join('\r\n');
+      if (tipo === 'abada') {
+        return [['Data', 'Nome', 'WhatsApp', 'Tamanho', 'Quantidade', 'Pagamento', 'Origem', 'Observação'],
+          ...lista.map((r) => [dataCompleta(r.criadoEm), r.nome, r.whatsapp, r.tamanho, qtd(r), statusTxt(r), origemTxt(r), r.obs || ''])];
+      }
+      const extra = tipo === 'destaque' ? 'Posição de destaque' : tipo === 'bateria' ? 'Instrumento' : null;
+      return [['Data', 'Nome', ...(extra ? [extra] : []), 'WhatsApp', 'Abadá', 'Valor do kit', 'Pagamento', 'Origem', 'Observação'],
+        ...lista.map((r) => [dataCompleta(r.criadoEm), r.nome, ...(extra ? [tipo === 'destaque' ? r.posicao : r.instrumento] : []), r.whatsapp, r.tamanho, r.valorKit, statusTxt(r), origemTxt(r), r.obs || ''])];
+    }
+
+    function linhasResumo() {
+      const linhas = [['Resumo geral – Mosquito • Caravana Cigana 2027'], ['Gerado em', dataCompleta(new Date().toISOString())], [],
+        ['Setor', 'Cadastros', 'Abadás', 'Abadás pagos', 'Abadás pendentes']];
+      SETORES.forEach((t) => {
+        const l = inscricoes.filter((r) => r.tipo === t), p = l.filter((r) => r.status === 'pago');
+        linhas.push([NOMES[t], l.length, soma(l), soma(p), soma(l) - soma(p)]);
+      });
+      const pagos = inscricoes.filter((r) => r.status === 'pago');
+      linhas.push(['TOTAL', inscricoes.length, soma(inscricoes), soma(pagos), soma(inscricoes) - soma(pagos)], [], ['Abadás por tamanho', 'Quantidade']);
+      const cont = Object.fromEntries(TAMANHOS.map((t) => [t, 0])); let semTam = 0;
+      inscricoes.forEach((r) => abadasDe(r).forEach((t) => { if (t in cont) cont[t]++; else semTam++; }));
+      TAMANHOS.forEach((t) => linhas.push([t, cont[t]]));
+      if (semTam) linhas.push(['Sem tamanho informado', semTam]);
+      return linhas;
+    }
+
+    const nomeAba = (t) => NOMES[t].replace(/[\\/?*[\]:]/g, '').slice(0, 31);
+    function folha(linhas) {
+      const ws = XLSX.utils.aoa_to_sheet(linhas);
+      const larg = (linhas[0] || []).map((_, c) => ({ wch: Math.min(45, Math.max(10, ...linhas.map((l) => String(l[c] ?? '').length + 2))) }));
+      ws['!cols'] = larg;
+      return ws;
+    }
+    function baixarCsv(linhas, nome) {
+      const csv = '\ufeff' + linhas.map((l) => l.map((v) => `"${String(v ?? '').replace(/"/g, '""')}"`).join(';')).join('\r\n');
       const a = document.createElement('a');
       a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
-      a.download = `mosquito-2027-${abaAtual}.csv`;
-      a.click();
+      a.download = nome + '.csv'; a.click();
       setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+    }
+    const hoje = () => new Date().toISOString().slice(0, 10);
+
+    $('#btnPlanilhaSetor').addEventListener('click', () => {
+      const linhas = linhasSetor(abaAtual), nome = `mosquito-2027-${abaAtual}-${hoje()}`;
+      if (!window.XLSX) return baixarCsv(linhas, nome);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, folha(linhas), nomeAba(abaAtual));
+      XLSX.writeFile(wb, nome + '.xlsx');
+    });
+
+    $('#btnPlanilhaGeral').addEventListener('click', () => {
+      const nome = `mosquito-2027-geral-${hoje()}`;
+      if (!window.XLSX) {
+        const tudo = [['Setor', 'Data', 'Nome', 'Posição / Instrumento', 'WhatsApp', 'Tamanho', 'Abadás', 'Crianças', 'Valor do kit', 'Pagamento', 'Origem', 'Observação']];
+        inscricoes.slice().reverse().forEach((r) => tudo.push([NOMES[r.tipo], dataCompleta(r.criadoEm), r.nome, r.posicao || r.instrumento || '', r.whatsapp, r.tamanho, qtd(r),
+          (r.criancas || []).map((c) => `${c.nome} (${c.idade} anos, ${c.tamanho || '—'})`).join(' | '), r.valorKit || '', statusTxt(r), origemTxt(r), r.obs || '']));
+        return baixarCsv(tudo, nome);
+      }
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, folha(linhasResumo()), 'Resumo');
+      SETORES.forEach((t) => XLSX.utils.book_append_sheet(wb, folha(linhasSetor(t)), nomeAba(t)));
+      XLSX.writeFile(wb, nome + '.xlsx');
+    });
+
+    // ---------- Cadastro / edição pelo painel ----------
+    let editandoId = null;
+    const opcoes = (lista, vazio) => (vazio ? `<option value="">${vazio}</option>` : '') + lista.map((v) => `<option>${esc(v)}</option>`).join('');
+    $('#fTipo').innerHTML = SETORES.map((t) => `<option value="${t}">${NOMES[t]}</option>`).join('');
+    $('#fTamanho').innerHTML = opcoes(TAMANHOS, 'Não informado');
+    $('#fPosicao').innerHTML = opcoes(POSICOES, 'Selecione') + '<option value="__outra">Outra…</option>';
+    $('#fInstrumento').innerHTML = opcoes(INSTRUMENTOS, 'Selecione') + '<option value="__outra">Outro…</option>';
+
+    $('#fPosicao').addEventListener('change', () => $('#fPosicaoOutra').classList.toggle('hidden', $('#fPosicao').value !== '__outra'));
+    $('#fInstrumento').addEventListener('change', () => $('#fInstrumentoOutro').classList.toggle('hidden', $('#fInstrumento').value !== '__outra'));
+
+    function ajustarCamposSetor() {
+      const t = $('#fTipo').value;
+      document.querySelectorAll('#formCadastro [data-so]').forEach((el) => el.classList.toggle('hidden', el.dataset.so !== t));
+      document.querySelectorAll('#formCadastro [data-nao]').forEach((el) => el.classList.toggle('hidden', el.dataset.nao === t));
+      $('#rotuloNome').textContent = t === 'paisFilhos' ? 'Nome do responsável' : 'Nome completo';
+      $('#rotuloTamanho').textContent = t === 'paisFilhos' ? 'Abadá do responsável' : 'Tamanho do abadá';
+      if (t === 'paisFilhos' && !$('#fCriancas').children.length) linhaCrianca();
+    }
+    $('#fTipo').addEventListener('change', ajustarCamposSetor);
+
+    function linhaCrianca(c = {}) {
+      const div = document.createElement('div');
+      div.className = 'linha-crianca grid grid-cols-[80px_1fr_32px] sm:grid-cols-[1fr_70px_96px_32px] gap-2 items-center p-2 sm:p-0 rounded-xl bg-pele sm:bg-transparent';
+      div.innerHTML = `
+        <input class="campo !py-2 c-nome col-span-3 sm:col-span-1" placeholder="Nome da criança" maxlength="80" value="${esc(c.nome || '')}" />
+        <input class="campo !py-2 !px-2 c-idade" type="number" min="0" max="17" placeholder="Idade" value="${esc(c.idade ?? '')}" />
+        <select class="campo !py-2 !px-2 c-tam">${opcoes(TAMANHOS, 'Tam.')}</select>
+        <button type="button" class="text-xl text-tinta/40 hover:text-red-700" aria-label="Remover criança">×</button>`;
+      div.querySelector('.c-tam').value = c.tamanho || 'Infantil';
+      div.querySelector('button').addEventListener('click', () => div.remove());
+      $('#fCriancas').appendChild(div);
+    }
+    $('#btnAddCrianca').addEventListener('click', () => linhaCrianca());
+
+    // máscara do WhatsApp no modal
+    $('#fWhats').addEventListener('input', (e) => {
+      let d = e.target.value.replace(/\D/g, '').slice(0, 11);
+      if (d.length > 10) d = d.replace(/^(\d{2})(\d{5})(\d{0,4}).*/, '($1) $2-$3');
+      else if (d.length > 6) d = d.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, '($1) $2-$3');
+      else if (d.length > 2) d = d.replace(/^(\d{2})(\d{0,5})/, '($1) $2');
+      else if (d.length > 0) d = '(' + d;
+      e.target.value = d;
+    });
+
+    function escolherOuOutro(select, outro, valor, lista) {
+      if (!valor) { select.value = ''; outro.value = ''; outro.classList.add('hidden'); return; }
+      if (lista.includes(valor)) { select.value = valor; outro.value = ''; outro.classList.add('hidden'); }
+      else { select.value = '__outra'; outro.value = valor; outro.classList.remove('hidden'); }
+    }
+
+    function abrirModal(reg = null) {
+      editandoId = reg ? reg.id : null;
+      $('#modalTitulo').textContent = reg ? 'Editar cadastro' : 'Novo cadastro';
+      $('#btnSalvar').textContent = reg ? 'Salvar alterações' : 'Salvar cadastro';
+      $('#erroModal').classList.add('hidden');
+      $('#fTipo').value = reg ? reg.tipo : abaAtual;
+      $('#fNome').value = reg?.nome || '';
+      $('#fWhats').value = reg?.whatsapp || '';
+      $('#fTamanho').value = reg?.tamanho || '';
+      $('#fQtd').value = reg?.quantidade || 1;
+      $('#fValor').value = reg?.valorKit || '';
+      $('#fStatus').value = reg?.status || 'pendente';
+      $('#fObs').value = reg?.obs || '';
+      escolherOuOutro($('#fPosicao'), $('#fPosicaoOutra'), reg?.posicao, POSICOES);
+      escolherOuOutro($('#fInstrumento'), $('#fInstrumentoOutro'), reg?.instrumento, INSTRUMENTOS);
+      $('#fCriancas').innerHTML = '';
+      (reg?.criancas || []).forEach((c) => linhaCrianca(c));
+      ajustarCamposSetor();
+      $('#modal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      $('#fNome').focus();
+    }
+    function fecharModal() {
+      $('#modal').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+    document.querySelectorAll('[data-fechar]').forEach((b) => b.addEventListener('click', fecharModal));
+    $('#modal').addEventListener('click', (e) => { if (e.target === $('#modal') || e.target === $('#modal').firstElementChild) fecharModal(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !$('#modal').classList.contains('hidden')) fecharModal(); });
+    $('#btnNovo').addEventListener('click', () => abrirModal());
+    $('#btnNovoTopo').addEventListener('click', () => abrirModal());
+
+    $('#formCadastro').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const t = $('#fTipo').value;
+      const err = $('#erroModal');
+      const falha = (m) => { err.textContent = m; err.classList.remove('hidden'); };
+      const valorOuOutro = (sel, outro) => sel.value === '__outra' ? outro.value.trim() : sel.value;
+
+      const dados = {
+        tipo: t,
+        nome: $('#fNome').value.trim(),
+        whatsapp: $('#fWhats').value.trim(),
+        tamanho: $('#fTamanho').value,
+        quantidade: parseInt($('#fQtd').value, 10) || 1,
+        valorKit: t === 'abada' ? '' : $('#fValor').value.trim(),
+        status: $('#fStatus').value,
+        obs: $('#fObs').value.trim()
+      };
+      if (t === 'destaque') dados.posicao = valorOuOutro($('#fPosicao'), $('#fPosicaoOutra'));
+      if (t === 'bateria') dados.instrumento = valorOuOutro($('#fInstrumento'), $('#fInstrumentoOutro'));
+      if (t === 'paisFilhos') {
+        dados.criancas = [...document.querySelectorAll('#fCriancas .linha-crianca')].map((l) => ({
+          nome: l.querySelector('.c-nome').value.trim(), idade: l.querySelector('.c-idade').value, tamanho: l.querySelector('.c-tam').value
+        })).filter((c) => c.nome);
+      }
+
+      if (dados.nome.length < 3) return falha('Informe o nome completo.');
+      const dig = dados.whatsapp.replace(/\D/g, '').length;
+      if (dig && (dig < 10 || dig > 11)) return falha('WhatsApp inválido: use DDD + número (ou deixe em branco).');
+      if (t === 'destaque' && (dados.posicao || '').length < 2) return falha('Escolha a posição de destaque.');
+      if (t === 'bateria' && (dados.instrumento || '').length < 2) return falha('Escolha o instrumento.');
+      if (t === 'paisFilhos' && !dados.criancas.length) return falha('Adicione pelo menos uma criança.');
+
+      const btn = $('#btnSalvar'); btn.disabled = true;
+      try {
+        const j = editandoId
+          ? await api('PUT', '/api/inscricoes', { ...dados, id: editandoId })
+          : await api('POST', '/api/inscricoes', dados);
+        const i = inscricoes.findIndex((r) => r.id === j.inscricao.id);
+        if (i >= 0) inscricoes[i] = j.inscricao; else inscricoes.unshift(j.inscricao);
+        fecharModal();
+        // mostra a aba do setor salvo
+        const aba = document.querySelector(`[data-aba="${j.inscricao.tipo}"]`);
+        if (aba) aba.click(); else renderizarTudo();
+        renderizarContadores();
+        mostrarErro('');
+      } catch (ex) { falha(ex.message); }
+      finally { btn.disabled = false; }
     });
 
     // ---------- Início ----------
