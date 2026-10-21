@@ -1,0 +1,38 @@
+MOSQUITO • CARAVANA CIGANA 2027 — COMO PUBLICAR O SITE + CONTROLE INTERNO
+==========================================================================
+
+ESTRUTURA
+  index.html      → site público
+  admin.html      → painel de controle interno (seusite.vercel.app/admin)
+  api/            → funções do servidor (salvar inscrições, login, listar)
+  img/  fonts/    → imagens e fonte dos títulos
+  package.json, vercel.json → configuração (não apagar)
+
+PASSO 1 — Subir o projeto
+  Envie a pasta INTEIRA para o Vercel (pelo GitHub ou pelo comando "vercel"
+  dentro da pasta). Não mande só o index.html: a pasta "api" é o sistema.
+
+PASSO 2 — Conectar o banco de dados (uma vez só, grátis)
+  No painel do Vercel, abra o projeto →
+  aba "Storage" → "Create Database" → escolha "Upstash" (Redis) →
+  crie no plano gratuito → "Connect" ao projeto.
+  Isso cria sozinho as variáveis KV_REST_API_URL e KV_REST_API_TOKEN.
+  Depois vá em "Deployments" → nos três pontinhos do último deploy → "Redeploy".
+
+PASSO 3 — Entrar no painel
+  Acesse:  https://SEU-SITE.vercel.app/admin
+  Usuário: Mosquito
+  Senha:   (enviada na conversa — guarde num lugar seguro)
+
+TROCAR A SENHA (opcional)
+  Vercel → Settings → Environment Variables → crie ADMIN_SENHA com a nova
+  senha → Redeploy. A senha antiga deixa de funcionar.
+
+OBSERVAÇÕES
+  • A inscrição entra no painel quando a pessoa clica no botão do formulário
+    (antes de abrir o WhatsApp), sempre como "Pendente". Se alguém desistir
+    ou duplicar, use "Excluir" no painel.
+  • Valores dos kits e número do WhatsApp: no final do index.html
+    (constantes VALORES_KIT e WHATSAPP_NUMERO).
+  • O arquivo de pré-visualização (mosquito-preview.html) NÃO salva no
+    sistema: só o site publicado no Vercel salva.

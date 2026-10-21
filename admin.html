@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Controle Interno • Mosquito 2027</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Calistoga&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            laranja: '#F05A1C', tangerina: '#F58517', branco: '#FFFDF8', pele: '#FFF1E6', tinta: '#2B1610'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    @font-face {
+      font-family: 'Quorum Black BT';
+      src: local('Quorum Black BT'), local('QuorumITCbyBT-Black'), local('Quorum BT Black'),
+           url('fonts/QuorumBlackBT.woff2') format('woff2'),
+           url('fonts/QuorumBlackBT.woff') format('woff'),
+           url('fonts/QuorumBlackBT.otf') format('opentype');
+      font-weight: 900; font-display: swap;
+    }
+    body { font-family: 'Poppins', sans-serif; color: #2B1610; background: #FFF7F0 url('img/bg-branco.jpg') center top / cover fixed; }
+    .titulo { font-family: 'Quorum Black BT', 'Calistoga', serif; font-weight: 900; text-transform: uppercase; letter-spacing: .01em; }
+    .fundo-laranja { background: #E5591F url('img/bg-laranja.jpg') center / cover no-repeat; }
+    .card { background: #fff; border: 2px solid #2B1610; border-radius: 1.25rem; box-shadow: 5px 5px 0 #F05A1C; }
+    .card-destaque { background: linear-gradient(160deg,#F58517,#F05A1C) !important; box-shadow: 5px 5px 0 #2B1610 !important; }
+    .campo { width: 100%; border-radius: .75rem; border: 2px solid #F6CBA8; background: #FFFDF8; padding: .65rem .9rem; outline: none; transition: border-color .2s, box-shadow .2s; }
+    .campo:focus { border-color: #F05A1C; box-shadow: 0 0 0 4px rgba(240,90,28,.18); }
+    .btn { border: 2px solid #2B1610; box-shadow: 3px 3px 0 #2B1610; transition: transform .15s, box-shadow .15s; font-weight: 700; }
+    .btn:hover { transform: translate(-1px,-1px); box-shadow: 4px 4px 0 #2B1610; }
+    .btn:active { transform: translate(1px,1px); box-shadow: 1px 1px 0 #2B1610; }
+    .btn-laranja { background: linear-gradient(180deg,#F9A51B,#F05A1C); color: #fff; }
+    .btn-branco { background: #fff; color: #2B1610; }
+    .aba { border: 2px solid #2B1610; background: #fff; font-weight: 700; }
+    .aba[aria-selected="true"] { background: #F05A1C; color: #fff; box-shadow: 3px 3px 0 #2B1610; }
+    table { border-collapse: separate; border-spacing: 0; }
+    th { position: sticky; top: 0; background: #FFF1E6; z-index: 1; }
+    th, td { border-bottom: 1px solid #F3DCCB; }
+    tbody tr:hover td { background: #FFFAF5; }
+    .pill { display: inline-flex; align-items: center; gap: .35rem; padding: .3rem .8rem; border-radius: 999px; font-size: .78rem; font-weight: 700; border: 2px solid; cursor: pointer; white-space: nowrap; transition: transform .1s; }
+    .pill:hover { transform: scale(1.04); }
+    .pill.pago { background: #E5F7EA; color: #166534; border-color: #22A04B; }
+    .pill.pendente { background: #FFF4D6; color: #8A5300; border-color: #E8A317; }
+    .pill:disabled { opacity: .5; cursor: wait; }
+  </style>
+</head>
+<body class="min-h-screen antialiased">
+
+  <!-- ================= LOGIN ================= -->
+  <main id="telaLogin" class="min-h-screen grid place-items-center px-4 py-10">
+    <form id="formLogin" class="card w-full max-w-sm p-7 sm:p-8" novalidate>
+      <img src="img/logo-caravana-cigana.png" alt="Mosquito – Caravana Cigana" class="w-32 mx-auto" width="596" height="781" />
+      <h1 class="titulo text-2xl text-center mt-4">Controle Interno</h1>
+      <p class="text-center text-sm text-tinta/60 mt-1">Acesso restrito à organização</p>
+
+      <label for="usuario" class="block text-sm font-semibold mt-6 mb-1.5">Usuário</label>
+      <input id="usuario" class="campo" autocomplete="username" required />
+      <label for="senha" class="block text-sm font-semibold mt-4 mb-1.5">Senha</label>
+      <input id="senha" type="password" class="campo" autocomplete="current-password" required />
+
+      <p id="erroLogin" class="hidden mt-3 text-sm font-semibold text-red-700"></p>
+      <button id="btnEntrar" type="submit" class="btn btn-laranja w-full mt-6 py-3 rounded-xl">Entrar</button>
+    </form>
+  </main>
+
+  <!-- ================= PAINEL ================= -->
+  <div id="telaPainel" class="hidden min-h-screen">
+    <header class="fundo-laranja border-b-2 border-tinta">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center gap-4">
+        <img src="img/logo-caravana-cigana.png" alt="" class="w-14 sm:w-16 bg-white rounded-xl p-1 border-2 border-tinta" width="596" height="781" />
+        <div class="flex-1 min-w-0">
+          <h1 class="titulo text-white text-xl sm:text-2xl leading-tight">Controle Interno</h1>
+          <p class="text-white/90 text-xs sm:text-sm truncate">Mosquito • Caravana Cigana • Carnaval 2027</p>
+        </div>
+        <button id="btnAtualizar" class="btn btn-branco px-3 sm:px-4 py-2 rounded-xl text-sm" title="Atualizar">⟳<span class="hidden sm:inline"> Atualizar</span></button>
+        <button id="btnSair" class="btn btn-branco px-3 sm:px-4 py-2 rounded-xl text-sm">Sair</button>
+      </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+      <p id="avisoErro" class="hidden mb-6 card !shadow-none !border-red-700 bg-red-50 text-red-800 px-4 py-3 text-sm font-semibold"></p>
+
+      <!-- Contadores -->
+      <section class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="card card-destaque p-5 col-span-2 lg:col-span-1 text-white">
+          <p class="text-xs font-bold uppercase tracking-wider text-white/85">Abadás encomendados (geral)</p>
+          <p id="cTotal" class="titulo text-5xl mt-2">0</p>
+          <p id="cTotalPagos" class="text-sm text-white/90 mt-1">0 pagos • 0 pendentes</p>
+        </div>
+        <div class="card p-5">
+          <p class="text-xs font-bold uppercase tracking-wider text-laranja">No Kit Desfile (alas)</p>
+          <p id="cKit" class="titulo text-4xl mt-2">0</p>
+          <p id="cKitDet" class="text-xs text-tinta/60 mt-1">—</p>
+        </div>
+        <div class="card p-5">
+          <p class="text-xs font-bold uppercase tracking-wider text-laranja">Abadás avulsos</p>
+          <p id="cAvulsos" class="titulo text-4xl mt-2">0</p>
+          <p id="cAvulsosDet" class="text-xs text-tinta/60 mt-1">—</p>
+        </div>
+        <div class="card p-5 col-span-2 lg:col-span-1">
+          <p class="text-xs font-bold uppercase tracking-wider text-laranja">Inscrições / pedidos</p>
+          <p id="cInscricoes" class="titulo text-4xl mt-2">0</p>
+          <p id="cInscricoesDet" class="text-xs text-tinta/60 mt-1">—</p>
+        </div>
+      </section>
+
+      <!-- Por tamanho -->
+      <section class="card p-5 mt-6">
+        <div class="flex flex-wrap items-baseline justify-between gap-2">
+          <h2 class="titulo text-lg">Abadás por tamanho</h2>
+          <p class="text-xs text-tinta/60">Soma de alas + avulsos (inclui responsáveis e crianças)</p>
+        </div>
+        <div id="porTamanho" class="mt-4 grid grid-cols-4 sm:grid-cols-7 gap-3"></div>
+      </section>
+
+      <!-- Abas -->
+      <section class="mt-8">
+        <div role="tablist" class="flex flex-wrap gap-3">
+          <button role="tab" class="aba px-4 py-2.5 rounded-xl text-sm" data-aba="paisFilhos" aria-selected="true">Ala Pais e Filhos <span class="ml-1 opacity-80" data-cont="paisFilhos">0</span></button>
+          <button role="tab" class="aba px-4 py-2.5 rounded-xl text-sm" data-aba="bandeiras" aria-selected="false">Ala das Bandeiras <span class="ml-1 opacity-80" data-cont="bandeiras">0</span></button>
+          <button role="tab" class="aba px-4 py-2.5 rounded-xl text-sm" data-aba="abada" aria-selected="false">Abadás avulsos (fora do kit) <span class="ml-1 opacity-80" data-cont="abada">0</span></button>
+        </div>
+
+        <div class="card mt-4 overflow-hidden">
+          <div class="p-4 flex flex-col sm:flex-row gap-3 sm:items-center border-b-2 border-tinta bg-white">
+            <input id="busca" class="campo sm:max-w-xs" placeholder="Buscar nome ou WhatsApp…" />
+            <select id="filtroStatus" class="campo sm:max-w-[180px]">
+              <option value="">Todos os status</option>
+              <option value="pendente">Pendentes</option>
+              <option value="pago">Pagos</option>
+            </select>
+            <div class="sm:ml-auto flex items-center gap-3">
+              <p id="resumoAba" class="text-sm text-tinta/70"></p>
+              <button id="btnCsv" class="btn btn-branco px-4 py-2 rounded-xl text-sm whitespace-nowrap">⬇ Exportar planilha</button>
+            </div>
+          </div>
+          <div class="overflow-x-auto max-h-[70vh]">
+            <table class="w-full text-sm">
+              <thead id="thead"></thead>
+              <tbody id="tbody"></tbody>
+            </table>
+          </div>
+          <p id="vazio" class="hidden p-10 text-center text-tinta/60">Nenhum registro por aqui ainda.</p>
+        </div>
+        <p class="mt-3 text-xs text-tinta/60">Clique no status para alternar entre <strong>Pendente</strong> e <strong>Pago</strong>. A lista se atualiza sozinha a cada minuto.</p>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const TAMANHOS = ['PP', 'P', 'M', 'G', 'GG', 'XGG', 'Infantil'];
+    const NOMES = { paisFilhos: 'Ala Pais e Filhos', bandeiras: 'Ala das Bandeiras', abada: 'Abadás avulsos' };
+
+    const $ = (s) => document.querySelector(s);
+    const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const data = (iso) => { try { return new Date(iso).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }); } catch { return ''; } };
+    const linkWhats = (w) => 'https://wa.me/55' + String(w).replace(/\D/g, '');
+
+    // ---------- Sessão ----------
+    const guardar = {
+      get: () => { try { return sessionStorage.getItem('mosquitoToken') || ''; } catch { return memToken; } },
+      set: (t) => { memToken = t; try { t ? sessionStorage.setItem('mosquitoToken', t) : sessionStorage.removeItem('mosquitoToken'); } catch {} }
+    };
+    let memToken = '';
+    let inscricoes = [];
+    let abaAtual = 'paisFilhos';
+
+    async function api(metodo, rota, corpo) {
+      const r = await fetch(rota, {
+        method: metodo,
+        headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + guardar.get() },
+        body: corpo ? JSON.stringify(corpo) : undefined
+      });
+      const j = await r.json().catch(() => ({ ok: false, erro: 'Resposta inválida do servidor.' }));
+      if (r.status === 401 && rota !== '/api/login') { sair(); throw new Error(j.erro || 'Sessão expirada.'); }
+      if (!r.ok || !j.ok) throw new Error(j.erro || 'Erro ' + r.status);
+      return j;
+    }
+
+    function mostrarErro(msg) {
+      const el = $('#avisoErro');
+      el.textContent = msg || '';
+      el.classList.toggle('hidden', !msg);
+    }
+
+    // ---------- Login ----------
+    $('#formLogin').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = $('#btnEntrar'), err = $('#erroLogin');
+      err.classList.add('hidden');
+      btn.disabled = true; btn.textContent = 'Entrando…';
+      try {
+        const j = await api('POST', '/api/login', { usuario: $('#usuario').value, senha: $('#senha').value });
+        guardar.set(j.token);
+        $('#senha').value = '';
+        abrirPainel();
+      } catch (ex) {
+        err.textContent = ex.message; err.classList.remove('hidden');
+      } finally {
+        btn.disabled = false; btn.textContent = 'Entrar';
+      }
+    });
+
+    function sair() {
+      guardar.set('');
+      $('#telaPainel').classList.add('hidden');
+      $('#telaLogin').classList.remove('hidden');
+    }
+    $('#btnSair').addEventListener('click', sair);
+
+    function abrirPainel() {
+      $('#telaLogin').classList.add('hidden');
+      $('#telaPainel').classList.remove('hidden');
+      carregar();
+    }
+
+    // ---------- Dados ----------
+    async function carregar() {
+      try {
+        const j = await api('GET', '/api/inscricoes');
+        inscricoes = j.inscricoes || [];
+        mostrarErro('');
+        renderizarTudo();
+      } catch (ex) {
+        if (guardar.get()) mostrarErro(ex.message);
+      }
+    }
+    $('#btnAtualizar').addEventListener('click', carregar);
+    setInterval(() => { if (guardar.get() && !document.hidden) carregar(); }, 60000);
+
+    // Lista de abadás "individuais" de uma inscrição (para contagem por tamanho)
+    function abadasDe(r) {
+      if (r.tipo === 'paisFilhos') return [r.tamanho, ...(r.criancas || []).map((c) => c.tamanho)];
+      return Array(r.quantidade || 1).fill(r.tamanho);
+    }
+    const qtd = (r) => r.tipo === 'paisFilhos' ? 1 + (r.criancas || []).length : (r.quantidade || 1);
+    const soma = (lista) => lista.reduce((s, r) => s + qtd(r), 0);
+
+    function renderizarContadores() {
+      const pagos = inscricoes.filter((r) => r.status === 'pago');
+      const total = soma(inscricoes), totalPagos = soma(pagos);
+      $('#cTotal').textContent = total;
+      $('#cTotalPagos').textContent = `${totalPagos} pagos • ${total - totalPagos} pendentes`;
+
+      const pf = inscricoes.filter((r) => r.tipo === 'paisFilhos');
+      const bd = inscricoes.filter((r) => r.tipo === 'bandeiras');
+      const av = inscricoes.filter((r) => r.tipo === 'abada');
+      $('#cKit').textContent = soma(pf) + soma(bd);
+      $('#cKitDet').textContent = `Pais e Filhos: ${soma(pf)} • Bandeiras: ${soma(bd)}`;
+      $('#cAvulsos').textContent = soma(av);
+      $('#cAvulsosDet').textContent = `${av.length} pedido(s) • ${soma(av.filter((r) => r.status === 'pago'))} pagos`;
+      $('#cInscricoes').textContent = inscricoes.length;
+      $('#cInscricoesDet').textContent = `${pagos.length} pagas • ${inscricoes.length - pagos.length} pendentes`;
+
+      const cont = Object.fromEntries(TAMANHOS.map((t) => [t, 0]));
+      inscricoes.forEach((r) => abadasDe(r).forEach((t) => { if (t in cont) cont[t]++; }));
+      $('#porTamanho').innerHTML = TAMANHOS.map((t) => `
+        <div class="rounded-xl bg-pele border-2 border-laranja/25 px-2 py-3 text-center">
+          <p class="text-xs font-bold text-laranja">${t}</p>
+          <p class="titulo text-2xl mt-0.5">${cont[t]}</p>
+        </div>`).join('');
+
+      ['paisFilhos', 'bandeiras', 'abada'].forEach((t) => {
+        document.querySelector(`[data-cont="${t}"]`).textContent = inscricoes.filter((r) => r.tipo === t).length;
+      });
+    }
+
+    const COLUNAS = {
+      paisFilhos: ['Data', 'Responsável', 'WhatsApp', 'Abadá resp.', 'Crianças (nome • idade • abadá)', 'Abadás', 'Kit', 'Pagamento', ''],
+      bandeiras:  ['Data', 'Nome', 'WhatsApp', 'Abadá', 'Abadás', 'Kit', 'Pagamento', ''],
+      abada:      ['Data', 'Nome', 'WhatsApp', 'Tamanho', 'Quantidade', 'Pagamento', '']
+    };
+
+    function filtrados() {
+      const termo = $('#busca').value.trim().toLowerCase();
+      const termoNum = termo.replace(/\D/g, '');
+      const st = $('#filtroStatus').value;
+      return inscricoes.filter((r) => r.tipo === abaAtual)
+        .filter((r) => !st || r.status === st)
+        .filter((r) => {
+          if (!termo) return true;
+          const nomes = [r.nome, ...(r.criancas || []).map((c) => c.nome)].join(' ').toLowerCase();
+          return nomes.includes(termo) || (termoNum && String(r.whatsapp).replace(/\D/g, '').includes(termoNum));
+        });
+    }
+
+    function celulaStatus(r) {
+      const pago = r.status === 'pago';
+      return `<button class="pill ${pago ? 'pago' : 'pendente'}" data-acao="status" data-id="${esc(r.id)}" title="Clique para alternar">
+        ${pago ? '✔ Pago' : '⏳ Pendente'}</button>`;
+    }
+    const celulaExcluir = (r) => `<button class="text-xs font-semibold text-tinta/50 hover:text-red-700 px-2 py-1 rounded" data-acao="excluir" data-id="${esc(r.id)}">Excluir</button>`;
+    const celulaWhats = (r) => `<a href="${linkWhats(r.whatsapp)}" target="_blank" rel="noopener" class="font-semibold text-laranja hover:underline whitespace-nowrap">${esc(r.whatsapp)}</a>`;
+    const tam = (t) => `<span class="inline-block min-w-[2.2rem] text-center font-bold bg-pele rounded-md px-1.5 py-0.5">${esc(t)}</span>`;
+
+    function renderizarTabela() {
+      $('#thead').innerHTML = '<tr>' + COLUNAS[abaAtual].map((c) => `<th class="text-left font-bold text-xs uppercase tracking-wide px-4 py-3 whitespace-nowrap">${c}</th>`).join('') + '</tr>';
+      const lista = filtrados();
+      const td = (h, extra = '') => `<td class="px-4 py-3 align-top ${extra}">${h}</td>`;
+
+      $('#tbody').innerHTML = lista.map((r) => {
+        const base = [td(`<span class="whitespace-nowrap text-tinta/60">${data(r.criadoEm)}</span>`), td(`<span class="font-semibold">${esc(r.nome)}</span>`), td(celulaWhats(r)), td(tam(r.tamanho))];
+        if (abaAtual === 'paisFilhos') {
+          const kids = (r.criancas || []).map((c) => `<li class="flex items-center gap-2"><span>${esc(c.nome)}</span><span class="text-tinta/50">• ${esc(c.idade)} anos</span>${tam(c.tamanho)}</li>`).join('');
+          base.push(td(`<ul class="space-y-1 min-w-[220px]">${kids}</ul>`), td(`<span class="titulo text-lg">${qtd(r)}</span>`), td(`<span class="whitespace-nowrap">${esc(r.valorKit || '—')}</span>`));
+        } else if (abaAtual === 'bandeiras') {
+          base.push(td(`<span class="titulo text-lg">${qtd(r)}</span>`), td(`<span class="whitespace-nowrap">${esc(r.valorKit || '—')}</span>`));
+        } else {
+          base.push(td(`<span class="titulo text-lg">${qtd(r)}</span>`));
+        }
+        base.push(td(celulaStatus(r)), td(celulaExcluir(r), 'text-right'));
+        return `<tr>${base.join('')}</tr>`;
+      }).join('');
+
+      $('#vazio').classList.toggle('hidden', lista.length > 0);
+      $('#resumoAba').textContent = `${lista.length} registro(s) • ${soma(lista)} abadá(s)`;
+    }
+
+    function renderizarTudo() { renderizarContadores(); renderizarTabela(); }
+
+    // ---------- Abas e filtros ----------
+    document.querySelectorAll('[data-aba]').forEach((b) => b.addEventListener('click', () => {
+      abaAtual = b.dataset.aba;
+      document.querySelectorAll('[data-aba]').forEach((x) => x.setAttribute('aria-selected', String(x === b)));
+      renderizarTabela();
+    }));
+    $('#busca').addEventListener('input', renderizarTabela);
+    $('#filtroStatus').addEventListener('change', renderizarTabela);
+
+    // ---------- Ações na tabela ----------
+    $('#tbody').addEventListener('click', async (e) => {
+      const btn = e.target.closest('button[data-acao]');
+      if (!btn) return;
+      const reg = inscricoes.find((r) => r.id === btn.dataset.id);
+      if (!reg) return;
+
+      if (btn.dataset.acao === 'status') {
+        const novo = reg.status === 'pago' ? 'pendente' : 'pago';
+        btn.disabled = true;
+        try {
+          await api('PATCH', '/api/inscricoes', { id: reg.id, status: novo });
+          reg.status = novo;
+          mostrarErro('');
+          renderizarTudo();
+        } catch (ex) { mostrarErro(ex.message); btn.disabled = false; }
+      }
+
+      if (btn.dataset.acao === 'excluir') {
+        if (btn.dataset.confirmar !== '1') {
+          btn.dataset.confirmar = '1';
+          btn.textContent = 'Confirmar exclusão?';
+          btn.classList.add('!text-red-700', 'bg-red-50');
+          setTimeout(() => { if (btn.isConnected) { btn.dataset.confirmar = ''; btn.textContent = 'Excluir'; btn.classList.remove('!text-red-700', 'bg-red-50'); } }, 4000);
+          return;
+        }
+        btn.disabled = true;
+        try {
+          await api('DELETE', '/api/inscricoes', { id: reg.id });
+          inscricoes = inscricoes.filter((r) => r.id !== reg.id);
+          renderizarTudo();
+        } catch (ex) { mostrarErro(ex.message); btn.disabled = false; }
+      }
+    });
+
+    // ---------- Exportar planilha (CSV que abre no Excel) ----------
+    $('#btnCsv').addEventListener('click', () => {
+      const lista = filtrados();
+      const linhas = [];
+      if (abaAtual === 'paisFilhos') {
+        linhas.push(['Data', 'Responsável', 'WhatsApp', 'Abadá responsável', 'Criança', 'Idade', 'Abadá criança', 'Abadás na inscrição', 'Kit', 'Pagamento']);
+        lista.forEach((r) => (r.criancas || []).forEach((c, i) => linhas.push([
+          data(r.criadoEm), r.nome, r.whatsapp, r.tamanho, c.nome, c.idade, c.tamanho, i === 0 ? qtd(r) : '', i === 0 ? r.valorKit : '', r.status
+        ])));
+      } else {
+        linhas.push(['Data', 'Nome', 'WhatsApp', 'Tamanho', 'Quantidade', ...(abaAtual === 'bandeiras' ? ['Kit'] : []), 'Pagamento']);
+        lista.forEach((r) => linhas.push([data(r.criadoEm), r.nome, r.whatsapp, r.tamanho, qtd(r), ...(abaAtual === 'bandeiras' ? [r.valorKit] : []), r.status]));
+      }
+      const csv = '﻿' + linhas.map((l) => l.map((v) => `"${String(v ?? '').replace(/"/g, '""')}"`).join(';')).join('\r\n');
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+      a.download = `mosquito-2027-${abaAtual}.csv`;
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+    });
+
+    // ---------- Início ----------
+    if (guardar.get()) abrirPainel();
+  </script>
+</body>
+</html>

@@ -293,6 +293,7 @@
             </div>
 
             <form id="formPaisFilhos" class="mt-6 space-y-4 flex-1 flex flex-col" novalidate>
+              <input type="text" name="site" class="armadilha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" />
               <div>
                 <label for="pfNome" class="block text-sm font-semibold mb-1.5">Nome do responsável</label>
                 <input id="pfNome" type="text" class="campo" placeholder="Seu nome completo" autocomplete="name" />
@@ -305,10 +306,15 @@
                   <p class="msg-erro">Informe um telefone válido com DDD.</p>
                 </div>
                 <div>
-                  <label for="pfQtd" class="block text-sm font-semibold mb-1.5">Quantidade de crianças</label>
-                  <input id="pfQtd" type="number" min="1" max="10" class="campo" placeholder="Ex.: 2" />
-                  <p class="msg-erro">Informe entre 1 e 10 crianças.</p>
+                  <label for="pfTamanho" class="block text-sm font-semibold mb-1.5">Seu tamanho de abadá</label>
+                  <select id="pfTamanho" class="campo" data-tamanhos></select>
+                  <p class="msg-erro">Selecione seu tamanho.</p>
                 </div>
+              </div>
+              <div>
+                <label for="pfQtd" class="block text-sm font-semibold mb-1.5">Quantidade de crianças</label>
+                <input id="pfQtd" type="number" min="1" max="10" class="campo" placeholder="Ex.: 2" />
+                <p class="msg-erro">Informe entre 1 e 10 crianças.</p>
               </div>
 
               <div id="listaCriancas" class="space-y-3"></div>
@@ -353,15 +359,23 @@
             </div>
 
             <form id="formBandeiras" class="mt-6 space-y-4 flex-1 flex flex-col" novalidate>
+              <input type="text" name="site" class="armadilha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" />
               <div>
                 <label for="bdNome" class="block text-sm font-semibold mb-1.5">Nome completo</label>
                 <input id="bdNome" type="text" class="campo" placeholder="Seu nome completo" autocomplete="name" />
                 <p class="msg-erro">Informe seu nome completo.</p>
               </div>
-              <div>
-                <label for="bdTelefone" class="block text-sm font-semibold mb-1.5">Telefone / WhatsApp</label>
-                <input id="bdTelefone" type="tel" class="campo mascara-tel" placeholder="(00) 00000-0000" autocomplete="tel" />
-                <p class="msg-erro">Informe um telefone válido com DDD.</p>
+              <div class="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label for="bdTelefone" class="block text-sm font-semibold mb-1.5">Telefone / WhatsApp</label>
+                  <input id="bdTelefone" type="tel" class="campo mascara-tel" placeholder="(00) 00000-0000" autocomplete="tel" />
+                  <p class="msg-erro">Informe um telefone válido com DDD.</p>
+                </div>
+                <div>
+                  <label for="bdTamanho" class="block text-sm font-semibold mb-1.5">Tamanho do abadá</label>
+                  <select id="bdTamanho" class="campo" data-tamanhos></select>
+                  <p class="msg-erro">Selecione um tamanho.</p>
+                </div>
               </div>
               <div class="pt-3 mt-auto">
                 <button type="submit" class="btn-laranja w-full font-bold px-6 py-4 rounded-2xl flex items-center justify-center gap-2">
@@ -451,27 +465,30 @@
           </p>
 
           <form id="formAbada" class="mt-7 space-y-4" novalidate>
+            <input type="text" name="site" class="armadilha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" />
             <div>
               <label for="abNome" class="block text-sm font-semibold mb-1.5">Nome completo</label>
               <input id="abNome" type="text" class="campo" placeholder="Seu nome completo" autocomplete="name" />
               <p class="msg-erro">Informe seu nome completo.</p>
             </div>
-            <div class="grid sm:grid-cols-2 gap-4">
-              <div>
-                <label for="abTelefone" class="block text-sm font-semibold mb-1.5">Telefone / WhatsApp</label>
-                <input id="abTelefone" type="tel" class="campo mascara-tel" placeholder="(00) 00000-0000" autocomplete="tel" />
-                <p class="msg-erro">Informe um telefone válido com DDD.</p>
-              </div>
+            <div>
+              <label for="abTelefone" class="block text-sm font-semibold mb-1.5">Telefone / WhatsApp</label>
+              <input id="abTelefone" type="tel" class="campo mascara-tel" placeholder="(00) 00000-0000" autocomplete="tel" />
+              <p class="msg-erro">Informe um telefone válido com DDD.</p>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
               <div>
                 <label for="abTamanho" class="block text-sm font-semibold mb-1.5">Tamanho do abadá</label>
-                <select id="abTamanho" class="campo">
-                  <option value="">Selecione</option>
-                  <option>PP</option><option>P</option><option>M</option><option>G</option>
-                  <option>GG</option><option>XGG</option><option>Infantil</option>
-                </select>
+                <select id="abTamanho" class="campo" data-tamanhos></select>
                 <p class="msg-erro">Selecione um tamanho.</p>
               </div>
+              <div>
+                <label for="abQtd" class="block text-sm font-semibold mb-1.5">Quantidade</label>
+                <input id="abQtd" type="number" min="1" max="20" value="1" class="campo" />
+                <p class="msg-erro">De 1 a 20 abadás.</p>
+              </div>
             </div>
+            <p class="text-xs text-tinta/60">Para mais de um tamanho, envie um pedido para cada tamanho.</p>
             <button type="submit" class="btn-laranja w-full font-bold px-6 py-4 rounded-2xl flex items-center justify-center gap-2">
               <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3 2.4 1 2.9.8 3.4.7.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
               Pedir meu Abadá no WhatsApp
@@ -589,6 +606,27 @@
     };
     /* ===================================================== */
 
+    /* Tamanhos de abadá oferecidos (mesma lista do painel interno) */
+    const TAMANHOS = ['PP', 'P', 'M', 'G', 'GG', 'XGG', 'Infantil'];
+
+    document.querySelectorAll('select[data-tamanhos]').forEach((s) => {
+      s.innerHTML = '<option value="">Selecione</option>' + TAMANHOS.map((t) => `<option>${t}</option>`).join('');
+    });
+
+    // Salva a inscrição no sistema interno (/admin) — não trava a abertura do WhatsApp
+    function salvarInscricao(dados, form) {
+      try {
+        const armadilha = form.querySelector('.armadilha');
+        if (armadilha && armadilha.value) dados.site = armadilha.value;
+        fetch('/api/inscricao', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(dados),
+          keepalive: true
+        }).catch(() => {});
+      } catch (_) {}
+    }
+
     document.querySelectorAll('[data-valor]').forEach((el) => {
       const v = VALORES_KIT[el.dataset.valor];
       if (v) el.textContent = v;
@@ -647,9 +685,9 @@
 
       for (let i = atuais; i < qtd; i++) {
         const bloco = document.createElement('div');
-        bloco.className = 'bloco-crianca grid grid-cols-[1fr_96px] gap-3 p-3 rounded-2xl bg-pele border-2 border-laranja/20';
+        bloco.className = 'bloco-crianca grid grid-cols-2 sm:grid-cols-[1fr_76px_112px] gap-3 p-3 rounded-2xl bg-pele border-2 border-laranja/20';
         bloco.innerHTML = `
-          <div>
+          <div class="col-span-2 sm:col-span-1">
             <label class="block text-xs font-bold mb-1 text-laranja">Criança ${i + 1} – nome</label>
             <input type="text" class="campo crianca-nome" placeholder="Nome da criança" />
             <p class="msg-erro">Informe o nome.</p>
@@ -658,9 +696,14 @@
             <label class="block text-xs font-bold mb-1 text-laranja">Idade</label>
             <input type="number" min="0" max="17" class="campo crianca-idade" placeholder="Anos" />
             <p class="msg-erro">Idade?</p>
+          </div>
+          <div>
+            <label class="block text-xs font-bold mb-1 text-laranja">Abadá</label>
+            <select class="campo crianca-tamanho !px-2">${['<option value="">Tam.</option>', ...TAMANHOS.map((t) => `<option${t === 'Infantil' ? ' selected' : ''}>${t}</option>`)].join('')}</select>
+            <p class="msg-erro">Tamanho?</p>
           </div>`;
         bloco.querySelectorAll('.campo').forEach((c) =>
-          c.addEventListener('input', () => c.classList.contains('erro') && marcarErro(c, false)));
+          ['input', 'change'].forEach((ev) => c.addEventListener(ev, () => c.classList.contains('erro') && marcarErro(c, false))));
         listaCriancas.appendChild(bloco);
       }
       const blocos = listaCriancas.querySelectorAll('.bloco-crianca');
@@ -671,21 +714,25 @@
     $('#formPaisFilhos').addEventListener('submit', (e) => {
       e.preventDefault();
       const form = e.currentTarget;
-      const nome = $('#pfNome'), tel = $('#pfTelefone');
+      const nome = $('#pfNome'), tel = $('#pfTelefone'), tam = $('#pfTamanho');
       const qtd = parseInt(inputQtd.value, 10);
 
       let ok = validar.nome(nome);
       ok = validar.telefone(tel) && ok;
+      ok = validar.obrigatorio(tam) && ok;
       ok = marcarErro(inputQtd, !(qtd >= 1 && qtd <= 10)) && ok;
 
-      const criancas = [];
+      const criancas = [], listaTexto = [];
       listaCriancas.querySelectorAll('.bloco-crianca').forEach((b) => {
         const n = b.querySelector('.crianca-nome');
         const i = b.querySelector('.crianca-idade');
+        const t = b.querySelector('.crianca-tamanho');
         const idade = parseInt(i.value, 10);
         ok = marcarErro(n, n.value.trim().length < 2) && ok;
         ok = marcarErro(i, isNaN(idade) || idade < 0 || idade > 17) && ok;
-        criancas.push(`   • ${n.value.trim()} – ${i.value} ano(s)`);
+        ok = validar.obrigatorio(t) && ok;
+        criancas.push({ nome: n.value.trim(), idade, tamanho: t.value });
+        listaTexto.push(`   • ${n.value.trim()} – ${i.value} ano(s) – abadá ${t.value}`);
       });
 
       if (!ok) return focarPrimeiroErro(form);
@@ -696,15 +743,20 @@ _Mosquito • Caravana Cigana • Carnaval 2027_
 
 👤 *Responsável:* ${nome.value.trim()}
 📱 *WhatsApp:* ${tel.value}
+📏 *Abadá do responsável:* ${tam.value}
 👧 *Quantidade de crianças:* ${qtd}
 
 🧒 *Crianças:*
-${criancas.join('\n')}
+${listaTexto.join('\n')}
 
 🎁 *Kit Abadá Desfile completo incluso* – ${VALORES_KIT.paisFilhos}
 
 ✨ Quero desfilar com a minha família!`;
 
+      salvarInscricao({
+        tipo: 'paisFilhos', nome: nome.value.trim(), whatsapp: tel.value, tamanho: tam.value,
+        criancas, valorKit: VALORES_KIT.paisFilhos
+      }, form);
       abrirWhatsApp(mensagem);
     });
 
@@ -712,10 +764,11 @@ ${criancas.join('\n')}
     $('#formBandeiras').addEventListener('submit', (e) => {
       e.preventDefault();
       const form = e.currentTarget;
-      const nome = $('#bdNome'), tel = $('#bdTelefone');
+      const nome = $('#bdNome'), tel = $('#bdTelefone'), tam = $('#bdTamanho');
 
       let ok = validar.nome(nome);
       ok = validar.telefone(tel) && ok;
+      ok = validar.obrigatorio(tam) && ok;
       if (!ok) return focarPrimeiroErro(form);
 
       const mensagem =
@@ -724,11 +777,16 @@ _Mosquito • Caravana Cigana • Carnaval 2027_
 
 👤 *Nome:* ${nome.value.trim()}
 📱 *WhatsApp:* ${tel.value}
+📏 *Tamanho do abadá:* ${tam.value}
 
 🎁 *Kit Abadá Desfile completo incluso* – ${VALORES_KIT.bandeiras}
 
 ✨ Quero levar as cores da caravana para a avenida!`;
 
+      salvarInscricao({
+        tipo: 'bandeiras', nome: nome.value.trim(), whatsapp: tel.value, tamanho: tam.value,
+        valorKit: VALORES_KIT.bandeiras
+      }, form);
       abrirWhatsApp(mensagem);
     });
 
@@ -736,11 +794,13 @@ _Mosquito • Caravana Cigana • Carnaval 2027_
     $('#formAbada').addEventListener('submit', (e) => {
       e.preventDefault();
       const form = e.currentTarget;
-      const nome = $('#abNome'), tel = $('#abTelefone'), tam = $('#abTamanho');
+      const nome = $('#abNome'), tel = $('#abTelefone'), tam = $('#abTamanho'), qtdAb = $('#abQtd');
+      const quantidade = parseInt(qtdAb.value, 10);
 
       let ok = validar.nome(nome);
       ok = validar.telefone(tel) && ok;
       ok = validar.obrigatorio(tam) && ok;
+      ok = marcarErro(qtdAb, !(quantidade >= 1 && quantidade <= 20)) && ok;
       if (!ok) return focarPrimeiroErro(form);
 
       const mensagem =
@@ -750,9 +810,13 @@ _Mosquito • Caravana Cigana_
 👤 *Nome:* ${nome.value.trim()}
 📱 *WhatsApp:* ${tel.value}
 📏 *Tamanho:* ${tam.value}
+🔢 *Quantidade:* ${quantidade}
 
 Gostaria de saber valores, formas de pagamento e retirada. 🙌`;
 
+      salvarInscricao({
+        tipo: 'abada', nome: nome.value.trim(), whatsapp: tel.value, tamanho: tam.value, quantidade
+      }, form);
       abrirWhatsApp(mensagem);
     });
 
