@@ -93,6 +93,7 @@
           <p class="text-white/90 text-xs sm:text-sm truncate">Mosquito • Caravana Cigana • Carnaval 2027</p>
         </div>
         <button id="btnNovoTopo" class="btn btn-laranja px-3 sm:px-4 py-2 rounded-xl text-sm whitespace-nowrap">+ <span class="hidden sm:inline">Novo cadastro</span></button>
+        <button id="btnTesteAviso" class="btn btn-branco px-3 sm:px-4 py-2 rounded-xl text-sm whitespace-nowrap" title="Enviar mensagem de teste para o WhatsApp de avisos">🔔<span class="hidden md:inline"> Testar aviso</span></button>
         <button id="btnAtualizar" class="btn btn-branco px-3 sm:px-4 py-2 rounded-xl text-sm" title="Atualizar">⟳<span class="hidden sm:inline"> Atualizar</span></button>
         <button id="btnSair" class="btn btn-branco px-3 sm:px-4 py-2 rounded-xl text-sm">Sair</button>
       </div>
@@ -100,6 +101,7 @@
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
       <p id="avisoErro" class="hidden mb-6 card !shadow-none !border-red-700 bg-red-50 text-red-800 px-4 py-3 text-sm font-semibold"></p>
+      <p id="avisoOk" class="hidden mb-6 card !shadow-none !border-green-700 bg-green-50 text-green-800 px-4 py-3 text-sm font-semibold"></p>
 
       <!-- Contadores -->
       <section class="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -714,6 +716,25 @@
         renderizarContadores();
         mostrarErro('');
       } catch (ex) { falha(ex.message); }
+      finally { btn.disabled = false; }
+    });
+
+    // ---------- Teste do aviso no WhatsApp ----------
+    $('#btnTesteAviso').addEventListener('click', async () => {
+      const btn = $('#btnTesteAviso'); btn.disabled = true;
+      $('#avisoOk').classList.add('hidden'); mostrarErro('');
+      try {
+        const r = await fetch('/api/aviso-teste', { method: 'POST', headers: { Authorization: 'Bearer ' + guardar.get() } });
+        const j = await r.json().catch(() => ({}));
+        if (r.status === 401) { sair(); return; }
+        if (j.ok) {
+          $('#avisoOk').textContent = '✔ Mensagem de teste enviada! Confira o WhatsApp de avisos.';
+          $('#avisoOk').classList.remove('hidden');
+          setTimeout(() => $('#avisoOk').classList.add('hidden'), 8000);
+        } else {
+          mostrarErro('Aviso no WhatsApp não enviado: ' + (j.erro || 'erro desconhecido'));
+        }
+      } catch { mostrarErro('Não foi possível testar o aviso agora.'); }
       finally { btn.disabled = false; }
     });
 

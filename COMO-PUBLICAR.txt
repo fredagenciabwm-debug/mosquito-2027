@@ -24,6 +24,21 @@ PASSO 3 — Entrar no painel
   Usuário: Mosquito
   Senha:   (enviada na conversa — guarde num lugar seguro)
 
+PASSO 4 — Aviso no WhatsApp a cada novo cadastro (grátis, via CallMeBot)
+  O número que recebe os avisos está configurado como (14) 99783-3913 (teste).
+  1. No celular desse número, abra https://www.callmebot.com/blog/free-api-whatsapp-messages/
+     e salve nos contatos o número do CallMeBot indicado lá.
+  2. Mande para esse contato, pelo WhatsApp, a mensagem:
+        I allow callmebot to send me messages
+  3. Você recebe uma resposta com a sua "apikey" (um número).
+  4. No Vercel → Settings → Environment Variables, crie:
+        CALLMEBOT_APIKEY = a apikey recebida
+        SITE_URL         = https://SEU-SITE.vercel.app   (opcional: link do painel no aviso)
+        AVISO_WHATSAPP   = 55 + DDD + número             (opcional: para trocar o número de teste)
+  5. Faça Redeploy, entre no /admin e clique em "🔔 Testar aviso".
+  Obs.: cada número precisa da sua própria apikey. Se o aviso falhar, o cadastro
+  continua salvo normalmente no painel.
+
 TROCAR A SENHA (opcional)
   Vercel → Settings → Environment Variables → crie ADMIN_SENHA com a nova
   senha → Redeploy. A senha antiga deixa de funcionar.
@@ -39,10 +54,9 @@ NO PAINEL
     POSICOES e INSTRUMENTOS no início do script do admin.html.
 
 OBSERVAÇÕES
-  • A inscrição entra no painel quando a pessoa clica no botão do formulário
-    (antes de abrir o WhatsApp), sempre como "Pendente". Se alguém desistir
-    ou duplicar, use "Excluir" no painel.
-  • Valores dos kits e número do WhatsApp: no final do index.html
-    (constantes VALORES_KIT e WHATSAPP_NUMERO).
+  • A inscrição entra no painel quando a pessoa clica no botão do formulário,
+    sempre como "Pendente". A pessoa vê uma confirmação na tela e a equipe
+    recebe o aviso no WhatsApp. Se alguém desistir ou duplicar, use "Excluir".
+  • Valores dos kits: no final do index.html (constante VALORES_KIT).
   • O arquivo de pré-visualização (mosquito-preview.html) NÃO salva no
     sistema: só o site publicado no Vercel salva.

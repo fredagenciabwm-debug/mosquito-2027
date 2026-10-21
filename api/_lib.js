@@ -152,3 +152,53 @@ export function normalizar(b, { admin = false } = {}) {
   }
   return reg;
 }
+
+// ---------- Aviso no WhatsApp da organização a cada novo cadastro ----------
+// Usa o CallMeBot (grátis). Configure no Vercel → Settings → Environment Variables:
+//   CALLMEBOT_APIKEY  = chave recebida do CallMeBot (obrigatória para o aviso funcionar)
+//   AVISO_WHATSAPP    = número que recebe o aviso, só dígitos com 55 + DDD (opcional)
+//   SITE_URL          = endereço do site, para o link do painel na mensagem (opcional)
+const AVISO_NUMERO_PADRAO = '5514997833913'; // (14) 99783-3913 — número de teste
+
+const NOMES_SETOR = {
+  paisFilhos: '🎭 Ala Pais e Filhos', bandeiras: '🚩 Ala das Bandeiras',
+  destaque: '⭐ Destaques', bateria: '🥁 Bateria', abada: '👕 Abadá avulso'
+};
+
+export function montarAviso(r) {
+  const linhas = [`🔔 *NOVO CADASTRO – ${NOMES_SETOR[r.tipo] || r.tipo}*`, '_Mosquito • Caravana Cigana 2027_', ''];
+  linhas.push(`👤 *${r.tipo === 'paisFilhos' ? 'Responsável' : 'Nome'}:* ${r.nome}`);
+  if (r.whatsapp) linhas.push(`📱 *WhatsApp:* ${r.whatsapp}`);
+  if (r.posicao) linhas.push(`⭐ *Posição:* ${r.posicao}`);
+  if (r.instrumento) linhas.push(`🥁 *Instrumento:* ${r.instrumento}`);
+  if (r.tamanho) linhas.push(`📏 *Abadá${r.tipo === 'paisFilhos' ? ' do responsável' : ''}:* ${r.tamanho}`);
+  if (r.tipo === 'paisFilhos' && r.criancas?.length) {
+    linhas.push('', '🧒 *Crianças:*');
+    r.criancas.forEach((c) => linhas.push(`   • ${c.nome} – ${c.idade} ano(s)${c.tamanho ? ' – abadá ' + c.tamanho : ''}`));
+  }
+  linhas.push('', `🔢 *Abadás:* ${r.quantidade || 1}`);
+  if (r.valorKit) linhas.push(`🎁 *Kit:* ${r.valorKit}`);
+  linhas.push('⏳ *Pagamento:* pendente');
+  const site = (process.env.SITE_URL || '').replace(/\/$/, '');
+  if (site) linhas.push('', `📋 Painel: ${site}/admin`);
+  return linhas.join('\n');
+}
+
+export async function avisarWhatsApp(texto) {
+  const apikey = process.env.CALLMEBOT_APIKEY;
+  const numero = String(process.env.AVISO_WHATSAPP || AVISO_NUMERO_PADRAO).replace(/\D/g, '');
+  if (!apikey) return { enviado: false, motivo: 'Falta a variável CALLMEBOT_APIKEY no Vercel.' };
+  const url = `https://api.callmebot.com/whatsapp.php?phone=${numero}&apikey=${encodeURIComponent(apikey)}&text=${encodeURIComponent(texto)}`;
+  const controle = new AbortController();
+  const tempo = setTimeout(() => controle.abort(), 7000);
+  try {
+    const r = await fetch(url, { signal: controle.signal });
+    const corpo = await r.text().catch(() => '');
+    const ok = r.ok && !/error|invalid|not\s+active/i.test(corpo.slice(0, 400));
+    return ok ? { enviado: true } : { enviado: false, motivo: 'CallMeBot respondeu: ' + corpo.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 200) };
+  } catch (e) {
+    return { enviado: false, motivo: 'Não foi possível falar com o CallMeBot (' + (e.name === 'AbortError' ? 'tempo esgotado' : e.message) + ').' };
+  } finally {
+    clearTimeout(tempo);
+  }
+}

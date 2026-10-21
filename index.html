@@ -131,6 +131,9 @@
     .campo.erro { border-color: #C62D12; box-shadow: 0 0 0 4px rgba(198,45,18,.15); }
     .msg-erro { color: #C62D12; font-size: .78rem; margin-top: .3rem; display: none; font-weight: 500; }
     .msg-erro.ativa { display: block; }
+    .btn-enviar[disabled] { opacity: .7; cursor: wait; transform: none !important; }
+    .caixa-sucesso { animation: surgir .45s ease both; }
+    @keyframes surgir { from { opacity: 0; transform: translateY(10px) scale(.98); } to { opacity: 1; transform: none; } }
 
     /* ---------- Hero: metade laranja / metade branca, igual à capa ---------- */
     .hero { --logo: min(82vw, 470px); }
@@ -258,7 +261,7 @@
       <div class="text-center revelar">
         <p class="ornamento rotulo text-lg">Desfile com o Mosquito</p>
         <h2 class="mt-3 titulo-preto text-5xl md:text-6xl">Escolha sua Ala</h2>
-        <p class="mt-5 text-tinta/75 max-w-2xl mx-auto">Preencha o formulário da ala que combina com você. A inscrição é enviada direto para o nosso WhatsApp.</p>
+        <p class="mt-5 text-tinta/75 max-w-2xl mx-auto">Preencha o formulário da ala que combina com você. Sua inscrição chega direto para a nossa equipe, que chama você no WhatsApp para confirmar.</p>
         <p class="mt-6 inline-flex items-center gap-2 bg-laranja text-white font-bold text-sm sm:text-base px-5 py-3 rounded-full border-2 border-tinta shadow-[3px_3px_0_#2B1610]">
           ★ Reservando seu lugar em uma das alas, você já garante o Kit Abadá Desfile completo!
         </p>
@@ -320,9 +323,8 @@
               <div id="listaCriancas" class="space-y-3"></div>
 
               <div class="pt-3 mt-auto">
-                <button type="submit" class="btn-laranja w-full font-bold px-6 py-4 rounded-2xl flex items-center justify-center gap-2">
-                  <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3 2.4 1 2.9.8 3.4.7.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
-                  Inscrever Ala Pais e Filhos via WhatsApp
+                <button type="submit" class="btn-enviar btn-laranja w-full font-bold px-6 py-4 rounded-2xl flex items-center justify-center gap-2">
+                  Inscrever na Ala Pais e Filhos
                 </button>
               </div>
             </form>
@@ -378,9 +380,8 @@
                 </div>
               </div>
               <div class="pt-3 mt-auto">
-                <button type="submit" class="btn-laranja w-full font-bold px-6 py-4 rounded-2xl flex items-center justify-center gap-2">
-                  <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3 2.4 1 2.9.8 3.4.7.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
-                  Inscrever Ala das Bandeiras via WhatsApp
+                <button type="submit" class="btn-enviar btn-laranja w-full font-bold px-6 py-4 rounded-2xl flex items-center justify-center gap-2">
+                  Inscrever na Ala das Bandeiras
                 </button>
               </div>
             </form>
@@ -460,8 +461,8 @@
         <div class="revelar card p-6 sm:p-10">
           <h3 class="titulo-preto text-4xl">Reserve o seu</h3>
           <p class="mt-3 text-tinta/75">
-            Vista o laranja e branco da caravana! Escolha seu tamanho e envie o pedido pelo WhatsApp. Nossa equipe confirma
-            valores, formas de pagamento e a data de retirada.
+            Vista o laranja e branco da caravana! Escolha seu tamanho e faça seu pedido. Nossa equipe chama você no WhatsApp
+            para confirmar valores, formas de pagamento e a data de retirada.
           </p>
 
           <form id="formAbada" class="mt-7 space-y-4" novalidate>
@@ -489,9 +490,8 @@
               </div>
             </div>
             <p class="text-xs text-tinta/60">Para mais de um tamanho, envie um pedido para cada tamanho.</p>
-            <button type="submit" class="btn-laranja w-full font-bold px-6 py-4 rounded-2xl flex items-center justify-center gap-2">
-              <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3 2.4 1 2.9.8 3.4.7.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
-              Pedir meu Abadá no WhatsApp
+            <button type="submit" class="btn-enviar btn-laranja w-full font-bold px-6 py-4 rounded-2xl flex items-center justify-center gap-2">
+              Reservar meu Abadá
             </button>
           </form>
         </div>
@@ -587,18 +587,14 @@
        JAVASCRIPT
   ========================================================== -->
   <script>
-    /* =====================================================
-       ⚙️ CONFIGURAÇÃO — ALTERE AQUI O NÚMERO DO WHATSAPP
-       Formato: 55 + DDD + número (somente dígitos)
-       Exemplo: 5514999999999
-    ====================================================== */
-    const WHATSAPP_NUMERO = '5514999999999';
+    /* O aviso de cada novo cadastro chega no WhatsApp da organização pelo sistema
+       (configurado no Vercel — veja COMO-PUBLICAR.txt). */
 
     /* =====================================================
        💰 VALORES DO KIT ABADÁ DESFILE DE CADA ALA
        (valores de EXEMPLO — troque pelos valores reais)
        Eles aparecem nos cards das alas, na seção do kit
-       e na mensagem do WhatsApp.
+       e ficam registrados no cadastro do painel.
     ====================================================== */
     const VALORES_KIT = {
       paisFilhos: 'R$ 150,00',
@@ -613,19 +609,62 @@
       s.innerHTML = '<option value="">Selecione</option>' + TAMANHOS.map((t) => `<option>${t}</option>`).join('');
     });
 
-    // Salva a inscrição no sistema interno (/admin) — não trava a abertura do WhatsApp
-    function salvarInscricao(dados, form) {
+    // Envia a inscrição para o sistema interno (/admin) e mostra a confirmação na tela
+    async function enviarInscricao(dados, form, sucesso) {
+      const btn = form.querySelector('.btn-enviar');
+      const textoBtn = btn.textContent.trim();
+      let aviso = form.querySelector('.erro-envio');
+      if (!aviso) {
+        aviso = document.createElement('p');
+        aviso.className = 'erro-envio msg-erro text-center !text-sm';
+        btn.insertAdjacentElement('afterend', aviso);
+      }
+      aviso.classList.remove('ativa');
+
+      const armadilha = form.querySelector('.armadilha');
+      if (armadilha && armadilha.value) dados.site = armadilha.value;
+
+      btn.disabled = true;
+      btn.textContent = 'Enviando…';
       try {
-        const armadilha = form.querySelector('.armadilha');
-        if (armadilha && armadilha.value) dados.site = armadilha.value;
-        fetch('/api/inscricao', {
+        const r = await fetch('/api/inscricao', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(dados),
-          keepalive: true
-        }).catch(() => {});
-      } catch (_) {}
+          body: JSON.stringify(dados)
+        });
+        const j = await r.json().catch(() => ({}));
+        if (!r.ok || !j.ok) throw new Error(j.erro || 'Não foi possível enviar agora.');
+        mostrarSucesso(form, sucesso);
+      } catch (ex) {
+        aviso.textContent = (ex.message || 'Não foi possível enviar agora.') + ' Tente novamente em instantes.';
+        aviso.classList.add('ativa');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = textoBtn;
+      }
     }
+
+    function mostrarSucesso(form, { titulo, texto }) {
+      form.classList.add('hidden');
+      const caixa = document.createElement('div');
+      caixa.className = 'caixa-sucesso mt-6 rounded-2xl border-2 border-tinta bg-pele p-6 sm:p-8 text-center shadow-[4px_4px_0_#F05A1C]';
+      caixa.innerHTML = `
+        <div class="mx-auto w-14 h-14 rounded-full bg-laranja text-white grid place-items-center text-3xl border-2 border-tinta">✓</div>
+        <p class="titulo-preto text-2xl mt-4">${titulo}</p>
+        <p class="mt-2 text-tinta/75">${texto}</p>
+        <button type="button" class="mt-5 btn-branco font-bold px-5 py-2.5 rounded-full text-sm">Fazer outra inscrição</button>`;
+      caixa.querySelector('button').addEventListener('click', () => {
+        form.reset();
+        if (form.id === 'formPaisFilhos') renderizarCriancas();
+        caixa.remove();
+        form.classList.remove('hidden');
+        form.querySelector('.campo').focus();
+      });
+      form.insertAdjacentElement('afterend', caixa);
+      caixa.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
     document.querySelectorAll('[data-valor]').forEach((el) => {
       const v = VALORES_KIT[el.dataset.valor];
@@ -634,11 +673,6 @@
 
     const $ = (sel) => document.querySelector(sel);
     const soDigitos = (v) => v.replace(/\D/g, '');
-
-    function abrirWhatsApp(mensagem) {
-      const url = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMERO}&text=${encodeURIComponent(mensagem)}`;
-      window.open(url, '_blank', 'noopener');
-    }
 
     function marcarErro(campo, temErro) {
       campo.classList.toggle('erro', temErro);
@@ -722,7 +756,7 @@
       ok = validar.obrigatorio(tam) && ok;
       ok = marcarErro(inputQtd, !(qtd >= 1 && qtd <= 10)) && ok;
 
-      const criancas = [], listaTexto = [];
+      const criancas = [];
       listaCriancas.querySelectorAll('.bloco-crianca').forEach((b) => {
         const n = b.querySelector('.crianca-nome');
         const i = b.querySelector('.crianca-idade');
@@ -732,32 +766,17 @@
         ok = marcarErro(i, isNaN(idade) || idade < 0 || idade > 17) && ok;
         ok = validar.obrigatorio(t) && ok;
         criancas.push({ nome: n.value.trim(), idade, tamanho: t.value });
-        listaTexto.push(`   • ${n.value.trim()} – ${i.value} ano(s) – abadá ${t.value}`);
       });
 
       if (!ok) return focarPrimeiroErro(form);
 
-      const mensagem =
-`🎭 *INSCRIÇÃO – PRIMEIRA ALA: PAIS E FILHOS (“Família Cigana”)*
-_Mosquito • Caravana Cigana • Carnaval 2027_
-
-👤 *Responsável:* ${nome.value.trim()}
-📱 *WhatsApp:* ${tel.value}
-📏 *Abadá do responsável:* ${tam.value}
-👧 *Quantidade de crianças:* ${qtd}
-
-🧒 *Crianças:*
-${listaTexto.join('\n')}
-
-🎁 *Kit Abadá Desfile completo incluso* – ${VALORES_KIT.paisFilhos}
-
-✨ Quero desfilar com a minha família!`;
-
-      salvarInscricao({
+      enviarInscricao({
         tipo: 'paisFilhos', nome: nome.value.trim(), whatsapp: tel.value, tamanho: tam.value,
         criancas, valorKit: VALORES_KIT.paisFilhos
-      }, form);
-      abrirWhatsApp(mensagem);
+      }, form, {
+        titulo: 'Inscrição recebida!',
+        texto: `Sua família já está na <strong>Ala Pais e Filhos</strong>. Em breve nossa equipe chama você no WhatsApp ${esc(tel.value)} para confirmar o pagamento do Kit Abadá Desfile.`
+      });
     });
 
     // ---------- Ala das Bandeiras ----------
@@ -771,23 +790,13 @@ ${listaTexto.join('\n')}
       ok = validar.obrigatorio(tam) && ok;
       if (!ok) return focarPrimeiroErro(form);
 
-      const mensagem =
-`🚩 *INSCRIÇÃO – SEGUNDA ALA: ALA DAS BANDEIRAS (“Elementos”)*
-_Mosquito • Caravana Cigana • Carnaval 2027_
-
-👤 *Nome:* ${nome.value.trim()}
-📱 *WhatsApp:* ${tel.value}
-📏 *Tamanho do abadá:* ${tam.value}
-
-🎁 *Kit Abadá Desfile completo incluso* – ${VALORES_KIT.bandeiras}
-
-✨ Quero levar as cores da caravana para a avenida!`;
-
-      salvarInscricao({
+      enviarInscricao({
         tipo: 'bandeiras', nome: nome.value.trim(), whatsapp: tel.value, tamanho: tam.value,
         valorKit: VALORES_KIT.bandeiras
-      }, form);
-      abrirWhatsApp(mensagem);
+      }, form, {
+        titulo: 'Inscrição recebida!',
+        texto: `Seu lugar na <strong>Ala das Bandeiras</strong> foi registrado. Em breve nossa equipe chama você no WhatsApp ${esc(tel.value)} para confirmar o pagamento do Kit Abadá Desfile.`
+      });
     });
 
     // ---------- Abadá ----------
@@ -803,21 +812,12 @@ _Mosquito • Caravana Cigana • Carnaval 2027_
       ok = marcarErro(qtdAb, !(quantidade >= 1 && quantidade <= 20)) && ok;
       if (!ok) return focarPrimeiroErro(form);
 
-      const mensagem =
-`👕 *PEDIDO – ABADÁ OFICIAL 2027*
-_Mosquito • Caravana Cigana_
-
-👤 *Nome:* ${nome.value.trim()}
-📱 *WhatsApp:* ${tel.value}
-📏 *Tamanho:* ${tam.value}
-🔢 *Quantidade:* ${quantidade}
-
-Gostaria de saber valores, formas de pagamento e retirada. 🙌`;
-
-      salvarInscricao({
+      enviarInscricao({
         tipo: 'abada', nome: nome.value.trim(), whatsapp: tel.value, tamanho: tam.value, quantidade
-      }, form);
-      abrirWhatsApp(mensagem);
+      }, form, {
+        titulo: 'Pedido recebido!',
+        texto: `Anotamos ${quantidade} abadá(s) tamanho <strong>${esc(tam.value)}</strong>. Em breve nossa equipe chama você no WhatsApp ${esc(tel.value)} com valores, pagamento e retirada.`
+      });
     });
 
     // ---------- Navbar: sombra ao rolar ----------
