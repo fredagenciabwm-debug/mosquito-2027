@@ -14,9 +14,17 @@ export const TAMANHOS = ['PP', 'P', 'M', 'G', 'GG', 'XGG', 'Infantil'];
 export const TIPOS = ['paisFilhos', 'bandeiras', 'abada'];
 
 // ---------- Banco de dados (Upstash Redis via REST, sem dependências) ----------
+// Aceita qualquer prefixo escolhido ao conectar o banco no Vercel (KV_, STORAGE_, UPSTASH_REDIS_ …)
+function acharVariavel(sufixo) {
+  const preferidas = ['KV' + sufixo, 'STORAGE' + sufixo, 'UPSTASH_REDIS' + sufixo];
+  for (const n of preferidas) if (process.env[n]) return process.env[n];
+  const outra = Object.keys(process.env).find((n) => n.endsWith(sufixo) && !n.includes('READ_ONLY'));
+  return outra ? process.env[outra] : '';
+}
+
 function credenciaisRedis() {
-  const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
-  const token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+  const url = acharVariavel('_REST_API_URL') || acharVariavel('_REST_URL');
+  const token = acharVariavel('_REST_API_TOKEN') || acharVariavel('_REST_TOKEN');
   if (!url || !token) throw new Error('BANCO_NAO_CONFIGURADO');
   return { url: url.replace(/\/$/, ''), token };
 }
@@ -37,7 +45,7 @@ export const CHAVE = 'mosquito2027:inscricoes';
 
 // ---------- Sessão (token assinado) ----------
 function segredoSessao() {
-  const base = process.env.SESSION_SECRET || process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN || '';
+  const base = process.env.SESSION_SECRET || acharVariavel('_REST_API_TOKEN') || acharVariavel('_REST_TOKEN') || '';
   if (!base) throw new Error('BANCO_NAO_CONFIGURADO');
   return crypto.createHash('sha256').update('sessao-mosquito:' + base).digest();
 }
