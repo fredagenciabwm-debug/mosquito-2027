@@ -6,13 +6,13 @@
   <title>Mosquito • Caravana Cigana • Carnaval 2027</title>
   <meta name="description" content="Carnaval 2027 do Mosquito: Caravana Cigana. Conheça o enredo, escolha sua ala, ouça o samba e garanta seu abadá." />
   <meta property="og:title" content="Mosquito • Caravana Cigana • Carnaval 2027" />
-  <meta property="og:image" content="img/hero.jpg" />
+  <meta property="og:image" content="img/logo-caravana-cigana.png" />
   <meta name="theme-color" content="#F05A1C" />
 
   <!-- Fontes -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Calistoga&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -30,7 +30,7 @@
             tinta:    '#2B1610'    // contorno escuro do logo
           },
           fontFamily: {
-            titulo: ['"Luckiest Guy"', 'cursive'],
+            titulo: ['"Quorum Black BT"', 'Calistoga', 'serif'],
             corpo:  ['Poppins', 'sans-serif']
           },
           keyframes: {
@@ -49,43 +49,47 @@
   <style>
     body { font-family: 'Poppins', sans-serif; background: #FFFDF8; color: #2B1610; }
 
-    /* ---------- Título no estilo do logo MOSQUITO ---------- */
-    .titulo-logo {
-      font-family: 'Luckiest Guy', cursive;
-      letter-spacing: .02em;
-      line-height: 1.15;
-      padding-top: .12em;
-      background: linear-gradient(180deg, #F9A51B 0%, #F58517 40%, #E8501C 100%);
-      -webkit-background-clip: text; background-clip: text; color: transparent;
-      filter: drop-shadow(3px 4px 0 #2B1610);
+    /* =====================================================
+       FONTE DOS TÍTULOS — Quorum Black BT
+       Coloque o arquivo da fonte na pasta /fonts com um destes nomes:
+       QuorumBlackBT.woff2 (recomendado), QuorumBlackBT.woff ou QuorumBlackBT.otf
+       Enquanto o arquivo não estiver lá, o site usa a Calistoga (Google Fonts).
+    ====================================================== */
+    @font-face {
+      font-family: 'Quorum Black BT';
+      src: local('Quorum Black BT'), local('QuorumITCbyBT-Black'), local('Quorum BT Black'),
+           url('fonts/QuorumBlackBT.woff2') format('woff2'),
+           url('fonts/QuorumBlackBT.woff') format('woff'),
+           url('fonts/QuorumBlackBT.otf') format('opentype');
+      font-weight: 900; font-style: normal; font-display: swap;
     }
-    .titulo-branco {
-      font-family: 'Luckiest Guy', cursive;
-      letter-spacing: .02em;
-      color: #FFFDF8;
-      filter: drop-shadow(3px 4px 0 #2B1610);
+
+    /* ---------- Títulos: preto no fundo branco, branco no fundo laranja ---------- */
+    .titulo-preto, .titulo-branco {
+      font-family: 'Quorum Black BT', 'Calistoga', serif;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .01em;
+      line-height: 1.08;
     }
+    .titulo-preto  { color: #141414; }
+    .titulo-branco { color: #FFFFFF; }
     .rotulo {
-      font-family: 'Luckiest Guy', cursive;
+      font-family: 'Quorum Black BT', 'Calistoga', serif;
+      font-weight: 900;
+      text-transform: uppercase;
       letter-spacing: .08em;
       color: #F05A1C;
     }
 
-    /* ---------- Fundo branco com estrelas laranja (parte de baixo da capa) ---------- */
+    /* ---------- Fundo branco oficial (estrelas laranja) ---------- */
     .fundo-estrelas {
-      background-color: #FFFDF8;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cg fill='none' stroke='%23F58517' stroke-width='2' stroke-linejoin='round' opacity='.35'%3E%3Cpath d='M40 30l5 11 12 1-9 8 3 12-11-6-11 6 3-12-9-8 12-1z'/%3E%3Cpath d='M200 170l4 9 10 1-8 7 3 10-9-5-9 5 3-10-8-7 10-1z'/%3E%3C/g%3E%3Cg fill='%23F58517' opacity='.4'%3E%3Cpath d='M160 50l2.5 7.5 7.5 2.5-7.5 2.5-2.5 7.5-2.5-7.5-7.5-2.5 7.5-2.5z'/%3E%3Cpath d='M70 200l2 6 6 2-6 2-2 6-2-6-6-2 6-2z'/%3E%3Ccircle cx='120' cy='120' r='2.5'/%3E%3Ccircle cx='230' cy='60' r='2'/%3E%3Ccircle cx='20' cy='130' r='2'/%3E%3Ccircle cx='140' cy='240' r='2.5'/%3E%3Ccircle cx='100' cy='20' r='1.5'/%3E%3C/g%3E%3C/svg%3E");
+      background: #FFF7F0 url('img/bg-branco.jpg') center / cover no-repeat;
     }
 
-    /* ---------- Fundo laranja "mesclado" com estrelas (parte de cima da capa) ---------- */
+    /* ---------- Fundo laranja oficial (mesclado com estrelas) ---------- */
     .fundo-laranja {
-      background-color: #E9501E;
-      background-image:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cg fill='none' stroke='%23FFD27A' stroke-width='2' stroke-linejoin='round' opacity='.55'%3E%3Cpath d='M50 40l6 13 14 1-11 9 4 14-13-7-13 7 4-14-11-9 14-1z'/%3E%3Cpath d='M190 160l4 9 10 1-8 7 3 10-9-5-9 5 3-10-8-7 10-1z'/%3E%3C/g%3E%3Cg fill='%23FFD27A' opacity='.55'%3E%3Cpath d='M170 40l3 9 9 3-9 3-3 9-3-9-9-3 9-3z'/%3E%3Cpath d='M60 180l2 6 6 2-6 2-2 6-2-6-6-2 6-2z'/%3E%3Ccircle cx='120' cy='110' r='2.5'/%3E%3Ccircle cx='220' cy='90' r='2'/%3E%3Ccircle cx='15' cy='120' r='2'/%3E%3C/g%3E%3C/svg%3E"),
-        radial-gradient(ellipse at 15% 20%, #F58517 0%, transparent 45%),
-        radial-gradient(ellipse at 80% 70%, #DF4221 0%, transparent 50%),
-        radial-gradient(ellipse at 60% 10%, #F26A1B 0%, transparent 40%),
-        radial-gradient(ellipse at 30% 90%, #F07A1A 0%, transparent 45%);
+      background: #F26A1B url('img/bg-laranja.jpg') center / cover no-repeat;
     }
 
     /* ---------- Ornamento (arabesco da capa) ---------- */
@@ -128,8 +132,10 @@
     .msg-erro { color: #C62D12; font-size: .78rem; margin-top: .3rem; display: none; font-weight: 500; }
     .msg-erro.ativa { display: block; }
 
-    /* ---------- Hero: divisão laranja/branco igual à capa ---------- */
-    .hero-capa { background: linear-gradient(180deg, #E9501E 0 50.4%, #FFFDF8 50.4% 100%); }
+    /* ---------- Hero: metade laranja / metade branca, igual à capa ---------- */
+    .hero { --logo: min(82vw, 470px); }
+    .hero-logo { width: var(--logo); }
+    .hero-topo { height: calc(2.5rem + var(--logo) * 0.70); }
 
     /* ---------- Revelação no scroll ---------- */
     .revelar { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s ease; }
@@ -150,7 +156,7 @@
   ========================================================== -->
   <nav id="navbar" class="sticky top-0 z-50 bg-branco/95 backdrop-blur border-b-2 border-laranja/20 transition-shadow">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
-      <a href="#inicio" class="titulo-logo text-3xl pt-1">Mosquito</a>
+      <a href="#inicio" class="titulo-preto text-3xl pt-1">Mosquito</a>
 
       <ul class="hidden md:flex items-center gap-1 text-sm font-semibold">
         <li><a href="#enredo" class="px-3 py-2 rounded-full hover:bg-pele hover:text-laranja transition">Enredo</a></li>
@@ -177,27 +183,24 @@
   <!-- =========================================================
        1. HERO — arte oficial da capa
   ========================================================== -->
-  <header id="inicio">
-    <div class="hero-capa">
-      <img src="img/hero.jpg"
-           alt="Mosquito – Caravana Cigana – Carnaval 2027"
-           class="block w-full max-w-[1500px] mx-auto h-auto" width="2339" height="1654" />
-    </div>
+  <header id="inicio" class="hero fundo-estrelas relative overflow-hidden">
+    <!-- metade de cima laranja -->
+    <div class="hero-topo fundo-laranja absolute inset-x-0 top-0"></div>
 
-    <div class="fundo-estrelas pb-16 md:pb-20 -mt-1">
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-        <div class="ornamento rotulo text-lg sm:text-xl pt-6">Carnaval 2027</div>
-        <p class="mt-4 text-lg sm:text-xl text-tinta/80 max-w-2xl mx-auto">
-          O Mosquito transforma a avenida em estrada e convida todos a seguir essa
-          <strong class="text-laranja">caravana encantada</strong>. Venha dançar, cantar e brilhar com a gente!
-        </p>
+    <div class="relative max-w-4xl mx-auto px-4 sm:px-6 pt-10 pb-16 md:pb-20 text-center">
+      <img src="img/logo-caravana-cigana.png" alt="Mosquito – Caravana Cigana – Carnaval 2027"
+           class="hero-logo mx-auto h-auto drop-shadow-[0_10px_20px_rgba(120,40,0,.25)]" width="596" height="781" />
 
-        <div class="mt-8 flex flex-wrap gap-4 justify-center">
-          <a href="#enredo" class="btn-branco font-bold px-6 py-3.5 rounded-full">Conheça o Enredo</a>
-          <a href="#alas"   class="btn-branco font-bold px-6 py-3.5 rounded-full">Desfile Conosco</a>
-          <a href="#samba"  class="btn-branco font-bold px-6 py-3.5 rounded-full">▶ Ouça o Samba</a>
-          <a href="#abada"  class="btn-laranja font-bold px-6 py-3.5 rounded-full">Garanta seu Abadá</a>
-        </div>
+      <p class="mt-8 text-lg sm:text-xl text-tinta/80 max-w-2xl mx-auto">
+        O Mosquito transforma a avenida em estrada e convida todos a seguir essa
+        <strong class="text-laranja">caravana encantada</strong>. Venha dançar, cantar e brilhar com a gente!
+      </p>
+
+      <div class="mt-8 flex flex-wrap gap-4 justify-center">
+        <a href="#enredo" class="btn-branco font-bold px-6 py-3.5 rounded-full">Conheça o Enredo</a>
+        <a href="#alas"   class="btn-branco font-bold px-6 py-3.5 rounded-full">Desfile Conosco</a>
+        <a href="#samba"  class="btn-branco font-bold px-6 py-3.5 rounded-full">▶ Ouça o Samba</a>
+        <a href="#abada"  class="btn-laranja font-bold px-6 py-3.5 rounded-full">Garanta seu Abadá</a>
       </div>
     </div>
   </header>
@@ -206,21 +209,10 @@
        2. ENREDO
   ========================================================== -->
   <section id="enredo" class="fundo-laranja relative overflow-hidden py-20 md:py-28 scroll-mt-16">
-    <!-- Mandala decorativa -->
-    <svg class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] text-white/15 animate-girar pointer-events-none" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width=".6">
-      <circle cx="100" cy="100" r="96"/><circle cx="100" cy="100" r="80"/><circle cx="100" cy="100" r="62"/><circle cx="100" cy="100" r="40"/><circle cx="100" cy="100" r="18"/>
-      <g id="petalas">
-        <path d="M100 4 Q114 50 100 100 Q86 50 100 4Z"/><path d="M196 100 Q150 114 100 100 Q150 86 196 100Z"/>
-        <path d="M100 196 Q86 150 100 100 Q114 150 100 196Z"/><path d="M4 100 Q50 86 100 100 Q50 114 4 100Z"/>
-      </g>
-      <use href="#petalas" transform="rotate(22.5 100 100)"/>
-      <use href="#petalas" transform="rotate(45 100 100)"/>
-      <use href="#petalas" transform="rotate(67.5 100 100)"/>
-    </svg>
 
     <div class="relative max-w-5xl mx-auto px-4 sm:px-6">
       <div class="text-center revelar">
-        <p class="font-titulo tracking-[.15em] text-ouro text-lg">✦ O Tema ✦</p>
+        <p class="rotulo !text-white/90 text-lg">✦ O Tema ✦</p>
         <h2 class="mt-2 titulo-branco text-5xl md:text-6xl">Conheça o Enredo</h2>
       </div>
 
@@ -265,7 +257,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="text-center revelar">
         <p class="ornamento rotulo text-lg">Desfile com o Mosquito</p>
-        <h2 class="mt-3 titulo-logo text-5xl md:text-6xl">Escolha sua Ala</h2>
+        <h2 class="mt-3 titulo-preto text-5xl md:text-6xl">Escolha sua Ala</h2>
         <p class="mt-5 text-tinta/75 max-w-2xl mx-auto">Preencha o formulário da ala que combina com você. A inscrição é enviada direto para o nosso WhatsApp.</p>
       </div>
 
@@ -279,7 +271,7 @@
             <span class="absolute top-4 left-4 bg-laranja text-white text-xs font-bold px-3 py-1.5 rounded-full border-2 border-tinta">Primeira Ala</span>
           </div>
           <div class="p-6 sm:p-8 flex-1 flex flex-col">
-            <h3 class="titulo-logo text-4xl">Ala Pais e Filhos</h3>
+            <h3 class="titulo-preto text-4xl">Ala Pais e Filhos</h3>
             <p class="mt-1 font-bold text-tangerina">“Família Cigana”</p>
             <p class="mt-3 text-tinta/75">
               A caravana é feita de gerações! Nesta ala, pais, mães e crianças desfilam juntos, num espaço seguro e cheio de carinho,
@@ -328,7 +320,7 @@
             <span class="absolute top-4 left-4 bg-laranja text-white text-xs font-bold px-3 py-1.5 rounded-full border-2 border-tinta">Ritmo & Cor</span>
           </div>
           <div class="p-6 sm:p-8 flex-1 flex flex-col">
-            <h3 class="titulo-logo text-4xl">Ala das Bandeiras</h3>
+            <h3 class="titulo-preto text-4xl">Ala das Bandeiras</h3>
             <p class="mt-1 font-bold text-tangerina">Os símbolos da caravana</p>
             <p class="mt-3 text-tinta/75">
               São as bandeiras que anunciam a chegada da caravana! O olho que tudo vê, o sol, a lua e o fogo sagrado
@@ -372,7 +364,7 @@
   <section id="samba" class="fundo-laranja py-20 md:py-28 scroll-mt-16">
     <div class="max-w-5xl mx-auto px-4 sm:px-6">
       <div class="text-center revelar">
-        <p class="font-titulo tracking-[.15em] text-ouro text-lg">✦ Samba-Enredo 2027 ✦</p>
+        <p class="rotulo !text-white/90 text-lg">✦ Samba-Enredo 2027 ✦</p>
         <h2 class="mt-2 titulo-branco text-5xl md:text-6xl">Ouça Nosso Samba</h2>
         <p class="mt-4 text-white/90 max-w-2xl mx-auto">Aprenda a letra, solte a voz e chegue no desfile cantando junto com a caravana.</p>
       </div>
@@ -418,7 +410,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="text-center revelar">
         <p class="ornamento rotulo text-lg">Manto Oficial</p>
-        <h2 class="mt-3 titulo-logo text-5xl md:text-6xl">Abadá Oficial 2027</h2>
+        <h2 class="mt-3 titulo-preto text-5xl md:text-6xl">Abadá Oficial 2027</h2>
       </div>
 
       <div class="mt-14 grid lg:grid-cols-2 gap-10 items-center">
@@ -428,12 +420,12 @@
             <img src="img/abada.jpg" width="1053" height="967" alt="Abadá oficial Mosquito – Caravana Cigana 2027 (frente e costas)"
                  class="w-full h-auto hover:scale-[1.03] transition duration-500" loading="lazy" />
           </div>
-          <span class="absolute -bottom-5 right-4 sm:right-12 bg-laranja text-white font-titulo tracking-wider text-lg px-5 py-2 rounded-full border-2 border-tinta shadow-[3px_3px_0_#2B1610] -rotate-3">Edição limitada ★</span>
+          <span class="absolute -bottom-5 right-4 sm:right-12 bg-laranja text-white titulo-branco text-base px-5 py-2 rounded-full border-2 border-tinta shadow-[3px_3px_0_#2B1610] -rotate-3">Edição limitada ★</span>
         </div>
 
         <!-- Formulário -->
         <div class="revelar card p-6 sm:p-10">
-          <h3 class="titulo-logo text-4xl">Reserve o seu</h3>
+          <h3 class="titulo-preto text-4xl">Reserve o seu</h3>
           <p class="mt-3 text-tinta/75">
             Vista o laranja e branco da caravana! Escolha seu tamanho e envie o pedido pelo WhatsApp. Nossa equipe confirma
             valores, formas de pagamento e a data de retirada.
@@ -476,7 +468,7 @@
                class="w-full max-w-sm h-auto" loading="lazy" />
         </div>
         <div class="p-6 sm:p-10 flex flex-col justify-center">
-          <h3 class="titulo-logo text-4xl sm:text-5xl">Kit Abadá Desfile</h3>
+          <h3 class="titulo-preto text-4xl sm:text-5xl">Kit Abadá Desfile</h3>
           <ul class="mt-6 grid sm:grid-cols-2 gap-3">
             <li class="flex items-center gap-3 bg-pele rounded-2xl px-4 py-3 font-bold"><span class="w-9 h-9 grid place-items-center rounded-full bg-laranja text-white text-sm shrink-0">1</span>Lenço cigano branco</li>
             <li class="flex items-center gap-3 bg-pele rounded-2xl px-4 py-3 font-bold"><span class="w-9 h-9 grid place-items-center rounded-full bg-laranja text-white text-sm shrink-0">2</span>Abadá</li>
@@ -499,13 +491,12 @@
   <footer class="fundo-laranja relative overflow-hidden text-white">
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 pt-16 pb-10 grid md:grid-cols-3 gap-10 text-center md:text-left">
       <div>
-        <a href="#inicio" class="titulo-branco text-5xl">Mosquito</a>
-        <p class="mt-3 font-titulo tracking-wider text-ouro text-xl">Caravana Cigana</p>
-        <p class="text-sm text-white/85">Carnaval 2027 • Brotas-SP</p>
+        <a href="#inicio" class="inline-block bg-white rounded-3xl p-3 border-2 border-tinta shadow-[4px_4px_0_#2B1610]"><img src="img/logo-caravana-cigana.png" alt="Mosquito – Caravana Cigana" class="w-32 h-auto" width="596" height="781" loading="lazy" /></a>
+        <p class="mt-3 text-sm text-white/90">Carnaval 2027 • Brotas-SP</p>
       </div>
 
       <div>
-        <h4 class="font-titulo tracking-wider text-xl mb-4">Siga a caravana</h4>
+        <h4 class="titulo-branco text-lg mb-4">Siga a caravana</h4>
         <!-- ▼ TROQUE OS href="#" PELOS PERFIS REAIS ▼ -->
         <div class="flex gap-3 justify-center md:justify-start">
           <a href="#" aria-label="Instagram" class="w-12 h-12 grid place-items-center rounded-full bg-white text-laranja border-2 border-tinta shadow-[3px_3px_0_#2B1610] hover:-translate-y-1 transition">
@@ -524,14 +515,14 @@
       </div>
 
       <div>
-        <h4 class="font-titulo tracking-wider text-xl mb-4">Realização</h4>
+        <h4 class="titulo-branco text-lg mb-4">Realização</h4>
         <p class="text-sm text-white/90">Bloco Mosquito<br/>Apoio: <span class="text-white/70">seus parceiros aqui</span></p>
       </div>
     </div>
 
     <div class="relative border-t-2 border-white/25">
       <p class="max-w-7xl mx-auto px-4 sm:px-6 py-6 text-center text-sm">
-        <span class="font-titulo tracking-wider text-lg text-white">O verdadeiro lar é o caminho — e o destino, a festa!</span>
+        <span class="titulo-branco text-base sm:text-lg">O verdadeiro lar é o caminho — e o destino, a festa!</span>
         <br /><span class="text-white/75">© <span id="ano"></span> Mosquito • Viva o Carnaval 2027 ★</span>
       </p>
     </div>

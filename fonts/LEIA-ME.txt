@@ -1,0 +1,11 @@
+Coloque aqui o arquivo da fonte Quorum Black BT com um destes nomes:
+
+  QuorumBlackBT.woff2   (recomendado, mais leve)
+  QuorumBlackBT.woff
+  QuorumBlackBT.otf
+
+O site carrega automaticamente. Enquanto o arquivo não estiver nesta pasta,
+os títulos aparecem na fonte Calistoga (Google Fonts) como reserva.
+
+Obs.: para usar a fonte num site publicado, a licença da Quorum precisa
+incluir uso web (webfont).
