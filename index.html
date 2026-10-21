@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mosquito • Caravana Cigana • Carnaval 2027</title>
+  <meta name="description" content="Carnaval 2027 do Mosquito: Caravana Cigana. Conheça o enredo, escolha sua ala, ouça o samba e garanta seu abadá." />
+  <meta property="og:title" content="Mosquito • Caravana Cigana • Carnaval 2027" />
+  <meta property="og:image" content="img/hero.jpg" />
+  <meta name="theme-color" content="#F05A1C" />
+
+  <!-- Fontes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            laranja:  '#F05A1C',   // laranja principal da capa
+            fogo:     '#DF4221',   // laranja escuro (topo da capa)
+            tangerina:'#F58517',   // laranja claro
+            ouro:     '#F9A51B',   // amarelo do degradê do logo
+            branco:   '#FFFDF8',   // branco quente da capa
+            pele:     '#FFF1E6',   // tom claro de apoio
+            tinta:    '#2B1610'    // contorno escuro do logo
+          },
+          fontFamily: {
+            titulo: ['"Luckiest Guy"', 'cursive'],
+            corpo:  ['Poppins', 'sans-serif']
+          },
+          keyframes: {
+            girar:  { to: { transform: 'rotate(360deg)' } },
+            piscar: { '0%,100%': { opacity: .35, transform: 'scale(.9)' }, '50%': { opacity: 1, transform: 'scale(1.1)' } }
+          },
+          animation: {
+            girar:  'girar 90s linear infinite',
+            piscar: 'piscar 2.6s ease-in-out infinite'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { font-family: 'Poppins', sans-serif; background: #FFFDF8; color: #2B1610; }
+
+    /* ---------- Título no estilo do logo MOSQUITO ---------- */
+    .titulo-logo {
+      font-family: 'Luckiest Guy', cursive;
+      letter-spacing: .02em;
+      line-height: 1.15;
+      padding-top: .12em;
+      background: linear-gradient(180deg, #F9A51B 0%, #F58517 40%, #E8501C 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      filter: drop-shadow(3px 4px 0 #2B1610);
+    }
+    .titulo-branco {
+      font-family: 'Luckiest Guy', cursive;
+      letter-spacing: .02em;
+      color: #FFFDF8;
+      filter: drop-shadow(3px 4px 0 #2B1610);
+    }
+    .rotulo {
+      font-family: 'Luckiest Guy', cursive;
+      letter-spacing: .08em;
+      color: #F05A1C;
+    }
+
+    /* ---------- Fundo branco com estrelas laranja (parte de baixo da capa) ---------- */
+    .fundo-estrelas {
+      background-color: #FFFDF8;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cg fill='none' stroke='%23F58517' stroke-width='2' stroke-linejoin='round' opacity='.35'%3E%3Cpath d='M40 30l5 11 12 1-9 8 3 12-11-6-11 6 3-12-9-8 12-1z'/%3E%3Cpath d='M200 170l4 9 10 1-8 7 3 10-9-5-9 5 3-10-8-7 10-1z'/%3E%3C/g%3E%3Cg fill='%23F58517' opacity='.4'%3E%3Cpath d='M160 50l2.5 7.5 7.5 2.5-7.5 2.5-2.5 7.5-2.5-7.5-7.5-2.5 7.5-2.5z'/%3E%3Cpath d='M70 200l2 6 6 2-6 2-2 6-2-6-6-2 6-2z'/%3E%3Ccircle cx='120' cy='120' r='2.5'/%3E%3Ccircle cx='230' cy='60' r='2'/%3E%3Ccircle cx='20' cy='130' r='2'/%3E%3Ccircle cx='140' cy='240' r='2.5'/%3E%3Ccircle cx='100' cy='20' r='1.5'/%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    /* ---------- Fundo laranja "mesclado" com estrelas (parte de cima da capa) ---------- */
+    .fundo-laranja {
+      background-color: #E9501E;
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cg fill='none' stroke='%23FFD27A' stroke-width='2' stroke-linejoin='round' opacity='.55'%3E%3Cpath d='M50 40l6 13 14 1-11 9 4 14-13-7-13 7 4-14-11-9 14-1z'/%3E%3Cpath d='M190 160l4 9 10 1-8 7 3 10-9-5-9 5 3-10-8-7 10-1z'/%3E%3C/g%3E%3Cg fill='%23FFD27A' opacity='.55'%3E%3Cpath d='M170 40l3 9 9 3-9 3-3 9-3-9-9-3 9-3z'/%3E%3Cpath d='M60 180l2 6 6 2-6 2-2 6-2-6-6-2 6-2z'/%3E%3Ccircle cx='120' cy='110' r='2.5'/%3E%3Ccircle cx='220' cy='90' r='2'/%3E%3Ccircle cx='15' cy='120' r='2'/%3E%3C/g%3E%3C/svg%3E"),
+        radial-gradient(ellipse at 15% 20%, #F58517 0%, transparent 45%),
+        radial-gradient(ellipse at 80% 70%, #DF4221 0%, transparent 50%),
+        radial-gradient(ellipse at 60% 10%, #F26A1B 0%, transparent 40%),
+        radial-gradient(ellipse at 30% 90%, #F07A1A 0%, transparent 45%);
+    }
+
+    /* ---------- Ornamento (arabesco da capa) ---------- */
+    .ornamento { display: flex; align-items: center; justify-content: center; gap: .6rem; color: #F58517; }
+    .ornamento::before, .ornamento::after {
+      content: ''; width: 64px; height: 12px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='12' viewBox='0 0 64 12'%3E%3Cpath d='M2 6h20c4 0 5-4 9-4s5 4 2 6-6-1-3-3' fill='none' stroke='%23F58517' stroke-width='1.6' stroke-linecap='round'/%3E%3Ccircle cx='60' cy='6' r='2.4' fill='%23F58517'/%3E%3C/svg%3E") no-repeat center;
+    }
+    .ornamento::before { transform: scaleX(-1); }
+
+    /* ---------- Botões ---------- */
+    .btn-laranja {
+      background: linear-gradient(180deg, #F9A51B 0%, #F05A1C 100%);
+      color: #fff; border: 2px solid #2B1610; box-shadow: 4px 4px 0 #2B1610;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .btn-laranja:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 #2B1610; }
+    .btn-laranja:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 #2B1610; }
+
+    .btn-branco {
+      background: #fff; color: #F05A1C; border: 2px solid #2B1610; box-shadow: 4px 4px 0 #2B1610;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .btn-branco:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 #2B1610; background: #FFF1E6; }
+    .btn-branco:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 #2B1610; }
+
+    /* ---------- Cards ---------- */
+    .card {
+      background: #fff; border: 2px solid #2B1610; border-radius: 1.75rem; box-shadow: 8px 8px 0 #F05A1C;
+    }
+
+    /* ---------- Campos ---------- */
+    .campo {
+      width: 100%; border-radius: .9rem; border: 2px solid #F6CBA8; background: #FFFDF8;
+      padding: .8rem 1rem; color: #2B1610; transition: border-color .2s, box-shadow .2s; outline: none;
+    }
+    .campo::placeholder { color: #b9a294; }
+    .campo:focus { border-color: #F05A1C; box-shadow: 0 0 0 4px rgba(240,90,28,.18); }
+    .campo.erro { border-color: #C62D12; box-shadow: 0 0 0 4px rgba(198,45,18,.15); }
+    .msg-erro { color: #C62D12; font-size: .78rem; margin-top: .3rem; display: none; font-weight: 500; }
+    .msg-erro.ativa { display: block; }
+
+    /* ---------- Hero: divisão laranja/branco igual à capa ---------- */
+    .hero-capa { background: linear-gradient(180deg, #E9501E 0 50.4%, #FFFDF8 50.4% 100%); }
+
+    /* ---------- Revelação no scroll ---------- */
+    .revelar { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s ease; }
+    .revelar.visivel { opacity: 1; transform: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .revelar { opacity: 1; transform: none; transition: none; }
+      .animate-girar, .animate-piscar { animation: none !important; }
+    }
+  </style>
+</head>
+
+<body class="antialiased">
+
+  <!-- =========================================================
+       NAVBAR
+  ========================================================== -->
+  <nav id="navbar" class="sticky top-0 z-50 bg-branco/95 backdrop-blur border-b-2 border-laranja/20 transition-shadow">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
+      <a href="#inicio" class="titulo-logo text-3xl pt-1">Mosquito</a>
+
+      <ul class="hidden md:flex items-center gap-1 text-sm font-semibold">
+        <li><a href="#enredo" class="px-3 py-2 rounded-full hover:bg-pele hover:text-laranja transition">Enredo</a></li>
+        <li><a href="#alas"   class="px-3 py-2 rounded-full hover:bg-pele hover:text-laranja transition">Alas</a></li>
+        <li><a href="#samba"  class="px-3 py-2 rounded-full hover:bg-pele hover:text-laranja transition">Samba</a></li>
+        <li><a href="#abada"  class="ml-3 px-5 py-2 rounded-full btn-laranja font-bold">Garanta seu Abadá</a></li>
+      </ul>
+
+      <button id="btnMenu" class="md:hidden text-laranja p-2 rounded-lg hover:bg-pele" aria-label="Abrir menu" aria-expanded="false">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+
+    <div id="menuMobile" class="md:hidden hidden border-t-2 border-laranja/20 bg-branco">
+      <ul class="flex flex-col p-4 gap-1 font-semibold">
+        <li><a href="#enredo" class="link-mobile block px-4 py-3 rounded-xl hover:bg-pele">Conheça o Enredo</a></li>
+        <li><a href="#alas"   class="link-mobile block px-4 py-3 rounded-xl hover:bg-pele">Desfile Conosco / Alas</a></li>
+        <li><a href="#samba"  class="link-mobile block px-4 py-3 rounded-xl hover:bg-pele">Ouça Nosso Samba</a></li>
+        <li><a href="#abada"  class="link-mobile block px-4 py-3 rounded-xl btn-laranja text-center mt-2">Garanta seu Abadá</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- =========================================================
+       1. HERO — arte oficial da capa
+  ========================================================== -->
+  <header id="inicio">
+    <div class="hero-capa">
+      <img src="img/hero.jpg"
+           alt="Mosquito – Caravana Cigana – Carnaval 2027"
+           class="block w-full max-w-[1500px] mx-auto h-auto" width="2339" height="1654" />
+    </div>
+
+    <div class="fundo-estrelas pb-16 md:pb-20 -mt-1">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+        <div class="ornamento rotulo text-lg sm:text-xl pt-6">Carnaval 2027</div>
+        <p class="mt-4 text-lg sm:text-xl text-tinta/80 max-w-2xl mx-auto">
+          O Mosquito transforma a avenida em estrada e convida todos a seguir essa
+          <strong class="text-laranja">caravana encantada</strong>. Venha dançar, cantar e brilhar com a gente!
+        </p>
+
+        <div class="mt-8 flex flex-wrap gap-4 justify-center">
+          <a href="#enredo" class="btn-branco font-bold px-6 py-3.5 rounded-full">Conheça o Enredo</a>
+          <a href="#alas"   class="btn-branco font-bold px-6 py-3.5 rounded-full">Desfile Conosco</a>
+          <a href="#samba"  class="btn-branco font-bold px-6 py-3.5 rounded-full">▶ Ouça o Samba</a>
+          <a href="#abada"  class="btn-laranja font-bold px-6 py-3.5 rounded-full">Garanta seu Abadá</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       2. ENREDO
+  ========================================================== -->
+  <section id="enredo" class="fundo-laranja relative overflow-hidden py-20 md:py-28 scroll-mt-16">
+    <!-- Mandala decorativa -->
+    <svg class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] text-white/15 animate-girar pointer-events-none" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width=".6">
+      <circle cx="100" cy="100" r="96"/><circle cx="100" cy="100" r="80"/><circle cx="100" cy="100" r="62"/><circle cx="100" cy="100" r="40"/><circle cx="100" cy="100" r="18"/>
+      <g id="petalas">
+        <path d="M100 4 Q114 50 100 100 Q86 50 100 4Z"/><path d="M196 100 Q150 114 100 100 Q150 86 196 100Z"/>
+        <path d="M100 196 Q86 150 100 100 Q114 150 100 196Z"/><path d="M4 100 Q50 86 100 100 Q50 114 4 100Z"/>
+      </g>
+      <use href="#petalas" transform="rotate(22.5 100 100)"/>
+      <use href="#petalas" transform="rotate(45 100 100)"/>
+      <use href="#petalas" transform="rotate(67.5 100 100)"/>
+    </svg>
+
+    <div class="relative max-w-5xl mx-auto px-4 sm:px-6">
+      <div class="text-center revelar">
+        <p class="font-titulo tracking-[.15em] text-ouro text-lg">✦ O Tema ✦</p>
+        <h2 class="mt-2 titulo-branco text-5xl md:text-6xl">Conheça o Enredo</h2>
+      </div>
+
+      <article class="revelar mt-12 card p-8 sm:p-12 !shadow-[8px_8px_0_#2B1610]">
+        <div class="space-y-5 text-lg leading-relaxed text-tinta/85">
+          <p class="first-letter:font-titulo first-letter:text-7xl first-letter:text-laranja first-letter:float-left first-letter:mr-3 first-letter:leading-[.8]">
+            Por entre estradas sem fim, cores vibrantes e símbolos carregados de significado, surge a
+            <strong class="text-laranja">Caravana Cigana</strong>. Um povo livre, guiado pela espiritualidade, pela força da lua,
+            pela sorte e pelos mistérios do destino. Em cada passo, tecidos dançam ao vento, amuletos protegem o caminho
+            e a música marca o ritmo da jornada.
+          </p>
+          <p>
+            O <strong class="text-laranja">Mosquito</strong> transforma a avenida em estrada e convida todos a seguir essa caravana
+            encantada, onde a fé, a alegria e a celebração da vida se encontram. No pulsar do samba, a tradição cigana ganha forma,
+            cor e emoção, revelando que <em class="font-semibold not-italic text-fogo">o verdadeiro lar é o caminho — e o destino, a festa.</em>
+          </p>
+        </div>
+
+        <!-- Nuvem de palavras do enredo -->
+        <div class="mt-10 pt-8 border-t-2 border-dashed border-laranja/30">
+          <p class="ornamento rotulo text-base mb-5">Palavras da Caravana</p>
+          <p class="text-center leading-relaxed font-extrabold text-laranja">
+            <span class="text-2xl">caravana cigana</span> <span class="text-sm text-tangerina">estrada</span> <span class="text-base">liberdade</span>
+            <span class="text-xl">povo</span> <span class="text-sm text-tangerina">espiritualidade</span> <span class="text-xl">destino</span>
+            <span class="text-base">símbolos de fé</span> <span class="text-sm text-tangerina">tradição ancestral</span> <span class="text-lg">lua mãe divina</span>
+            <span class="text-sm text-tangerina">águas</span> <span class="text-base">purificação</span> <span class="text-lg">fogo sagrado</span>
+            <span class="text-sm text-tangerina">amuletos</span> <span class="text-xl">cartas de tarô</span> <span class="text-base">olho que tudo vê</span>
+            <span class="text-sm text-tangerina">sorte</span> <span class="text-lg">dança</span> <span class="text-xl">bateria</span>
+            <span class="text-sm text-tangerina">tambor</span> <span class="text-lg">alegria</span> <span class="text-base">carroças</span>
+            <span class="text-sm text-tangerina">lar em movimento</span> <span class="text-lg">magia</span> <span class="text-xl">bola de cristal</span>
+            <span class="text-2xl">samba</span> <span class="text-base">celebração</span> <span class="text-xl text-tinta">laranja e branco</span>
+          </p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       3. ALAS
+  ========================================================== -->
+  <section id="alas" class="fundo-estrelas py-20 md:py-28 scroll-mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center revelar">
+        <p class="ornamento rotulo text-lg">Desfile com o Mosquito</p>
+        <h2 class="mt-3 titulo-logo text-5xl md:text-6xl">Escolha sua Ala</h2>
+        <p class="mt-5 text-tinta/75 max-w-2xl mx-auto">Preencha o formulário da ala que combina com você. A inscrição é enviada direto para o nosso WhatsApp.</p>
+      </div>
+
+      <div class="mt-14 grid lg:grid-cols-2 gap-10">
+
+        <!-- Card 1: Pais e Filhos -->
+        <div class="revelar card overflow-hidden flex flex-col">
+          <div class="relative bg-white border-b-2 border-tinta">
+            <img src="img/ala-pais-e-filhos.jpg" width="1333" height="856" alt="Ala Pais e Filhos – Família Cigana"
+                 class="w-full aspect-[16/10] object-cover" loading="lazy" />
+            <span class="absolute top-4 left-4 bg-laranja text-white text-xs font-bold px-3 py-1.5 rounded-full border-2 border-tinta">Primeira Ala</span>
+          </div>
+          <div class="p-6 sm:p-8 flex-1 flex flex-col">
+            <h3 class="titulo-logo text-4xl">Ala Pais e Filhos</h3>
+            <p class="mt-1 font-bold text-tangerina">“Família Cigana”</p>
+            <p class="mt-3 text-tinta/75">
+              A caravana é feita de gerações! Nesta ala, pais, mães e crianças desfilam juntos, num espaço seguro e cheio de carinho,
+              para que os pequenos vivam a magia do Carnaval de mãos dadas com quem amam.
+            </p>
+            <p class="mt-3 text-sm bg-pele rounded-xl px-4 py-3 text-tinta/80">
+              <strong class="text-laranja">Turbante:</strong> adultos com turbante + lenço branco; crianças apenas com o lenço.
+            </p>
+
+            <form id="formPaisFilhos" class="mt-6 space-y-4 flex-1 flex flex-col" novalidate>
+              <div>
+                <label for="pfNome" class="block text-sm font-semibold mb-1.5">Nome do responsável</label>
+                <input id="pfNome" type="text" class="campo" placeholder="Seu nome completo" autocomplete="name" />
+                <p class="msg-erro">Informe o nome do responsável.</p>
+              </div>
+              <div class="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label for="pfTelefone" class="block text-sm font-semibold mb-1.5">Telefone / WhatsApp</label>
+                  <input id="pfTelefone" type="tel" class="campo mascara-tel" placeholder="(00) 00000-0000" autocomplete="tel" />
+                  <p class="msg-erro">Informe um telefone válido com DDD.</p>
+                </div>
+                <div>
+                  <label for="pfQtd" class="block text-sm font-semibold mb-1.5">Quantidade de crianças</label>
+                  <input id="pfQtd" type="number" min="1" max="10" class="campo" placeholder="Ex.: 2" />
+                  <p class="msg-erro">Informe entre 1 e 10 crianças.</p>
+                </div>
+              </div>
+
+              <div id="listaCriancas" class="space-y-3"></div>
+
+              <div class="pt-3 mt-auto">
+                <button type="submit" class="btn-laranja w-full font-bold px-6 py-4 rounded-2xl flex items-center justify-center gap-2">
+                  <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3 2.4 1 2.9.8 3.4.7.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
+                  Inscrever Ala Pais e Filhos via WhatsApp
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Card 2: Bandeiras -->
+        <div class="revelar card overflow-hidden flex flex-col">
+          <div class="relative bg-white border-b-2 border-tinta">
+            <img src="img/ala-bandeiras.jpg" width="1333" height="856" alt="Ala das Bandeiras"
+                 class="w-full aspect-[16/10] object-cover" loading="lazy" />
+            <span class="absolute top-4 left-4 bg-laranja text-white text-xs font-bold px-3 py-1.5 rounded-full border-2 border-tinta">Ritmo & Cor</span>
+          </div>
+          <div class="p-6 sm:p-8 flex-1 flex flex-col">
+            <h3 class="titulo-logo text-4xl">Ala das Bandeiras</h3>
+            <p class="mt-1 font-bold text-tangerina">Os símbolos da caravana</p>
+            <p class="mt-3 text-tinta/75">
+              São as bandeiras que anunciam a chegada da caravana! O olho que tudo vê, o sol, a lua e o fogo sagrado
+              ganham a avenida no ritmo da bateria, enchendo o desfile de movimento e levando o nome do Mosquito bem alto.
+            </p>
+
+            <ul class="mt-4 space-y-2 text-sm text-tinta/80">
+              <li class="flex gap-2"><span class="text-laranja">★</span> Coreografia simples, ensaiada com o grupo</li>
+              <li class="flex gap-2"><span class="text-laranja">★</span> Estandarte e fantasia temática da Caravana</li>
+              <li class="flex gap-2"><span class="text-laranja">★</span> Para quem gosta de energia e movimento</li>
+            </ul>
+
+            <form id="formBandeiras" class="mt-6 space-y-4 flex-1 flex flex-col" novalidate>
+              <div>
+                <label for="bdNome" class="block text-sm font-semibold mb-1.5">Nome completo</label>
+                <input id="bdNome" type="text" class="campo" placeholder="Seu nome completo" autocomplete="name" />
+                <p class="msg-erro">Informe seu nome completo.</p>
+              </div>
+              <div>
+                <label for="bdTelefone" class="block text-sm font-semibold mb-1.5">Telefone / WhatsApp</label>
+                <input id="bdTelefone" type="tel" class="campo mascara-tel" placeholder="(00) 00000-0000" autocomplete="tel" />
+                <p class="msg-erro">Informe um telefone válido com DDD.</p>
+              </div>
+              <div class="pt-3 mt-auto">
+                <button type="submit" class="btn-laranja w-full font-bold px-6 py-4 rounded-2xl flex items-center justify-center gap-2">
+                  <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3 2.4 1 2.9.8 3.4.7.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
+                  Inscrever Ala das Bandeiras via WhatsApp
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       4. SAMBA
+  ========================================================== -->
+  <section id="samba" class="fundo-laranja py-20 md:py-28 scroll-mt-16">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <div class="text-center revelar">
+        <p class="font-titulo tracking-[.15em] text-ouro text-lg">✦ Samba-Enredo 2027 ✦</p>
+        <h2 class="mt-2 titulo-branco text-5xl md:text-6xl">Ouça Nosso Samba</h2>
+        <p class="mt-4 text-white/90 max-w-2xl mx-auto">Aprenda a letra, solte a voz e chegue no desfile cantando junto com a caravana.</p>
+      </div>
+
+      <div class="revelar mt-12 rounded-[1.75rem] border-2 border-tinta bg-white p-2 sm:p-3 shadow-[8px_8px_0_#2B1610]">
+        <div class="relative w-full aspect-video rounded-[1.25rem] overflow-hidden bg-tinta">
+          <!-- ▼ TROQUE "VIDEO_ID" PELO ID DO VÍDEO DO YOUTUBE ▼ -->
+          <iframe class="absolute inset-0 w-full h-full"
+            src="https://www.youtube.com/embed/VIDEO_ID"
+            title="Samba-enredo Caravana Cigana – Mosquito 2027" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <p class="revelar mt-10 text-center font-bold text-white">Ouça também nas plataformas:</p>
+      <div class="revelar mt-5 grid grid-cols-2 md:grid-cols-4 gap-4">
+        <!-- ▼ TROQUE OS href="#" PELOS LINKS REAIS ▼ -->
+        <a href="#" target="_blank" rel="noopener" class="btn-branco flex items-center justify-center gap-2 px-4 py-4 rounded-2xl font-bold !text-tinta">
+          <svg class="w-6 h-6 text-[#1DB954]" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm4.6 14.4a.6.6 0 0 1-.9.2c-2.4-1.5-5.4-1.8-8.9-1-.3.1-.7-.1-.7-.5-.1-.3.1-.7.5-.7 3.8-.9 7.1-.5 9.8 1.1.3.2.4.6.2.9zm1.2-2.8a.8.8 0 0 1-1.1.3c-2.7-1.7-6.9-2.2-10.2-1.2a.8.8 0 0 1-.5-1.5c3.7-1.1 8.4-.6 11.5 1.3.4.3.5.8.3 1.1zm.1-2.9C14.7 8.8 9.4 8.6 6.3 9.5a1 1 0 1 1-.6-1.8c3.5-1.1 9.4-.9 13.1 1.3a1 1 0 0 1-.9 1.6z"/></svg>
+          Spotify
+        </a>
+        <a href="#" target="_blank" rel="noopener" class="btn-branco flex items-center justify-center gap-2 px-4 py-4 rounded-2xl font-bold !text-tinta">
+          <svg class="w-6 h-6 text-[#FA243C]" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3v12.5a3.5 3.5 0 1 1-2-3.2V7.2l-8 1.7v8.6a3.5 3.5 0 1 1-2-3.2V5.5L19 3z"/></svg>
+          Apple Music
+        </a>
+        <a href="#" target="_blank" rel="noopener" class="btn-branco flex items-center justify-center gap-2 px-4 py-4 rounded-2xl font-bold !text-tinta">
+          <svg class="w-6 h-6 text-[#A238FF]" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="15" width="3.5" height="5" rx=".5"/><rect x="7" y="11" width="3.5" height="9" rx=".5"/><rect x="12" y="7" width="3.5" height="13" rx=".5"/><rect x="17" y="3" width="3.5" height="17" rx=".5"/></svg>
+          Deezer
+        </a>
+        <a href="#" target="_blank" rel="noopener" class="btn-branco flex items-center justify-center gap-2 px-4 py-4 rounded-2xl font-bold !text-tinta">
+          <svg class="w-6 h-6 text-[#FF0000]" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 16a6 6 0 1 1 0-12 6 6 0 0 1 0 12zm-2-8.8v5.6l4.8-2.8L10 9.2z"/></svg>
+          YouTube Music
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       5. ABADÁ
+  ========================================================== -->
+  <section id="abada" class="fundo-estrelas py-20 md:py-28 scroll-mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center revelar">
+        <p class="ornamento rotulo text-lg">Manto Oficial</p>
+        <h2 class="mt-3 titulo-logo text-5xl md:text-6xl">Abadá Oficial 2027</h2>
+      </div>
+
+      <div class="mt-14 grid lg:grid-cols-2 gap-10 items-center">
+        <!-- Imagem do abadá -->
+        <div class="revelar relative flex justify-center">
+          <div class="relative w-full max-w-lg rounded-[1.75rem] overflow-hidden border-2 border-tinta bg-[#151515] shadow-[8px_8px_0_#F05A1C]">
+            <img src="img/abada.jpg" width="1053" height="967" alt="Abadá oficial Mosquito – Caravana Cigana 2027 (frente e costas)"
+                 class="w-full h-auto hover:scale-[1.03] transition duration-500" loading="lazy" />
+          </div>
+          <span class="absolute -bottom-5 right-4 sm:right-12 bg-laranja text-white font-titulo tracking-wider text-lg px-5 py-2 rounded-full border-2 border-tinta shadow-[3px_3px_0_#2B1610] -rotate-3">Edição limitada ★</span>
+        </div>
+
+        <!-- Formulário -->
+        <div class="revelar card p-6 sm:p-10">
+          <h3 class="titulo-logo text-4xl">Reserve o seu</h3>
+          <p class="mt-3 text-tinta/75">
+            Vista o laranja e branco da caravana! Escolha seu tamanho e envie o pedido pelo WhatsApp. Nossa equipe confirma
+            valores, formas de pagamento e a data de retirada.
+          </p>
+
+          <form id="formAbada" class="mt-7 space-y-4" novalidate>
+            <div>
+              <label for="abNome" class="block text-sm font-semibold mb-1.5">Nome completo</label>
+              <input id="abNome" type="text" class="campo" placeholder="Seu nome completo" autocomplete="name" />
+              <p class="msg-erro">Informe seu nome completo.</p>
+            </div>
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label for="abTelefone" class="block text-sm font-semibold mb-1.5">Telefone / WhatsApp</label>
+                <input id="abTelefone" type="tel" class="campo mascara-tel" placeholder="(00) 00000-0000" autocomplete="tel" />
+                <p class="msg-erro">Informe um telefone válido com DDD.</p>
+              </div>
+              <div>
+                <label for="abTamanho" class="block text-sm font-semibold mb-1.5">Tamanho do abadá</label>
+                <select id="abTamanho" class="campo">
+                  <option value="">Selecione</option>
+                  <option>PP</option><option>P</option><option>M</option><option>G</option>
+                  <option>GG</option><option>XGG</option><option>Infantil</option>
+                </select>
+                <p class="msg-erro">Selecione um tamanho.</p>
+              </div>
+            </div>
+            <button type="submit" class="btn-laranja w-full font-bold px-6 py-4 rounded-2xl flex items-center justify-center gap-2">
+              <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3 2.4 1 2.9.8 3.4.7.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
+              Pedir meu Abadá no WhatsApp
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Kit Abadá Desfile -->
+      <div class="revelar mt-24 card overflow-hidden grid md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+        <div class="bg-white flex items-end justify-center pt-6 border-b-2 md:border-b-0 md:border-r-2 border-tinta">
+          <img src="img/kit-abada.jpg" width="640" height="1079" alt="Kit Abadá Desfile: lenço cigano branco, abadá, caneca e lenço laranja e branco"
+               class="w-full max-w-sm h-auto" loading="lazy" />
+        </div>
+        <div class="p-6 sm:p-10 flex flex-col justify-center">
+          <h3 class="titulo-logo text-4xl sm:text-5xl">Kit Abadá Desfile</h3>
+          <ul class="mt-6 grid sm:grid-cols-2 gap-3">
+            <li class="flex items-center gap-3 bg-pele rounded-2xl px-4 py-3 font-bold"><span class="w-9 h-9 grid place-items-center rounded-full bg-laranja text-white text-sm shrink-0">1</span>Lenço cigano branco</li>
+            <li class="flex items-center gap-3 bg-pele rounded-2xl px-4 py-3 font-bold"><span class="w-9 h-9 grid place-items-center rounded-full bg-laranja text-white text-sm shrink-0">2</span>Abadá</li>
+            <li class="flex items-center gap-3 bg-pele rounded-2xl px-4 py-3 font-bold"><span class="w-9 h-9 grid place-items-center rounded-full bg-laranja text-white text-sm shrink-0">3</span>Caneca</li>
+            <li class="flex items-center gap-3 bg-pele rounded-2xl px-4 py-3 font-bold"><span class="w-9 h-9 grid place-items-center rounded-full bg-laranja text-white text-sm shrink-0">4</span>Lenço laranja e branco</li>
+          </ul>
+          <p class="mt-6 text-sm text-tinta/70 leading-relaxed">
+            Os lenços poderão ser usados durante o desfile de forma alternada, conforme a ala — na cabeça ou na cintura —
+            em combinação com o chapéu da ala ou da bateria. O mesmo lenço também será usado nas apresentações da bateria,
+            garantindo unidade visual e identidade ao conjunto.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       6. FOOTER
+  ========================================================== -->
+  <footer class="fundo-laranja relative overflow-hidden text-white">
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 pt-16 pb-10 grid md:grid-cols-3 gap-10 text-center md:text-left">
+      <div>
+        <a href="#inicio" class="titulo-branco text-5xl">Mosquito</a>
+        <p class="mt-3 font-titulo tracking-wider text-ouro text-xl">Caravana Cigana</p>
+        <p class="text-sm text-white/85">Carnaval 2027 • Brotas-SP</p>
+      </div>
+
+      <div>
+        <h4 class="font-titulo tracking-wider text-xl mb-4">Siga a caravana</h4>
+        <!-- ▼ TROQUE OS href="#" PELOS PERFIS REAIS ▼ -->
+        <div class="flex gap-3 justify-center md:justify-start">
+          <a href="#" aria-label="Instagram" class="w-12 h-12 grid place-items-center rounded-full bg-white text-laranja border-2 border-tinta shadow-[3px_3px_0_#2B1610] hover:-translate-y-1 transition">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+          </a>
+          <a href="#" aria-label="Facebook" class="w-12 h-12 grid place-items-center rounded-full bg-white text-laranja border-2 border-tinta shadow-[3px_3px_0_#2B1610] hover:-translate-y-1 transition">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M14 8V6.5c0-.7.5-1 1-1h2V2h-3c-2.8 0-4 2-4 4.3V8H8v3.5h2V22h4V11.5h2.7L17 8h-3z"/></svg>
+          </a>
+          <a href="#" aria-label="TikTok" class="w-12 h-12 grid place-items-center rounded-full bg-white text-laranja border-2 border-tinta shadow-[3px_3px_0_#2B1610] hover:-translate-y-1 transition">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M16.5 3c.4 2.2 1.8 3.6 4 3.8v3.3c-1.5 0-2.8-.4-4-1.2v6.2A6 6 0 1 1 10.5 9v3.4a2.7 2.7 0 1 0 2.6 2.7V3h3.4z"/></svg>
+          </a>
+          <a href="#" aria-label="YouTube" class="w-12 h-12 grid place-items-center rounded-full bg-white text-laranja border-2 border-tinta shadow-[3px_3px_0_#2B1610] hover:-translate-y-1 transition">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22 8.2a3 3 0 0 0-2.1-2.1C18 5.6 12 5.6 12 5.6s-6 0-7.9.5A3 3 0 0 0 2 8.2 31 31 0 0 0 1.6 12c0 1.3.1 2.6.4 3.8a3 3 0 0 0 2.1 2.1c1.9.5 7.9.5 7.9.5s6 0 7.9-.5a3 3 0 0 0 2.1-2.1c.3-1.2.4-2.5.4-3.8s-.1-2.6-.4-3.8zM10 15.1V8.9l5.2 3.1-5.2 3.1z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="font-titulo tracking-wider text-xl mb-4">Realização</h4>
+        <p class="text-sm text-white/90">Bloco Mosquito<br/>Apoio: <span class="text-white/70">seus parceiros aqui</span></p>
+      </div>
+    </div>
+
+    <div class="relative border-t-2 border-white/25">
+      <p class="max-w-7xl mx-auto px-4 sm:px-6 py-6 text-center text-sm">
+        <span class="font-titulo tracking-wider text-lg text-white">O verdadeiro lar é o caminho — e o destino, a festa!</span>
+        <br /><span class="text-white/75">© <span id="ano"></span> Mosquito • Viva o Carnaval 2027 ★</span>
+      </p>
+    </div>
+  </footer>
+
+  <!-- =========================================================
+       JAVASCRIPT
+  ========================================================== -->
+  <script>
+    /* =====================================================
+       ⚙️ CONFIGURAÇÃO — ALTERE AQUI O NÚMERO DO WHATSAPP
+       Formato: 55 + DDD + número (somente dígitos)
+       Exemplo: 5514999999999
+    ====================================================== */
+    const WHATSAPP_NUMERO = '5514999999999';
+    /* ===================================================== */
+
+    const $ = (sel) => document.querySelector(sel);
+    const soDigitos = (v) => v.replace(/\D/g, '');
+
+    function abrirWhatsApp(mensagem) {
+      const url = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMERO}&text=${encodeURIComponent(mensagem)}`;
+      window.open(url, '_blank', 'noopener');
+    }
+
+    function marcarErro(campo, temErro) {
+      campo.classList.toggle('erro', temErro);
+      const msg = campo.parentElement.querySelector('.msg-erro');
+      if (msg) msg.classList.toggle('ativa', temErro);
+      return !temErro;
+    }
+
+    const validar = {
+      nome:        (c) => marcarErro(c, c.value.trim().length < 3),
+      telefone:    (c) => { const d = soDigitos(c.value).length; return marcarErro(c, d < 10 || d > 11); },
+      obrigatorio: (c) => marcarErro(c, c.value.trim() === '')
+    };
+
+    document.querySelectorAll('.campo').forEach((c) => {
+      c.addEventListener('input',  () => c.classList.contains('erro') && marcarErro(c, false));
+      c.addEventListener('change', () => c.classList.contains('erro') && marcarErro(c, false));
+    });
+
+    // Máscara de telefone (00) 00000-0000
+    document.querySelectorAll('.mascara-tel').forEach((campo) => {
+      campo.addEventListener('input', () => {
+        let d = soDigitos(campo.value).slice(0, 11);
+        if (d.length > 10)      d = d.replace(/^(\d{2})(\d{5})(\d{0,4}).*/, '($1) $2-$3');
+        else if (d.length > 6)  d = d.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, '($1) $2-$3');
+        else if (d.length > 2)  d = d.replace(/^(\d{2})(\d{0,5})/, '($1) $2');
+        else if (d.length > 0)  d = d.replace(/^(\d*)/, '($1');
+        campo.value = d;
+      });
+    });
+
+    function focarPrimeiroErro(form) {
+      const primeiro = form.querySelector('.campo.erro');
+      if (primeiro) primeiro.focus();
+    }
+
+    // ---------- Ala Pais e Filhos: campos dinâmicos ----------
+    const inputQtd = $('#pfQtd');
+    const listaCriancas = $('#listaCriancas');
+
+    function renderizarCriancas() {
+      const qtd = Math.min(Math.max(parseInt(inputQtd.value, 10) || 0, 0), 10);
+      const atuais = listaCriancas.querySelectorAll('.bloco-crianca').length;
+
+      for (let i = atuais; i < qtd; i++) {
+        const bloco = document.createElement('div');
+        bloco.className = 'bloco-crianca grid grid-cols-[1fr_96px] gap-3 p-3 rounded-2xl bg-pele border-2 border-laranja/20';
+        bloco.innerHTML = `
+          <div>
+            <label class="block text-xs font-bold mb-1 text-laranja">Criança ${i + 1} – nome</label>
+            <input type="text" class="campo crianca-nome" placeholder="Nome da criança" />
+            <p class="msg-erro">Informe o nome.</p>
+          </div>
+          <div>
+            <label class="block text-xs font-bold mb-1 text-laranja">Idade</label>
+            <input type="number" min="0" max="17" class="campo crianca-idade" placeholder="Anos" />
+            <p class="msg-erro">Idade?</p>
+          </div>`;
+        bloco.querySelectorAll('.campo').forEach((c) =>
+          c.addEventListener('input', () => c.classList.contains('erro') && marcarErro(c, false)));
+        listaCriancas.appendChild(bloco);
+      }
+      const blocos = listaCriancas.querySelectorAll('.bloco-crianca');
+      for (let i = blocos.length - 1; i >= qtd; i--) blocos[i].remove();
+    }
+    inputQtd.addEventListener('input', renderizarCriancas);
+
+    $('#formPaisFilhos').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const form = e.currentTarget;
+      const nome = $('#pfNome'), tel = $('#pfTelefone');
+      const qtd = parseInt(inputQtd.value, 10);
+
+      let ok = validar.nome(nome);
+      ok = validar.telefone(tel) && ok;
+      ok = marcarErro(inputQtd, !(qtd >= 1 && qtd <= 10)) && ok;
+
+      const criancas = [];
+      listaCriancas.querySelectorAll('.bloco-crianca').forEach((b) => {
+        const n = b.querySelector('.crianca-nome');
+        const i = b.querySelector('.crianca-idade');
+        const idade = parseInt(i.value, 10);
+        ok = marcarErro(n, n.value.trim().length < 2) && ok;
+        ok = marcarErro(i, isNaN(idade) || idade < 0 || idade > 17) && ok;
+        criancas.push(`   • ${n.value.trim()} – ${i.value} ano(s)`);
+      });
+
+      if (!ok) return focarPrimeiroErro(form);
+
+      const mensagem =
+`🎭 *INSCRIÇÃO – ALA PAIS E FILHOS*
+_Mosquito • Caravana Cigana • Carnaval 2027_
+
+👤 *Responsável:* ${nome.value.trim()}
+📱 *WhatsApp:* ${tel.value}
+👧 *Quantidade de crianças:* ${qtd}
+
+🧒 *Crianças:*
+${criancas.join('\n')}
+
+✨ Quero desfilar com a minha família!`;
+
+      abrirWhatsApp(mensagem);
+    });
+
+    // ---------- Ala das Bandeiras ----------
+    $('#formBandeiras').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const form = e.currentTarget;
+      const nome = $('#bdNome'), tel = $('#bdTelefone');
+
+      let ok = validar.nome(nome);
+      ok = validar.telefone(tel) && ok;
+      if (!ok) return focarPrimeiroErro(form);
+
+      const mensagem =
+`🚩 *INSCRIÇÃO – ALA DAS BANDEIRAS*
+_Mosquito • Caravana Cigana • Carnaval 2027_
+
+👤 *Nome:* ${nome.value.trim()}
+📱 *WhatsApp:* ${tel.value}
+
+✨ Quero levar as cores da caravana para a avenida!`;
+
+      abrirWhatsApp(mensagem);
+    });
+
+    // ---------- Abadá ----------
+    $('#formAbada').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const form = e.currentTarget;
+      const nome = $('#abNome'), tel = $('#abTelefone'), tam = $('#abTamanho');
+
+      let ok = validar.nome(nome);
+      ok = validar.telefone(tel) && ok;
+      ok = validar.obrigatorio(tam) && ok;
+      if (!ok) return focarPrimeiroErro(form);
+
+      const mensagem =
+`👕 *PEDIDO – ABADÁ OFICIAL 2027*
+_Mosquito • Caravana Cigana_
+
+👤 *Nome:* ${nome.value.trim()}
+📱 *WhatsApp:* ${tel.value}
+📏 *Tamanho:* ${tam.value}
+
+Gostaria de saber valores, formas de pagamento e retirada. 🙌`;
+
+      abrirWhatsApp(mensagem);
+    });
+
+    // ---------- Navbar: sombra ao rolar ----------
+    const navbar = $('#navbar');
+    const atualizarNavbar = () => navbar.classList.toggle('shadow-lg', window.scrollY > 20);
+    window.addEventListener('scroll', atualizarNavbar, { passive: true });
+    atualizarNavbar();
+
+    // ---------- Menu mobile ----------
+    const btnMenu = $('#btnMenu'), menuMobile = $('#menuMobile');
+    btnMenu.addEventListener('click', () => {
+      const aberto = menuMobile.classList.toggle('hidden') === false;
+      btnMenu.setAttribute('aria-expanded', aberto);
+    });
+    document.querySelectorAll('.link-mobile').forEach((l) =>
+      l.addEventListener('click', () => { menuMobile.classList.add('hidden'); btnMenu.setAttribute('aria-expanded', 'false'); }));
+
+    // ---------- Animação de revelação ----------
+    const observer = new IntersectionObserver((entradas) => {
+      entradas.forEach((en) => { if (en.isIntersecting) { en.target.classList.add('visivel'); observer.unobserve(en.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.revelar').forEach((el) => observer.observe(el));
+
+    $('#ano').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
