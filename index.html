@@ -161,23 +161,25 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
       <a href="#inicio" class="titulo-preto text-3xl pt-1">Mosquito</a>
 
-      <ul class="hidden lg:flex items-center gap-1 text-sm font-semibold">
+      <ul class="hidden xl:flex items-center gap-1 whitespace-nowrap text-sm font-semibold">
         <li><a href="#enredo" class="px-3 py-2 rounded-full hover:bg-pele hover:text-laranja transition">Conheça o Enredo</a></li>
         <li><a href="#alas"   class="px-3 py-2 rounded-full hover:bg-pele hover:text-laranja transition">Desfile em Nossas Alas</a></li>
         <li><a href="#samba"  class="px-3 py-2 rounded-full hover:bg-pele hover:text-laranja transition">Ouça o Samba</a></li>
+        <li><a href="#apoio"  class="px-3 py-2 rounded-full hover:bg-pele hover:text-laranja transition">Apoio Cultural</a></li>
         <li><a href="#abada"  class="ml-3 px-5 py-2 rounded-full btn-laranja font-bold">Garanta seu Abadá</a></li>
       </ul>
 
-      <button id="btnMenu" class="lg:hidden text-laranja p-2 rounded-lg hover:bg-pele" aria-label="Abrir menu" aria-expanded="false">
+      <button id="btnMenu" class="xl:hidden text-laranja p-2 rounded-lg hover:bg-pele" aria-label="Abrir menu" aria-expanded="false">
         <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></svg>
       </button>
     </div>
 
-    <div id="menuMobile" class="lg:hidden hidden border-t-2 border-laranja/20 bg-branco">
+    <div id="menuMobile" class="xl:hidden hidden border-t-2 border-laranja/20 bg-branco">
       <ul class="flex flex-col p-4 gap-1 font-semibold">
         <li><a href="#enredo" class="link-mobile block px-4 py-3 rounded-xl hover:bg-pele">Conheça o Enredo</a></li>
         <li><a href="#alas"   class="link-mobile block px-4 py-3 rounded-xl hover:bg-pele">Desfile em Nossas Alas</a></li>
         <li><a href="#samba"  class="link-mobile block px-4 py-3 rounded-xl hover:bg-pele">Ouça o Samba</a></li>
+        <li><a href="#apoio"  class="link-mobile block px-4 py-3 rounded-xl hover:bg-pele">Apoio Cultural</a></li>
         <li><a href="#abada"  class="link-mobile block px-4 py-3 rounded-xl btn-laranja text-center mt-2">Garanta seu Abadá</a></li>
       </ul>
     </div>
@@ -203,6 +205,7 @@
         <a href="#enredo" class="btn-branco font-bold px-6 py-3.5 rounded-full">Conheça o Enredo</a>
         <a href="#alas"   class="btn-branco font-bold px-6 py-3.5 rounded-full">Desfile em Nossas Alas</a>
         <a href="#samba"  class="btn-branco font-bold px-6 py-3.5 rounded-full">▶ Ouça o Samba</a>
+        <a href="#apoio"  class="btn-branco font-bold px-6 py-3.5 rounded-full">Apoio Cultural</a>
         <a href="#abada"  class="btn-laranja font-bold px-6 py-3.5 rounded-full">Garanta seu Abadá</a>
       </div>
     </div>
@@ -389,6 +392,47 @@
         </div>
 
       </div>
+
+      <!-- Kit Abadá Desfile -->
+      <div class="revelar mt-16 card overflow-hidden grid md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+        <div class="bg-white flex items-end justify-center pt-6 border-b-2 md:border-b-0 md:border-r-2 border-tinta">
+          <img src="img/kit-abada.jpg" width="640" height="1079" alt="Kit Abadá Desfile: lenço cigano branco, abadá, copo e lenço laranja e branco"
+               class="w-full max-w-sm h-auto" loading="lazy" />
+        </div>
+        <div class="p-6 sm:p-10 flex flex-col justify-center">
+          <h3 class="titulo-preto text-4xl sm:text-5xl">Kit Abadá Desfile</h3>
+          <ul class="mt-6 grid sm:grid-cols-2 gap-3">
+            <li class="flex items-center gap-3 bg-pele rounded-2xl px-4 py-3 font-bold"><span class="w-9 h-9 grid place-items-center rounded-full bg-laranja text-white text-sm shrink-0">1</span>Lenço cigano branco</li>
+            <li class="flex items-center gap-3 bg-pele rounded-2xl px-4 py-3 font-bold"><span class="w-9 h-9 grid place-items-center rounded-full bg-laranja text-white text-sm shrink-0">2</span>Abadá</li>
+            <li class="flex items-center gap-3 bg-pele rounded-2xl px-4 py-3 font-bold"><span class="w-9 h-9 grid place-items-center rounded-full bg-laranja text-white text-sm shrink-0">3</span>Copo</li>
+            <li class="flex items-center gap-3 bg-pele rounded-2xl px-4 py-3 font-bold"><span class="w-9 h-9 grid place-items-center rounded-full bg-laranja text-white text-sm shrink-0">4</span>Lenço laranja e branco</li>
+          </ul>
+          <p class="mt-6 text-sm text-tinta/70 leading-relaxed">
+            Os lenços poderão ser usados durante o desfile de forma alternada, conforme a ala — na cabeça ou na cintura —
+            em combinação com o chapéu da ala ou da bateria. O mesmo lenço também será usado nas apresentações da bateria,
+            garantindo unidade visual e identidade ao conjunto.
+          </p>
+
+          <!-- Fechou a ala, ganhou o kit + valores -->
+          <div class="mt-7 rounded-2xl bg-laranja text-white border-2 border-tinta shadow-[4px_4px_0_#2B1610] p-5 sm:p-6">
+            <p class="titulo-branco text-xl sm:text-2xl">Fechou a ala, ganhou o kit!</p>
+            <p class="mt-2 text-sm text-white/90">
+              Ao reservar seu lugar em uma das alas, você já faz parte do desfile com o <strong>Kit Abadá Desfile completo</strong> incluso.
+            </p>
+            <div class="mt-4 grid sm:grid-cols-2 gap-3">
+              <div class="bg-white text-tinta rounded-xl px-4 py-3 flex items-center justify-between gap-3">
+                <span class="font-bold text-sm">Ala Pais e Filhos</span>
+                <span class="titulo-preto text-xl whitespace-nowrap" data-valor="paisFilhos">R$ 0,00</span>
+              </div>
+              <div class="bg-white text-tinta rounded-xl px-4 py-3 flex items-center justify-between gap-3">
+                <span class="font-bold text-sm">Ala das Bandeiras</span>
+                <span class="titulo-preto text-xl whitespace-nowrap" data-valor="bandeiras">R$ 0,00</span>
+              </div>
+            </div>
+            <a href="#alas" class="mt-4 inline-block btn-branco font-bold px-5 py-2.5 rounded-full text-sm">Reservar meu lugar →</a>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -496,47 +540,6 @@
           </form>
         </div>
       </div>
-
-      <!-- Kit Abadá Desfile -->
-      <div class="revelar mt-24 card overflow-hidden grid md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
-        <div class="bg-white flex items-end justify-center pt-6 border-b-2 md:border-b-0 md:border-r-2 border-tinta">
-          <img src="img/kit-abada.jpg" width="640" height="1079" alt="Kit Abadá Desfile: lenço cigano branco, abadá, copo e lenço laranja e branco"
-               class="w-full max-w-sm h-auto" loading="lazy" />
-        </div>
-        <div class="p-6 sm:p-10 flex flex-col justify-center">
-          <h3 class="titulo-preto text-4xl sm:text-5xl">Kit Abadá Desfile</h3>
-          <ul class="mt-6 grid sm:grid-cols-2 gap-3">
-            <li class="flex items-center gap-3 bg-pele rounded-2xl px-4 py-3 font-bold"><span class="w-9 h-9 grid place-items-center rounded-full bg-laranja text-white text-sm shrink-0">1</span>Lenço cigano branco</li>
-            <li class="flex items-center gap-3 bg-pele rounded-2xl px-4 py-3 font-bold"><span class="w-9 h-9 grid place-items-center rounded-full bg-laranja text-white text-sm shrink-0">2</span>Abadá</li>
-            <li class="flex items-center gap-3 bg-pele rounded-2xl px-4 py-3 font-bold"><span class="w-9 h-9 grid place-items-center rounded-full bg-laranja text-white text-sm shrink-0">3</span>Copo</li>
-            <li class="flex items-center gap-3 bg-pele rounded-2xl px-4 py-3 font-bold"><span class="w-9 h-9 grid place-items-center rounded-full bg-laranja text-white text-sm shrink-0">4</span>Lenço laranja e branco</li>
-          </ul>
-          <p class="mt-6 text-sm text-tinta/70 leading-relaxed">
-            Os lenços poderão ser usados durante o desfile de forma alternada, conforme a ala — na cabeça ou na cintura —
-            em combinação com o chapéu da ala ou da bateria. O mesmo lenço também será usado nas apresentações da bateria,
-            garantindo unidade visual e identidade ao conjunto.
-          </p>
-
-          <!-- Fechou a ala, ganhou o kit + valores -->
-          <div class="mt-7 rounded-2xl bg-laranja text-white border-2 border-tinta shadow-[4px_4px_0_#2B1610] p-5 sm:p-6">
-            <p class="titulo-branco text-xl sm:text-2xl">Fechou a ala, ganhou o kit!</p>
-            <p class="mt-2 text-sm text-white/90">
-              Ao reservar seu lugar em uma das alas, você já faz parte do desfile com o <strong>Kit Abadá Desfile completo</strong> incluso.
-            </p>
-            <div class="mt-4 grid sm:grid-cols-2 gap-3">
-              <div class="bg-white text-tinta rounded-xl px-4 py-3 flex items-center justify-between gap-3">
-                <span class="font-bold text-sm">Ala Pais e Filhos</span>
-                <span class="titulo-preto text-xl whitespace-nowrap" data-valor="paisFilhos">R$ 0,00</span>
-              </div>
-              <div class="bg-white text-tinta rounded-xl px-4 py-3 flex items-center justify-between gap-3">
-                <span class="font-bold text-sm">Ala das Bandeiras</span>
-                <span class="titulo-preto text-xl whitespace-nowrap" data-valor="bandeiras">R$ 0,00</span>
-              </div>
-            </div>
-            <a href="#alas" class="mt-4 inline-block btn-branco font-bold px-5 py-2.5 rounded-full text-sm">Reservar meu lugar →</a>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -586,42 +589,42 @@
   <!-- =========================================================
        6. FOOTER
   ========================================================== -->
-  <footer class="fundo-laranja relative overflow-hidden text-white">
+  <footer class="fundo-estrelas relative overflow-hidden text-tinta border-t-2 border-laranja/20">
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 pt-16 pb-10 grid md:grid-cols-3 gap-10 text-center md:text-left">
       <div>
-        <a href="#inicio" class="inline-block bg-white rounded-3xl p-3 border-2 border-tinta shadow-[4px_4px_0_#2B1610]"><img src="img/logo-caravana-cigana.png" alt="Mosquito – Caravana Cigana" class="w-32 h-auto" width="596" height="781" loading="lazy" /></a>
-        <p class="mt-3 text-sm text-white/90">Carnaval 2027 • Brotas-SP</p>
+        <a href="#inicio" class="inline-block"><img src="img/logo-caravana-cigana.png" alt="Mosquito – Caravana Cigana" class="w-36 h-auto drop-shadow-[0_6px_12px_rgba(120,40,0,.2)]" width="596" height="781" loading="lazy" /></a>
+        <p class="mt-3 text-sm text-tinta/80">Carnaval 2027 • Brotas-SP</p>
       </div>
 
       <div>
-        <h4 class="titulo-branco text-lg mb-4">Siga a caravana</h4>
+        <h4 class="titulo-preto text-lg mb-4">Siga a caravana</h4>
         <!-- ▼ TROQUE OS href="#" PELOS PERFIS REAIS ▼ -->
         <div class="flex gap-3 justify-center md:justify-start">
-          <a href="#" aria-label="Instagram" class="w-12 h-12 grid place-items-center rounded-full bg-white text-laranja border-2 border-tinta shadow-[3px_3px_0_#2B1610] hover:-translate-y-1 transition">
+          <a href="#" aria-label="Instagram" class="w-12 h-12 grid place-items-center rounded-full bg-laranja text-white border-2 border-tinta shadow-[3px_3px_0_#2B1610] hover:-translate-y-1 transition">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
           </a>
-          <a href="#" aria-label="Facebook" class="w-12 h-12 grid place-items-center rounded-full bg-white text-laranja border-2 border-tinta shadow-[3px_3px_0_#2B1610] hover:-translate-y-1 transition">
+          <a href="#" aria-label="Facebook" class="w-12 h-12 grid place-items-center rounded-full bg-laranja text-white border-2 border-tinta shadow-[3px_3px_0_#2B1610] hover:-translate-y-1 transition">
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M14 8V6.5c0-.7.5-1 1-1h2V2h-3c-2.8 0-4 2-4 4.3V8H8v3.5h2V22h4V11.5h2.7L17 8h-3z"/></svg>
           </a>
-          <a href="#" aria-label="TikTok" class="w-12 h-12 grid place-items-center rounded-full bg-white text-laranja border-2 border-tinta shadow-[3px_3px_0_#2B1610] hover:-translate-y-1 transition">
+          <a href="#" aria-label="TikTok" class="w-12 h-12 grid place-items-center rounded-full bg-laranja text-white border-2 border-tinta shadow-[3px_3px_0_#2B1610] hover:-translate-y-1 transition">
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M16.5 3c.4 2.2 1.8 3.6 4 3.8v3.3c-1.5 0-2.8-.4-4-1.2v6.2A6 6 0 1 1 10.5 9v3.4a2.7 2.7 0 1 0 2.6 2.7V3h3.4z"/></svg>
           </a>
-          <a href="#" aria-label="YouTube" class="w-12 h-12 grid place-items-center rounded-full bg-white text-laranja border-2 border-tinta shadow-[3px_3px_0_#2B1610] hover:-translate-y-1 transition">
+          <a href="#" aria-label="YouTube" class="w-12 h-12 grid place-items-center rounded-full bg-laranja text-white border-2 border-tinta shadow-[3px_3px_0_#2B1610] hover:-translate-y-1 transition">
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22 8.2a3 3 0 0 0-2.1-2.1C18 5.6 12 5.6 12 5.6s-6 0-7.9.5A3 3 0 0 0 2 8.2 31 31 0 0 0 1.6 12c0 1.3.1 2.6.4 3.8a3 3 0 0 0 2.1 2.1c1.9.5 7.9.5 7.9.5s6 0 7.9-.5a3 3 0 0 0 2.1-2.1c.3-1.2.4-2.5.4-3.8s-.1-2.6-.4-3.8zM10 15.1V8.9l5.2 3.1-5.2 3.1z"/></svg>
           </a>
         </div>
       </div>
 
       <div>
-        <h4 class="titulo-branco text-lg mb-4">Realização</h4>
-        <p class="text-sm text-white/90">Bloco Mosquito<br/>Apoio: <a href="#apoio" class="underline underline-offset-2 hover:text-white">veja nossos apoiadores</a></p>
+        <h4 class="titulo-preto text-lg mb-4">Realização</h4>
+        <p class="text-sm text-tinta/80">Bloco Mosquito<br/>Apoio: <a href="#apoio" class="underline underline-offset-2 text-laranja font-semibold hover:text-fogo">veja nossos apoiadores</a></p>
       </div>
     </div>
 
-    <div class="relative border-t-2 border-white/25">
+    <div class="relative border-t-2 border-laranja/20">
       <p class="max-w-7xl mx-auto px-4 sm:px-6 py-6 text-center text-sm">
-        <span class="titulo-branco text-base sm:text-lg">O verdadeiro lar é o caminho — e o destino, a festa!</span>
-        <br /><span class="text-white/75">© <span id="ano"></span> Mosquito • Viva o Carnaval 2027 ★</span>
+        <span class="titulo-preto text-base sm:text-lg">O verdadeiro lar é o caminho — e o destino, a festa!</span>
+        <br /><span class="text-tinta/70">© <span id="ano"></span> Mosquito • Viva o Carnaval 2027 ★</span>
       </p>
     </div>
   </footer>
