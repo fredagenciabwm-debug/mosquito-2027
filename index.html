@@ -541,6 +541,49 @@
   </section>
 
   <!-- =========================================================
+       APOIO CULTURAL
+       Logos ficam em img/apoio/. Para incluir um apoiador novo,
+       copie um bloco <div class="apoio-logo">…</div> e troque a imagem.
+  ========================================================== -->
+  <section id="apoio" class="fundo-laranja py-20 md:py-28 scroll-mt-16">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="text-center revelar">
+        <p class="rotulo !text-white/90 text-lg">✦ Quem fortalece a caravana ✦</p>
+        <h2 class="mt-2 titulo-branco text-5xl md:text-6xl">Apoio Cultural</h2>
+        <p class="mt-4 text-white/90 max-w-2xl mx-auto">Nosso muito obrigado às empresas que acreditam no Mosquito e ajudam a levar a Caravana Cigana para a avenida.</p>
+      </div>
+
+      <!-- Patrocinadores master (maior destaque) -->
+      <div class="revelar mt-12 grid md:grid-cols-2 gap-6 sm:gap-8">
+        <div class="card !shadow-[8px_8px_0_#2B1610] relative px-6 pt-12 pb-8 sm:px-10 sm:pt-14 sm:pb-10 flex items-center justify-center min-h-[15rem] sm:min-h-[18rem]">
+          <span class="absolute top-4 left-1/2 -translate-x-1/2 whitespace-nowrap bg-laranja text-white text-xs font-bold px-3 py-1.5 rounded-full border-2 border-tinta">★ Patrocínio Master ★</span>
+          <img src="img/apoio/caminho-das-aguas.png" width="900" height="443" alt="Hotel Pousada Caminho das Águas"
+               class="w-full max-w-[22rem] max-h-44 sm:max-h-48 object-contain" loading="lazy" />
+        </div>
+        <div class="card !shadow-[8px_8px_0_#2B1610] relative px-6 pt-12 pb-8 sm:px-10 sm:pt-14 sm:pb-10 flex items-center justify-center min-h-[15rem] sm:min-h-[18rem]">
+          <span class="absolute top-4 left-1/2 -translate-x-1/2 whitespace-nowrap bg-laranja text-white text-xs font-bold px-3 py-1.5 rounded-full border-2 border-tinta">★ Patrocínio Master ★</span>
+          <img src="img/apoio/cimi-supermercados.png" width="900" height="514" alt="Cimi Supermercados"
+               class="w-full max-w-[22rem] max-h-44 sm:max-h-48 object-contain" loading="lazy" />
+        </div>
+      </div>
+
+      <!-- Demais apoiadores -->
+      <div class="revelar mt-8 card !shadow-[8px_8px_0_#2B1610] p-6 sm:p-10">
+        <p class="rotulo text-center text-base">Apoiadores</p>
+        <div class="mt-6 flex flex-wrap justify-center gap-x-4 gap-y-6 sm:gap-x-8 sm:gap-y-8">
+          <div class="apoio-logo w-[42%] sm:w-[28%] lg:w-[21%] h-20 sm:h-24 flex items-center justify-center"><img src="img/apoio/qtal-sports.png"           width="551" height="315" alt="Qtal Sports"                 class="max-w-full max-h-full object-contain" loading="lazy" /></div>
+          <div class="apoio-logo w-[42%] sm:w-[28%] lg:w-[21%] h-20 sm:h-24 flex items-center justify-center"><img src="img/apoio/marcel-angelelli.png"      width="600" height="340" alt="Marcel Angelelli – Laranjas Direto da Roça" class="max-w-full max-h-full object-contain" loading="lazy" /></div>
+          <div class="apoio-logo w-[42%] sm:w-[28%] lg:w-[21%] h-20 sm:h-24 flex items-center justify-center"><img src="img/apoio/camillo.png"               width="600" height="144" alt="Camillo Bar e Restaurante"   class="max-w-full max-h-full object-contain" loading="lazy" /></div>
+          <div class="apoio-logo w-[42%] sm:w-[28%] lg:w-[21%] h-20 sm:h-24 flex items-center justify-center"><img src="img/apoio/braguinha.png"             width="600" height="291" alt="Loja do Braguinha"           class="max-w-full max-h-full object-contain" loading="lazy" /></div>
+          <div class="apoio-logo w-[42%] sm:w-[28%] lg:w-[21%] h-20 sm:h-24 flex items-center justify-center"><img src="img/apoio/jnf-engenharia.png"        width="556" height="425" alt="JNF Engenharia"              class="max-w-full max-h-full object-contain" loading="lazy" /></div>
+          <div class="apoio-logo w-[42%] sm:w-[28%] lg:w-[21%] h-20 sm:h-24 flex items-center justify-center"><img src="img/apoio/bertocco.png"              width="600" height="514" alt="Bertocco – Brotas-SP"        class="max-w-full max-h-full object-contain" loading="lazy" /></div>
+          <div class="apoio-logo w-[42%] sm:w-[28%] lg:w-[21%] h-20 sm:h-24 flex items-center justify-center"><img src="img/apoio/uniao-posto-de-molas.png"  width="600" height="275" alt="União Posto de Molas – Torrinha-SP" class="max-w-full max-h-full object-contain" loading="lazy" /></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
        6. FOOTER
   ========================================================== -->
   <footer class="fundo-laranja relative overflow-hidden text-white">
@@ -571,7 +614,7 @@
 
       <div>
         <h4 class="titulo-branco text-lg mb-4">Realização</h4>
-        <p class="text-sm text-white/90">Bloco Mosquito<br/>Apoio: <span class="text-white/70">seus parceiros aqui</span></p>
+        <p class="text-sm text-white/90">Bloco Mosquito<br/>Apoio: <a href="#apoio" class="underline underline-offset-2 hover:text-white">veja nossos apoiadores</a></p>
       </div>
     </div>
 
