@@ -285,12 +285,16 @@
               <strong class="text-laranja">Crianças:</strong> liberadas com fantasias livres de ciganos (responsabilidade dos pais).
             </p>
 
-            <div class="mt-5 flex items-center justify-between gap-4 rounded-2xl border-2 border-dashed border-laranja bg-pele px-5 py-4">
-              <div>
-                <p class="rotulo text-xs">Kit + dois dias de desfile</p>
-                <p class="text-sm text-tinta/75 mt-0.5">Com 5% de desconto: <strong class="text-laranja whitespace-nowrap" data-valor="paisFilhosDesconto">R$ 0,00</strong></p>
+            <div class="mt-5 rounded-2xl border-2 border-dashed border-laranja bg-pele px-5 py-4">
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <p class="rotulo text-xs">Kit + dois dias de desfile</p>
+                  <p class="mt-1 text-sm text-tinta/60">De <s class="font-semibold whitespace-nowrap" data-valor="paisFilhos">R$ 0,00</s></p>
+                </div>
+                <span class="shrink-0 bg-laranja text-white text-xs sm:text-sm font-extrabold px-3 py-1.5 rounded-full border-2 border-tinta shadow-[2px_2px_0_#2B1610] whitespace-nowrap">5% OFF</span>
               </div>
-              <p class="titulo-preto text-2xl sm:text-3xl whitespace-nowrap" data-valor="paisFilhos">R$ 0,00</p>
+              <p class="mt-2 text-sm font-semibold text-tinta/80">na reserva antecipada por</p>
+              <p class="titulo-preto !text-laranja text-4xl sm:text-5xl whitespace-nowrap" data-valor="paisFilhosDesconto">R$ 0,00</p>
             </div>
 
             <form id="formPaisFilhos" class="mt-6 space-y-4 flex-1 flex flex-col" novalidate>
@@ -353,12 +357,16 @@
               <li class="flex gap-2"><span class="text-laranja">★</span> Bandeiras espalhadas pela ala</li>
             </ul>
 
-            <div class="mt-5 flex items-center justify-between gap-4 rounded-2xl border-2 border-dashed border-laranja bg-pele px-5 py-4">
-              <div>
-                <p class="rotulo text-xs">Kit + dois dias de desfile</p>
-                <p class="text-sm text-tinta/75 mt-0.5">Com 5% de desconto: <strong class="text-laranja whitespace-nowrap" data-valor="bandeirasDesconto">R$ 0,00</strong></p>
+            <div class="mt-5 rounded-2xl border-2 border-dashed border-laranja bg-pele px-5 py-4">
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <p class="rotulo text-xs">Kit + dois dias de desfile</p>
+                  <p class="mt-1 text-sm text-tinta/60">De <s class="font-semibold whitespace-nowrap" data-valor="bandeiras">R$ 0,00</s></p>
+                </div>
+                <span class="shrink-0 bg-laranja text-white text-xs sm:text-sm font-extrabold px-3 py-1.5 rounded-full border-2 border-tinta shadow-[2px_2px_0_#2B1610] whitespace-nowrap">5% OFF</span>
               </div>
-              <p class="titulo-preto text-2xl sm:text-3xl whitespace-nowrap" data-valor="bandeiras">R$ 0,00</p>
+              <p class="mt-2 text-sm font-semibold text-tinta/80">na reserva antecipada por</p>
+              <p class="titulo-preto !text-laranja text-4xl sm:text-5xl whitespace-nowrap" data-valor="bandeirasDesconto">R$ 0,00</p>
             </div>
 
             <form id="formBandeiras" class="mt-6 space-y-4 flex-1 flex flex-col" novalidate>
@@ -416,15 +424,22 @@
             <p class="titulo-branco text-xl sm:text-2xl">Fechou a ala, ganhou o kit!</p>
             <p class="mt-2 text-sm text-white/90">
               Ao reservar seu lugar em uma das alas, você já faz parte do desfile com o <strong>Kit Abadá Desfile completo</strong> incluso.
+              Reservando antecipado, você ganha <strong>5% OFF</strong>.
             </p>
             <div class="mt-4 grid sm:grid-cols-2 gap-3">
               <div class="bg-white text-tinta rounded-xl px-4 py-3 flex items-center justify-between gap-3">
                 <span class="font-bold text-sm">Ala Pais e Filhos</span>
-                <span class="titulo-preto text-xl whitespace-nowrap" data-valor="paisFilhos">R$ 0,00</span>
+                <span class="text-right leading-tight">
+                  <s class="block text-xs text-tinta/50 whitespace-nowrap" data-valor="paisFilhos">R$ 0,00</s>
+                  <span class="titulo-preto !text-laranja text-xl whitespace-nowrap" data-valor="paisFilhosDesconto">R$ 0,00</span>
+                </span>
               </div>
               <div class="bg-white text-tinta rounded-xl px-4 py-3 flex items-center justify-between gap-3">
                 <span class="font-bold text-sm">Ala das Bandeiras</span>
-                <span class="titulo-preto text-xl whitespace-nowrap" data-valor="bandeiras">R$ 0,00</span>
+                <span class="text-right leading-tight">
+                  <s class="block text-xs text-tinta/50 whitespace-nowrap" data-valor="bandeiras">R$ 0,00</s>
+                  <span class="titulo-preto !text-laranja text-xl whitespace-nowrap" data-valor="bandeirasDesconto">R$ 0,00</span>
+                </span>
               </div>
             </div>
             <a href="#alas" class="mt-4 inline-block btn-branco font-bold px-5 py-2.5 rounded-full text-sm">Reservar meu lugar →</a>
@@ -885,7 +900,7 @@
 
       enviarInscricao({
         tipo: 'paisFilhos', nome: nome.value.trim(), whatsapp: tel.value, tamanho: tam.value,
-        criancas, valorKit: VALORES_KIT.paisFilhos
+        criancas, valorKit: VALORES_KIT.paisFilhosDesconto
       }, form, {
         titulo: 'Inscrição recebida!',
         texto: `Sua família já está na <strong>Ala Pais e Filhos</strong>. Em breve nossa equipe chama você no WhatsApp ${esc(tel.value)} para confirmar o pagamento do Kit Abadá Desfile.`
@@ -905,7 +920,7 @@
 
       enviarInscricao({
         tipo: 'bandeiras', nome: nome.value.trim(), whatsapp: tel.value, tamanho: tam.value,
-        valorKit: VALORES_KIT.bandeiras
+        valorKit: VALORES_KIT.bandeirasDesconto
       }, form, {
         titulo: 'Inscrição recebida!',
         texto: `Seu lugar na <strong>Ala das Bandeiras</strong> foi registrado. Em breve nossa equipe chama você no WhatsApp ${esc(tel.value)} para confirmar o pagamento do Kit Abadá Desfile.`
