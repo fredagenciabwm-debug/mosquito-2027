@@ -684,6 +684,12 @@
 
     /* Tamanhos de abadá oferecidos (mesma lista do painel interno) */
     const TAMANHOS = ['PP', 'P', 'M', 'G', 'GG', 'XGG', 'Infantil'];
+    /* Abadá infantil das crianças da Ala Pais e Filhos: numeração de 1 a 16 */
+    const TAMANHOS_ADULTO = ['PP', 'P', 'M', 'G', 'GG', 'XGG'];
+    const TAMANHOS_INFANTIS = Array.from({ length: 16 }, (_, i) => 'Infantil ' + (i + 1));
+    const opcoesCrianca = '<option value="">Tam.</option>'
+      + '<optgroup label="Abadá Infantil">' + TAMANHOS_INFANTIS.map((t) => `<option value="${t}">${t}</option>`).join('') + '</optgroup>'
+      + '<optgroup label="Adulto (crianças maiores)">' + TAMANHOS_ADULTO.map((t) => `<option>${t}</option>`).join('') + '</optgroup>';
 
     document.querySelectorAll('select[data-tamanhos]').forEach((s) => {
       s.innerHTML = '<option value="">Selecione</option>' + TAMANHOS.map((t) => `<option>${t}</option>`).join('');
@@ -799,7 +805,7 @@
 
       for (let i = atuais; i < qtd; i++) {
         const bloco = document.createElement('div');
-        bloco.className = 'bloco-crianca grid grid-cols-2 sm:grid-cols-[1fr_76px_112px] gap-3 p-3 rounded-2xl bg-pele border-2 border-laranja/20';
+        bloco.className = 'bloco-crianca grid grid-cols-2 sm:grid-cols-[1fr_76px_136px] gap-3 p-3 rounded-2xl bg-pele border-2 border-laranja/20';
         bloco.innerHTML = `
           <div class="col-span-2 sm:col-span-1">
             <label class="block text-xs font-bold mb-1 text-laranja">Criança ${i + 1} – nome</label>
@@ -812,8 +818,8 @@
             <p class="msg-erro">Idade?</p>
           </div>
           <div>
-            <label class="block text-xs font-bold mb-1 text-laranja">Abadá</label>
-            <select class="campo crianca-tamanho !px-2">${['<option value="">Tam.</option>', ...TAMANHOS.map((t) => `<option${t === 'Infantil' ? ' selected' : ''}>${t}</option>`)].join('')}</select>
+            <label class="block text-xs font-bold mb-1 text-laranja">Abadá Infantil</label>
+            <select class="campo crianca-tamanho !px-2">${opcoesCrianca}</select>
             <p class="msg-erro">Tamanho?</p>
           </div>`;
         bloco.querySelectorAll('.campo').forEach((c) =>
@@ -880,6 +886,11 @@
     });
 
     // ---------- Abadá ----------
+    // "R$ 54,90" × 2 → "R$ 109,80"
+    function valorTotal(unitario, quantidade) {
+      const n = parseFloat(String(unitario).replace(/[^\d,]/g, '').replace(',', '.')) || 0;
+      return (n * (quantidade || 1)).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
     $('#formAbada').addEventListener('submit', (e) => {
       e.preventDefault();
       const form = e.currentTarget;
@@ -893,7 +904,8 @@
       if (!ok) return focarPrimeiroErro(form);
 
       enviarInscricao({
-        tipo: 'abada', nome: nome.value.trim(), whatsapp: tel.value, tamanho: tam.value, quantidade
+        tipo: 'abada', nome: nome.value.trim(), whatsapp: tel.value, tamanho: tam.value, quantidade,
+        valorKit: valorTotal(VALORES_KIT.avulso, quantidade)
       }, form, {
         titulo: 'Pedido recebido!',
         texto: `Anotamos ${quantidade} abadá(s) tamanho <strong>${esc(tam.value)}</strong>. Em breve nossa equipe chama você no WhatsApp ${esc(tel.value)} para combinar o pagamento e a retirada.`

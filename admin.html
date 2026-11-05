@@ -220,8 +220,8 @@
             <label class="rotulo-campo" for="fQtd">Quantidade *</label>
             <input id="fQtd" type="number" min="1" max="200" value="1" class="campo" />
           </div>
-          <div data-nao="abada">
-            <label class="rotulo-campo" for="fValor">Valor do kit</label>
+          <div>
+            <label class="rotulo-campo" for="fValor"><span id="rotuloValor">Valor do kit</span></label>
             <input id="fValor" class="campo" placeholder="R$ 0,00" maxlength="20" />
           </div>
           <div>
@@ -257,6 +257,11 @@
 
   <script>
     const TAMANHOS = ['PP', 'P', 'M', 'G', 'GG', 'XGG', 'Infantil'];
+    /* Abadá infantil das crianças (Ala Pais e Filhos): numeração de 1 a 16 */
+    const TAMANHOS_ADULTO = ['PP', 'P', 'M', 'G', 'GG', 'XGG'];
+    const TAMANHOS_INFANTIS = Array.from({ length: 16 }, (_, i) => 'Infantil ' + (i + 1));
+    /* Valor unitário do abadá avulso (mesmo do index.html) — usado para sugerir o valor no cadastro */
+    const VALOR_AVULSO = 'R$ 54,90';
     const NOMES = { paisFilhos: 'Ala Pais e Filhos', bandeiras: 'Ala das Bandeiras', destaque: 'Destaques', bateria: 'Bateria', abada: 'Abadás avulsos' };
     const SETORES = Object.keys(NOMES);
     const SETORES_KIT = ['paisFilhos', 'bandeiras', 'destaque', 'bateria'];
@@ -362,6 +367,14 @@
     const qtd = (r) => r.tipo === 'paisFilhos' ? 1 + (r.criancas || []).length : (r.quantidade || 1);
     const soma = (lista) => lista.reduce((s, r) => s + qtd(r), 0);
 
+    const TODOS_TAMANHOS = [...TAMANHOS_ADULTO, ...TAMANHOS_INFANTIS, 'Infantil'];
+    function contarTamanhos() {
+      const cont = Object.fromEntries(TODOS_TAMANHOS.map((t) => [t, 0])); let semTam = 0;
+      inscricoes.forEach((r) => abadasDe(r).forEach((t) => { if (t in cont) cont[t]++; else semTam++; }));
+      cont._semTam = semTam;
+      return cont;
+    }
+
     function renderizarContadores() {
       const pagos = inscricoes.filter((r) => r.status === 'pago');
       const total = soma(inscricoes), totalPagos = soma(pagos);
@@ -377,13 +390,19 @@
       $('#cInscricoes').textContent = inscricoes.length;
       $('#cInscricoesDet').textContent = `${pagos.length} pagas • ${inscricoes.length - pagos.length} pendentes`;
 
-      const cont = Object.fromEntries(TAMANHOS.map((t) => [t, 0]));
-      inscricoes.forEach((r) => abadasDe(r).forEach((t) => { if (t in cont) cont[t]++; }));
-      $('#porTamanho').innerHTML = TAMANHOS.map((t) => `
-        <div class="rounded-xl bg-pele border-2 border-laranja/25 px-2 py-3 text-center">
-          <p class="text-xs font-bold text-laranja">${t}</p>
-          <p class="titulo text-2xl mt-0.5">${cont[t]}</p>
-        </div>`).join('');
+      const cont = contarTamanhos();
+      const caixa = (rotulo, n) => `
+        <div class="rounded-xl bg-pele border-2 border-laranja/25 px-2 py-3 text-center ${n ? '' : 'opacity-60'}">
+          <p class="text-xs font-bold text-laranja whitespace-nowrap">${rotulo}</p>
+          <p class="titulo text-2xl mt-0.5">${n}</p>
+        </div>`;
+      const adultos = TAMANHOS_ADULTO.map((t) => caixa(t, cont[t]));
+      if (cont.Infantil) adultos.push(caixa('Infantil (s/ nº)', cont.Infantil)); // cadastros antigos
+      const totalInf = TAMANHOS_INFANTIS.reduce((s, t) => s + cont[t], 0);
+      $('#porTamanho').innerHTML = `
+        <div class="col-span-full grid grid-cols-4 sm:grid-cols-7 gap-3">${adultos.join('')}</div>
+        <p class="col-span-full text-xs font-bold uppercase tracking-wider text-laranja mt-2">Abadá Infantil (nº 1 a 16) • ${totalInf} no total</p>
+        <div class="col-span-full grid grid-cols-4 sm:grid-cols-8 gap-3">${TAMANHOS_INFANTIS.map((t) => caixa(t.replace('Infantil ', 'Nº '), cont[t])).join('')}</div>`;
 
       SETORES.forEach((t) => {
         document.querySelector(`[data-cont="${t}"]`).textContent = inscricoes.filter((r) => r.tipo === t).length;
@@ -395,7 +414,7 @@
       bandeiras:  ['Data', 'Nome', 'WhatsApp', 'Abadá', 'Abadás', 'Kit', 'Pagamento', ''],
       destaque:   ['Data', 'Nome', 'Posição de destaque', 'WhatsApp', 'Abadá', 'Kit', 'Pagamento', ''],
       bateria:    ['Data', 'Nome', 'Instrumento', 'WhatsApp', 'Abadá', 'Kit', 'Pagamento', ''],
-      abada:      ['Data', 'Nome', 'WhatsApp', 'Tamanho', 'Quantidade', 'Pagamento', '']
+      abada:      ['Data', 'Nome', 'WhatsApp', 'Tamanho', 'Quantidade', 'Valor', 'Pagamento', '']
     };
 
     function filtrados() {
@@ -427,6 +446,12 @@
       <span class="tag ${r.origem === 'painel' ? 'tag-painel' : 'tag-site'} ml-1">${r.origem === 'painel' ? 'painel' : 'site'}</span>
       ${r.obs ? `<p class="text-xs text-tinta/55 mt-1 max-w-[260px]">📝 ${esc(r.obs)}</p>` : ''}`;
     const kit = (r) => `<span class="whitespace-nowrap">${esc(r.valorKit || '—')}</span>`;
+    // Abadá da criança: "Infantil 8" aparece como "Abadá Infantil 8" em destaque
+    const tamCrianca = (t) => {
+      if (!t) return '<span class="text-tinta/40">sem tamanho</span>';
+      if (/^Infantil/.test(t)) return `<span class="inline-block whitespace-nowrap font-bold text-laranja bg-pele border border-laranja/30 rounded-md px-2 py-0.5">Abadá ${esc(t)}</span>`;
+      return `<span class="inline-block whitespace-nowrap font-bold bg-pele rounded-md px-2 py-0.5">Abadá adulto ${esc(t)}</span>`;
+    };
 
     function renderizarTabela() {
       $('#thead').innerHTML = '<tr>' + COLUNAS[abaAtual].map((c) => `<th class="text-left font-bold text-xs uppercase tracking-wide px-4 py-3 whitespace-nowrap">${c}</th>`).join('') + '</tr>';
@@ -438,8 +463,8 @@
         const destaqueCel = (v) => td(`<span class="inline-block font-bold text-laranja bg-pele rounded-lg px-2 py-1 min-w-[140px]">${esc(v || '—')}</span>`);
         let base;
         if (abaAtual === 'paisFilhos') {
-          const kids = (r.criancas || []).map((c) => `<li class="flex items-center gap-2"><span>${esc(c.nome)}</span><span class="text-tinta/50">• ${esc(c.idade)} anos</span>${tam(c.tamanho)}</li>`).join('');
-          base = [dataCel, td(celulaNome(r)), td(celulaWhats(r)), td(tam(r.tamanho)), td(`<ul class="space-y-1 min-w-[220px]">${kids}</ul>`), td(`<span class="titulo text-lg">${qtd(r)}</span>`), td(kit(r))];
+          const kids = (r.criancas || []).map((c) => `<li class="flex flex-wrap items-center gap-x-2 gap-y-1"><span class="font-semibold">${esc(c.nome)}</span><span class="text-tinta/50">• ${esc(c.idade)} anos</span>${tamCrianca(c.tamanho)}</li>`).join('');
+          base = [dataCel, td(celulaNome(r)), td(celulaWhats(r)), td(tam(r.tamanho)), td(`<ul class="space-y-1.5 min-w-[280px]">${kids}</ul>`), td(`<span class="titulo text-lg">${qtd(r)}</span>`), td(kit(r))];
         } else if (abaAtual === 'bandeiras') {
           base = [dataCel, td(celulaNome(r)), td(celulaWhats(r)), td(tam(r.tamanho)), td(`<span class="titulo text-lg">${qtd(r)}</span>`), td(kit(r))];
         } else if (abaAtual === 'destaque') {
@@ -447,7 +472,7 @@
         } else if (abaAtual === 'bateria') {
           base = [dataCel, td(celulaNome(r)), destaqueCel(r.instrumento), td(celulaWhats(r)), td(tam(r.tamanho)), td(kit(r))];
         } else {
-          base = [dataCel, td(celulaNome(r)), td(celulaWhats(r)), td(tam(r.tamanho)), td(`<span class="titulo text-lg">${qtd(r)}</span>`)];
+          base = [dataCel, td(celulaNome(r)), td(celulaWhats(r)), td(tam(r.tamanho)), td(`<span class="titulo text-lg">${qtd(r)}</span>`), td(kit(r))];
         }
         base.push(td(celulaStatus(r)), td(celulaAcoes(r), 'text-right'));
         return `<tr>${base.join('')}</tr>`;
@@ -513,7 +538,7 @@
     function linhasSetor(tipo) {
       const lista = inscricoes.filter((r) => r.tipo === tipo).slice().reverse(); // mais antigos primeiro
       if (tipo === 'paisFilhos') {
-        const cab = ['Data', 'Responsável', 'WhatsApp', 'Abadá responsável', 'Criança', 'Idade', 'Abadá criança', 'Abadás na inscrição', 'Valor do kit', 'Pagamento', 'Origem', 'Observação'];
+        const cab = ['Data', 'Responsável', 'WhatsApp', 'Abadá responsável', 'Criança', 'Idade', 'Abadá infantil da criança', 'Abadás na inscrição', 'Valor do kit', 'Pagamento', 'Origem', 'Observação'];
         const linhas = [];
         lista.forEach((r) => {
           const kids = r.criancas && r.criancas.length ? r.criancas : [{}];
@@ -525,8 +550,8 @@
         return [cab, ...linhas];
       }
       if (tipo === 'abada') {
-        return [['Data', 'Nome', 'WhatsApp', 'Tamanho', 'Quantidade', 'Pagamento', 'Origem', 'Observação'],
-          ...lista.map((r) => [dataCompleta(r.criadoEm), r.nome, r.whatsapp, r.tamanho, qtd(r), statusTxt(r), origemTxt(r), r.obs || ''])];
+        return [['Data', 'Nome', 'WhatsApp', 'Tamanho', 'Quantidade', 'Valor', 'Pagamento', 'Origem', 'Observação'],
+          ...lista.map((r) => [dataCompleta(r.criadoEm), r.nome, r.whatsapp, r.tamanho, qtd(r), r.valorKit || '', statusTxt(r), origemTxt(r), r.obs || ''])];
       }
       const extra = tipo === 'destaque' ? 'Posição de destaque' : tipo === 'bateria' ? 'Instrumento' : null;
       return [['Data', 'Nome', ...(extra ? [extra] : []), 'WhatsApp', 'Abadá', 'Valor do kit', 'Pagamento', 'Origem', 'Observação'],
@@ -542,10 +567,11 @@
       });
       const pagos = inscricoes.filter((r) => r.status === 'pago');
       linhas.push(['TOTAL', inscricoes.length, soma(inscricoes), soma(pagos), soma(inscricoes) - soma(pagos)], [], ['Abadás por tamanho', 'Quantidade']);
-      const cont = Object.fromEntries(TAMANHOS.map((t) => [t, 0])); let semTam = 0;
-      inscricoes.forEach((r) => abadasDe(r).forEach((t) => { if (t in cont) cont[t]++; else semTam++; }));
-      TAMANHOS.forEach((t) => linhas.push([t, cont[t]]));
-      if (semTam) linhas.push(['Sem tamanho informado', semTam]);
+      const cont = contarTamanhos();
+      TAMANHOS_ADULTO.forEach((t) => linhas.push([t, cont[t]]));
+      TAMANHOS_INFANTIS.forEach((t) => linhas.push(['Abadá ' + t, cont[t]]));
+      if (cont.Infantil) linhas.push(['Abadá Infantil (sem número)', cont.Infantil]);
+      if (cont._semTam) linhas.push(['Sem tamanho informado', cont._semTam]);
       return linhas;
     }
 
@@ -604,19 +630,40 @@
       document.querySelectorAll('#formCadastro [data-nao]').forEach((el) => el.classList.toggle('hidden', el.dataset.nao === t));
       $('#rotuloNome').textContent = t === 'paisFilhos' ? 'Nome do responsável' : 'Nome completo';
       $('#rotuloTamanho').textContent = t === 'paisFilhos' ? 'Abadá do responsável' : 'Tamanho do abadá';
+      $('#rotuloValor').textContent = t === 'abada' ? 'Valor (total do pedido)' : 'Valor do kit';
+      if (t === 'abada' && !editandoId && !$('#fValor').value) sugerirValorAvulso();
       if (t === 'paisFilhos' && !$('#fCriancas').children.length) linhaCrianca();
     }
     $('#fTipo').addEventListener('change', ajustarCamposSetor);
 
+    // Abadá da criança: Infantil 1 a 16 (+ adulto para crianças maiores)
+    function opcoesCrianca(atual) {
+      const antigo = atual === 'Infantil' ? '<option value="Infantil">Infantil (sem número – escolha o nº)</option>' : '';
+      return '<option value="">Tam.</option>' + antigo
+        + '<optgroup label="Abadá Infantil">' + TAMANHOS_INFANTIS.map((t) => `<option value="${t}">${t}</option>`).join('') + '</optgroup>'
+        + '<optgroup label="Adulto (crianças maiores)">' + TAMANHOS_ADULTO.map((t) => `<option>${t}</option>`).join('') + '</optgroup>';
+    }
+
+    // Valor do abadá avulso: sugere valor unitário × quantidade (pode ser editado)
+    let valorAvulsoManual = false;
+    function sugerirValorAvulso() {
+      if (valorAvulsoManual) return;
+      const unit = parseFloat(VALOR_AVULSO.replace(/[^\d,]/g, '').replace(',', '.')) || 0;
+      const q = parseInt($('#fQtd').value, 10) || 1;
+      $('#fValor').value = (unit * q).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
+    $('#fQtd').addEventListener('input', () => { if ($('#fTipo').value === 'abada' && !editandoId) sugerirValorAvulso(); });
+    $('#fValor').addEventListener('input', () => { valorAvulsoManual = true; });
+
     function linhaCrianca(c = {}) {
       const div = document.createElement('div');
-      div.className = 'linha-crianca grid grid-cols-[80px_1fr_32px] sm:grid-cols-[1fr_70px_96px_32px] gap-2 items-center p-2 sm:p-0 rounded-xl bg-pele sm:bg-transparent';
+      div.className = 'linha-crianca grid grid-cols-[80px_1fr_32px] sm:grid-cols-[1fr_70px_150px_32px] gap-2 items-center p-2 sm:p-0 rounded-xl bg-pele sm:bg-transparent';
       div.innerHTML = `
         <input class="campo !py-2 c-nome col-span-3 sm:col-span-1" placeholder="Nome da criança" maxlength="80" value="${esc(c.nome || '')}" />
         <input class="campo !py-2 !px-2 c-idade" type="number" min="0" max="17" placeholder="Idade" value="${esc(c.idade ?? '')}" />
-        <select class="campo !py-2 !px-2 c-tam">${opcoes(TAMANHOS, 'Tam.')}</select>
+        <select class="campo !py-2 !px-2 c-tam">${opcoesCrianca(c.tamanho)}</select>
         <button type="button" class="text-xl text-tinta/40 hover:text-red-700" aria-label="Remover criança">×</button>`;
-      div.querySelector('.c-tam').value = c.tamanho || 'Infantil';
+      div.querySelector('.c-tam').value = c.tamanho || '';
       div.querySelector('button').addEventListener('click', () => div.remove());
       $('#fCriancas').appendChild(div);
     }
@@ -649,6 +696,7 @@
       $('#fTamanho').value = reg?.tamanho || '';
       $('#fQtd').value = reg?.quantidade || 1;
       $('#fValor').value = reg?.valorKit || '';
+      valorAvulsoManual = !!reg;
       $('#fStatus').value = reg?.status || 'pendente';
       $('#fObs').value = reg?.obs || '';
       escolherOuOutro($('#fPosicao'), $('#fPosicaoOutra'), reg?.posicao, POSICOES);
@@ -683,7 +731,7 @@
         whatsapp: $('#fWhats').value.trim(),
         tamanho: $('#fTamanho').value,
         quantidade: parseInt($('#fQtd').value, 10) || 1,
-        valorKit: t === 'abada' ? '' : $('#fValor').value.trim(),
+        valorKit: $('#fValor').value.trim(),
         status: $('#fStatus').value,
         obs: $('#fObs').value.trim()
       };
