@@ -683,9 +683,9 @@
     /* ===================================================== */
 
     /* Tamanhos de abadá oferecidos (mesma lista do painel interno) */
-    const TAMANHOS = ['PP', 'P', 'M', 'G', 'GG', 'XGG', 'Infantil'];
+    const TAMANHOS = ['PP', 'P', 'M', 'G', 'GG', 'XGG', 'G1', 'G2', 'Infantil'];
     /* Abadá infantil das crianças da Ala Pais e Filhos: numeração de 1 a 16 */
-    const TAMANHOS_ADULTO = ['PP', 'P', 'M', 'G', 'GG', 'XGG'];
+    const TAMANHOS_ADULTO = ['PP', 'P', 'M', 'G', 'GG', 'XGG', 'G1', 'G2'];
     const TAMANHOS_INFANTIS = Array.from({ length: 16 }, (_, i) => 'Infantil ' + (i + 1));
     const opcoesCrianca = '<option value="">Tam.</option>'
       + '<optgroup label="Abadá Infantil">' + TAMANHOS_INFANTIS.map((t) => `<option value="${t}">${t}</option>`).join('') + '</optgroup>'

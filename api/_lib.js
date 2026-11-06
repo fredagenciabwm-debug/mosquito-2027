@@ -10,7 +10,7 @@ import crypto from 'node:crypto';
 const USUARIO_PADRAO = 'Mosquito';
 const SENHA_HASH_PADRAO = '319865e076987801d98fbc9ed9a8bc7f51057bd0e65c55f918e154378203c34b';
 
-export const TAMANHOS = ['PP', 'P', 'M', 'G', 'GG', 'XGG', 'Infantil'];
+export const TAMANHOS = ['PP', 'P', 'M', 'G', 'GG', 'XGG', 'G1', 'G2', 'Infantil'];
 // Abadá das crianças (Ala Pais e Filhos): numeração Infantil 1 a 16, tamanhos adultos
 // para crianças maiores e "Infantil" (sem número) para cadastros antigos
 export const TAMANHOS_INFANTIS = Array.from({ length: 16 }, (_, i) => 'Infantil ' + (i + 1));
