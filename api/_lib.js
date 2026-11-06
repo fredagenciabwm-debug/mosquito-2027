@@ -11,6 +11,10 @@ const USUARIO_PADRAO = 'Mosquito';
 const SENHA_HASH_PADRAO = '319865e076987801d98fbc9ed9a8bc7f51057bd0e65c55f918e154378203c34b';
 
 export const TAMANHOS = ['PP', 'P', 'M', 'G', 'GG', 'XGG', 'Infantil'];
+// Abadá das crianças (Ala Pais e Filhos): numeração Infantil 1 a 16, tamanhos adultos
+// para crianças maiores e "Infantil" (sem número) para cadastros antigos
+export const TAMANHOS_INFANTIS = Array.from({ length: 16 }, (_, i) => 'Infantil ' + (i + 1));
+export const TAMANHOS_CRIANCA = [...TAMANHOS, ...TAMANHOS_INFANTIS];
 // Setores que o SITE pode enviar
 export const TIPOS_PUBLICOS = ['paisFilhos', 'bandeiras', 'abada'];
 // Todos os setores (o painel pode cadastrar em qualquer um)
@@ -132,7 +136,7 @@ export function normalizar(b, { admin = false } = {}) {
     reg.criancas = (Array.isArray(b.criancas) ? b.criancas : []).slice(0, 10).map((c) => ({
       nome: texto(c?.nome, 80),
       idade: Math.max(0, Math.min(17, parseInt(c?.idade, 10) || 0)),
-      tamanho: TAMANHOS.includes(c?.tamanho) ? c.tamanho : (admin ? '' : 'Infantil')
+      tamanho: TAMANHOS_CRIANCA.includes(c?.tamanho) ? c.tamanho : (admin ? '' : 'Infantil')
     })).filter((c) => c.nome.length >= 2);
     if (!reg.criancas.length) falha('Informe ao menos uma criança.');
     reg.quantidade = 1 + reg.criancas.length;
